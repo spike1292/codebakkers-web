@@ -1,0 +1,5 @@
+# Old henkbakker.net (Jekyll) sections retired — send to homepage.
+# Add specific old post slugs here if any are worth preserving.
+/blog/*   /   301
+/tags/*   /   301
+/tag/*    /   301

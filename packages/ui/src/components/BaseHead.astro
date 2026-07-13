@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  site: string;        /* e.g. "CodeBakkers" */
+  canonical?: string;
+}
+const { title, description = "", site, canonical } = Astro.props;
+const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+{description && <meta name="description" content={description} />}
+<link rel="canonical" href={url} />
+<meta property="og:title" content={title} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site} />
+{description && <meta property="og:description" content={description} />}
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />

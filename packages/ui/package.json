@@ -1,0 +1,13 @@
+{
+  "name": "@codebakkers/ui",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./styles/global.css": "./src/styles/global.css",
+    "./components/*": "./src/components/*"
+  },
+  "peerDependencies": {
+    "astro": "^5.0.0"
+  }
+}

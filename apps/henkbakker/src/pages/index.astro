@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+
+const work = [
+  "Framework-level modernization across a ~400-project Angular / Nx monorepo — signals, inject(), removing NgModules, major-version upgrades.",
+  "Front end through to the edge: CloudFront behaviours, edge redirects, decommissioning an nginx tier, AWS CDK.",
+  "Workspace health at scale: buildable/flatten restructuring, import-sorting and boundary rules, dependency untangling.",
+  "Security and vulnerability remediation across the front-end platform and its containers.",
+];
+
+const companies = [
+  {
+    name: "CodeBakkers",
+    role: "Owner",
+    blurb: "My holding and personal brand. Home of the blog and these notes.",
+    href: "https://codebakkers.com",
+    cta: "Read the blog",
+  },
+  {
+    name: "Codecask",
+    role: "Co-owner",
+    blurb: "A consultancy delivering working software — professional geeks, not a body shop.",
+    href: "https://www.codecask.cc",
+    cta: "Visit Codecask",
+  },
+];
+---
+
+<BaseLayout title="Henk Bakker — Angular platform modernization, frontend to edge">
+  <Container>
+    <section class="hero" aria-labelledby="hero-h">
+      <p class="kicker">HENK BAKKER · CODEBAKKERS</p>
+      <h1 id="hero-h">
+        Large-scale Angular platform modernization, <span class="accent">frontend&#8209;to&#8209;edge</span>.
+      </h1>
+      <p class="lead">
+        Independent platform engineer. I modernize big Angular / Nx monorepos end-to-end —
+        framework refactors, workspace health, and the AWS/CloudFront edge — for teams shipping
+        at scale. Currently doing exactly that for Essent.
+      </p>
+      <div class="cta">
+        <a class="btn" href="#contact">Work with me</a>
+        <a class="btn ghost" href="https://codebakkers.com">Read the blog →</a>
+      </div>
+    </section>
+
+    <section id="work" class="block" aria-labelledby="work-h">
+      <h2 id="work-h">What I do</h2>
+      <ul class="work">
+        {work.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section id="companies" class="block" aria-labelledby="companies-h">
+      <h2 id="companies-h">Companies</h2>
+      <div class="cards">
+        {companies.map((c) => (
+          <article class="card">
+            <p class="role">{c.role}</p>
+            <h3>{c.name}</h3>
+            <p class="blurb">{c.blurb}</p>
+            <a href={c.href}>{c.cta} →</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="contact" class="block" aria-labelledby="contact-h">
+      <h2 id="contact-h">Contact</h2>
+      <p class="lead">
+        Building or modernizing an Angular platform and want a hand at the framework and edge
+        layers? Get in touch.
+      </p>
+      <p class="email"><a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a></p>
+    </section>
+  </Container>
+</BaseLayout>
+
+<style>
+  .hero { margin: var(--space-16) 0 var(--space-12); max-width: var(--measure); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+  .hero h1 { font-size: var(--step-4); }
+  .accent { color: var(--color-accent); }
+  .lead { color: var(--color-text-soft); font-size: var(--step-1); margin-top: var(--space-4); }
+  .cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+  .btn { display: inline-block; font-weight: 600; font-size: var(--step--1); padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--color-accent); color: #fff; text-decoration: none; }
+  .btn:hover { background: var(--color-accent-strong); color: #fff; }
+  .btn.ghost { background: transparent; color: var(--color-accent-strong); border: 1px solid var(--color-border); }
+  .block { margin: var(--space-16) 0; }
+  .block h2 { max-width: var(--measure); }
+  .work { list-style: none; padding: 0; margin: var(--space-6) 0 0; max-width: var(--measure); }
+  .work li { position: relative; padding-left: var(--space-6); margin-bottom: var(--space-4); color: var(--color-text-soft); }
+  .work li::before { content: "→"; position: absolute; left: 0; color: var(--color-accent); font-family: var(--font-mono); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-6); }
+  @media (max-width: 40rem) { .cards { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-6); background: var(--color-surface); }
+  .card .role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-muted); }
+  .card h3 { margin: var(--space-1) 0 var(--space-2); }
+  .card .blurb { color: var(--color-text-soft); margin-bottom: var(--space-4); }
+  .email { font-size: var(--step-1); margin-top: var(--space-4); }
+</style>

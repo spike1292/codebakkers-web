@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+import Prose from "@codebakkers/ui/components/Prose.astro";
+---
+
+<BaseLayout title="About — CodeBakkers" description="About CodeBakkers and Henk Bakker.">
+  <Container narrow>
+    <section>
+      <p class="kicker">ABOUT</p>
+      <h1>CodeBakkers</h1>
+      <Prose>
+        <p>
+          CodeBakkers is Henk Bakker's personal brand and the home of these notes: field
+          reports from large-scale Angular platform modernization — framework refactors across a
+          ~400-project Nx monorepo, all the way through to the CloudFront edge.
+        </p>
+        <p>
+          The posts here are the personal-voice version. The consultancy angle lives at
+          <a href="https://www.codecask.cc">codecask.cc</a>, and more about the person at
+          <a href="https://henkbakker.net">henkbakker.net</a>.
+        </p>
+      </Prose>
+    </section>
+  </Container>
+</BaseLayout>
+
+<style>
+  section { margin: var(--space-16) 0 var(--space-12); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+</style>

@@ -1,0 +1,13 @@
+node_modules
+dist
+.astro
+.turbo
+.DS_Store
+*.log
+.env
+.env.*
+.wrangler
+
+# local planning + weekly outputs — never publish
+PLAN.md
+weekly/

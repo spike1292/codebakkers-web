@@ -1,0 +1,14 @@
+---
+/* Wrapper for long-form markdown content */
+---
+<div class="prose"><slot /></div>
+<style>
+  .prose { max-width: var(--measure); }
+  .prose :global(h2) { margin-top: var(--space-12); margin-bottom: var(--space-3); }
+  .prose :global(h3) { margin-top: var(--space-8); margin-bottom: var(--space-2); }
+  .prose :global(p), .prose :global(ul), .prose :global(ol), .prose :global(pre), .prose :global(blockquote) { margin-bottom: var(--space-4); }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; }
+  .prose :global(li) { margin-bottom: var(--space-2); }
+  .prose :global(blockquote) { border-left: 3px solid var(--color-accent); padding-left: var(--space-4); color: var(--color-text-soft); font-style: italic; }
+  .prose :global(img) { border-radius: var(--radius); border: 1px solid var(--color-border); }
+</style>
