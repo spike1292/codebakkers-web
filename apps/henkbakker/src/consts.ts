@@ -9,13 +9,12 @@ export const SITE = {
     { href: "/faith", label: "Faith" },
     { href: "/#contact", label: "Contact" },
   ],
-  // NOTE: replace the LinkedIn URL with Henk's real profile before deploy.
   social: [
     { label: "Email", href: "mailto:hello@codebakkers.com" },
     { label: "GitHub", href: "https://github.com/spike1292" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/henkbakker" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/henkhbakker/" },
   ],
   github: "https://github.com/spike1292",
-  linkedin: "https://www.linkedin.com/in/henkbakker",
+  linkedin: "https://www.linkedin.com/in/henkhbakker/",
   email: "hello@codebakkers.com",
 } as const;
