@@ -11,3 +11,6 @@ dist
 # local planning + weekly outputs — never publish
 PLAN.md
 weekly/
+
+# personal source docs — never publish/commit
+private/
