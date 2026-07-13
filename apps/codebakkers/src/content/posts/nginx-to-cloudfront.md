@@ -3,6 +3,7 @@ title: "Killing the nginx tier: CloudFront + an SSR origin"
 description: "Retiring a whole ECS/nginx layer in favour of CloudFront in front of a Node SSR origin — what moved, and what got simpler."
 pubDate: 2026-07-13
 tags: ["aws", "cloudfront", "edge", "angular"]
+type: deep-dive
 ---
 
 For years the request path ran through an nginx tier on ECS before it ever

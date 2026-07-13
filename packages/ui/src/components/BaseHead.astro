@@ -1,12 +1,21 @@
 ---
+// Self-hosted variable fonts (no external font request)
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+
 interface Props {
   title: string;
   description?: string;
-  site: string;        /* e.g. "CodeBakkers" */
+  site: string; // e.g. "CodeBakkers"
   canonical?: string;
+  image?: string; // absolute or root-relative OG image
+  type?: "website" | "article";
+  rss?: boolean;
 }
-const { title, description = "", site, canonical } = Astro.props;
+const { title, description = "", site, canonical, image = "/og.png", type = "website" } = Astro.props;
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+const imageUrl = image.startsWith("http") ? image : new URL(image, Astro.site).toString();
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,8 +23,28 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 {description && <meta name="description" content={description} />}
 <link rel="canonical" href={url} />
 <meta property="og:title" content={title} />
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={url} />
 <meta property="og:site_name" content={site} />
 {description && <meta property="og:description" content={description} />}
+<meta property="og:image" content={imageUrl} />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+{description && <meta name="twitter:description" content={description} />}
+<meta name="twitter:image" content={imageUrl} />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+{rss && <link rel="alternate" type="application/rss+xml" title={site} href="/rss.xml" />}
+<meta name="theme-color" content="#16181d" />
+<!-- No-flash theme init: apply stored choice before first paint -->
+<script is:inline>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") {
+        document.documentElement.setAttribute("data-theme", t);
+      }
+    } catch (e) {}
+  })();
+</script>

@@ -6,5 +6,11 @@ export default defineConfig({
   site: "https://codebakkers.com",
   integrations: [sitemap()],
   prefetch: true,
+  markdown: {
+    shikiConfig: {
+      themes: { light: "github-light", dark: "github-dark" },
+      wrap: true,
+    },
+  },
   vite: { ssr: { noExternal: ["@codebakkers/ui"] } },
 });

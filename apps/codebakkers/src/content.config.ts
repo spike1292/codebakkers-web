@@ -9,6 +9,8 @@ const posts = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
+    author: z.string().default("Henk Bakker"),
+    type: z.enum(["field-report", "deep-dive"]).default("field-report"),
     draft: z.boolean().default(false),
   }),
 });

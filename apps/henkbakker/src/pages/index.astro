@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
+import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
+import { SITE } from "../consts";
 
 const work = [
   "Framework-level modernization across a ~400-project Angular / Nx monorepo — signals, inject(), removing NgModules, major-version upgrades.",
@@ -10,46 +12,45 @@ const work = [
 ];
 
 const companies = [
-  {
-    name: "CodeBakkers",
-    role: "Owner",
-    blurb: "My holding and personal brand. Home of the blog and these notes.",
-    href: "https://codebakkers.com",
-    cta: "Read the blog",
-  },
-  {
-    name: "Codecask",
-    role: "Co-owner",
-    blurb: "A consultancy delivering working software — professional geeks, not a body shop.",
-    href: "https://www.codecask.cc",
-    cta: "Visit Codecask",
-  },
+  { name: "CodeBakkers", role: "Owner", blurb: "My holding and personal brand. Home of the blog and these notes.", href: "https://codebakkers.com", cta: "Read the blog" },
+  { name: "Codecask", role: "Co-owner", blurb: "A consultancy delivering working software — professional geeks, not a body shop.", href: "https://www.codecask.cc", cta: "Visit Codecask" },
 ];
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Henk Bakker",
+  url: SITE.url,
+  jobTitle: "Platform engineer — Angular modernization, frontend to edge",
+  sameAs: [SITE.github, SITE.linkedin],
+  worksFor: { "@type": "Organization", name: "Codecask", url: "https://www.codecask.cc" },
+  knowsAbout: ["Angular", "Nx monorepos", "Frontend platform engineering", "AWS CloudFront", "AWS CDK"],
+};
 ---
 
 <BaseLayout title="Henk Bakker — Angular platform modernization, frontend to edge">
   <Container>
     <section class="hero" aria-labelledby="hero-h">
-      <p class="kicker">HENK BAKKER · CODEBAKKERS</p>
-      <h1 id="hero-h">
-        Large-scale Angular platform modernization, <span class="accent">frontend&#8209;to&#8209;edge</span>.
-      </h1>
-      <p class="lead">
-        Independent platform engineer. I modernize big Angular / Nx monorepos end-to-end —
-        framework refactors, workspace health, and the AWS/CloudFront edge — for teams shipping
-        at scale. Currently doing exactly that for Essent.
-      </p>
-      <div class="cta">
-        <a class="btn" href="#contact">Work with me</a>
-        <a class="btn ghost" href="https://codebakkers.com">Read the blog →</a>
+      <div class="hero-text">
+        <p class="kicker">HENK BAKKER · CODEBAKKERS</p>
+        <h1 id="hero-h">Large-scale Angular platform modernization, <span class="accent">frontend&#8209;to&#8209;edge</span>.</h1>
+        <p class="lead">
+          Independent platform engineer. I modernize big Angular / Nx monorepos end-to-end —
+          framework refactors, workspace health, and the AWS/CloudFront edge — for teams shipping
+          at scale. Currently doing exactly that for Essent.
+        </p>
+        <div class="cta">
+          <a class="btn" href="/#contact">Work with me</a>
+          <a class="btn ghost" href="/cv">See my CV →</a>
+        </div>
       </div>
+      <img class="portrait" src="/henk.jpeg" width="240" height="240" alt="Henk Bakker" loading="eager" />
     </section>
 
     <section id="work" class="block" aria-labelledby="work-h">
       <h2 id="work-h">What I do</h2>
-      <ul class="work">
-        {work.map((item) => <li>{item}</li>)}
-      </ul>
+      <ul class="work">{work.map((item) => <li>{item}</li>)}</ul>
+      <p class="more"><a href="/cv">Full CV and selected work →</a></p>
     </section>
 
     <section id="companies" class="block" aria-labelledby="companies-h">
@@ -68,17 +69,18 @@ const companies = [
 
     <section id="contact" class="block" aria-labelledby="contact-h">
       <h2 id="contact-h">Contact</h2>
-      <p class="lead">
-        Building or modernizing an Angular platform and want a hand at the framework and edge
-        layers? Get in touch.
-      </p>
-      <p class="email"><a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a></p>
+      <p class="lead">Building or modernizing an Angular platform and want a hand at the framework and edge layers? Get in touch.</p>
+      <p class="email"><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
     </section>
   </Container>
+  <JsonLd schema={person} />
 </BaseLayout>
 
 <style>
-  .hero { margin: var(--space-16) 0 var(--space-12); max-width: var(--measure); }
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: var(--space-8); align-items: center; margin: var(--space-16) 0 var(--space-12); }
+  .hero-text { max-width: var(--measure); }
+  .portrait { border-radius: 50%; object-fit: cover; border: 1px solid var(--color-border); background: var(--color-surface); }
+  @media (max-width: 46rem) { .hero { grid-template-columns: 1fr; } .portrait { width: 120px; height: 120px; order: -1; } }
   .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
   .hero h1 { font-size: var(--step-4); }
   .accent { color: var(--color-accent); }
@@ -92,6 +94,7 @@ const companies = [
   .work { list-style: none; padding: 0; margin: var(--space-6) 0 0; max-width: var(--measure); }
   .work li { position: relative; padding-left: var(--space-6); margin-bottom: var(--space-4); color: var(--color-text-soft); }
   .work li::before { content: "→"; position: absolute; left: 0; color: var(--color-accent); font-family: var(--font-mono); }
+  .more { margin-top: var(--space-4); }
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-6); }
   @media (max-width: 40rem) { .cards { grid-template-columns: 1fr; } }
   .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-6); background: var(--color-surface); }

@@ -1,6 +1,6 @@
 /* CodeBakkers unified brand tokens */
 :root {
-  /* Palette */
+  /* Palette (light) */
   --cb-ink: #16181d;
   --cb-ink-soft: #3a3f4a;
   --cb-muted: #6b7280;
@@ -10,21 +10,12 @@
   --cb-accent: #217a55;        /* pine green — the CodeBakkers signature */
   --cb-accent-strong: #185c40;
   --cb-accent-soft: #dcebe3;
-  --cb-code-bg: #f2f2ef;
-
-  /* Semantic */
-  --color-bg: var(--cb-paper);
-  --color-surface: var(--cb-subtle);
-  --color-text: var(--cb-ink);
-  --color-text-soft: var(--cb-ink-soft);
-  --color-muted: var(--cb-muted);
-  --color-border: var(--cb-border);
-  --color-accent: var(--cb-accent);
-  --color-accent-strong: var(--cb-accent-strong);
+  --cb-code-bg: #f4f5f2;
 
   /* Type */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-serif: "Fraunces Variable", Fraunces, Georgia, "Times New Roman", serif;
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
   --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.45rem);
@@ -39,10 +30,14 @@
   --radius-sm: 6px;
   --container: 68rem;
   --measure: 42rem;
+
+  color-scheme: light;
 }
 
+/* Dark palette — applied when OS prefers dark (unless user forced light),
+   or when the user explicitly chose dark via the toggle. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --cb-paper: #121317;
     --cb-subtle: #1a1c22;
     --cb-border: #2a2d36;
@@ -52,6 +47,32 @@
     --cb-accent: #35b07d;
     --cb-accent-strong: #52c793;
     --cb-accent-soft: #12241c;
-    --cb-code-bg: #1e2027;
+    --cb-code-bg: #1b1e25;
+    color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+  --cb-paper: #121317;
+  --cb-subtle: #1a1c22;
+  --cb-border: #2a2d36;
+  --cb-ink: #ecebe6;
+  --cb-ink-soft: #c7c7c0;
+  --cb-muted: #9aa0ab;
+  --cb-accent: #35b07d;
+  --cb-accent-strong: #52c793;
+  --cb-accent-soft: #12241c;
+  --cb-code-bg: #1b1e25;
+  color-scheme: dark;
+}
+
+/* Semantic aliases (resolve after theme is decided) */
+:root, :root[data-theme] {
+  --color-bg: var(--cb-paper);
+  --color-surface: var(--cb-subtle);
+  --color-text: var(--cb-ink);
+  --color-text-soft: var(--cb-ink-soft);
+  --color-muted: var(--cb-muted);
+  --color-border: var(--cb-border);
+  --color-accent: var(--cb-accent);
+  --color-accent-strong: var(--cb-accent-strong);
 }

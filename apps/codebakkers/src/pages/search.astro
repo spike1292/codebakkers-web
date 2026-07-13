@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+---
+
+<BaseLayout title="Search — CodeBakkers" description="Search the CodeBakkers archive.">
+  <Container narrow>
+    <section>
+      <p class="kicker">SEARCH</p>
+      <h1>Search the archive</h1>
+      <div id="search" class="pf"></div>
+      <noscript><p>Search needs JavaScript. Browse <a href="/">all posts</a> instead.</p></noscript>
+    </section>
+  </Container>
+</BaseLayout>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener("DOMContentLoaded", () => {
+    if (window.PagefindUI) new PagefindUI({ element: "#search", showSubResults: true, showImages: false });
+  });
+</script>
+
+<style>
+  section { margin: var(--space-16) 0 var(--space-12); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+  .pf { margin-top: var(--space-6); --pagefind-ui-primary: var(--color-accent); --pagefind-ui-font: var(--font-sans); --pagefind-ui-background: var(--color-bg); --pagefind-ui-text: var(--color-text); --pagefind-ui-border: var(--color-border); }
+</style>

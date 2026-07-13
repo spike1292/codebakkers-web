@@ -1,13 +1,26 @@
 ---
 import Container from "./Container.astro";
-interface Props { brand?: string; tagline?: string; }
-const { brand = "CodeBakkers", tagline = "" } = Astro.props;
+interface LinkItem { label: string; href: string; }
+interface Props { brand?: string; tagline?: string; social?: LinkItem[]; }
+const { brand = "CodeBakkers", tagline = "", social = [] } = Astro.props;
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <Container>
     <div class="row">
       <p class="brand">© {year} {brand}{tagline ? ` — ${tagline}` : ""}</p>
+      {social.length > 0 && (
+        <ul class="links" aria-label="Elsewhere">
+          {social.map((l) => (
+            <li><a href={l.href} rel="me">{l.label}</a></li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <div class="row sub">
+      <ul class="links">
+        <li><a href="/privacy">Privacy</a></li>
+      </ul>
       <ul class="links">
         <li><a href="https://codebakkers.com">codebakkers.com</a></li>
         <li><a href="https://henkbakker.net">henkbakker.net</a></li>
@@ -19,6 +32,7 @@ const year = new Date().getFullYear();
 <style>
   .site-footer { border-top: 1px solid var(--color-border); margin-top: var(--space-16); padding-block: var(--space-8); color: var(--color-muted); font-size: var(--step--1); }
   .row { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-8); align-items: center; justify-content: space-between; }
+  .sub { margin-top: var(--space-4); }
   .links { list-style: none; display: flex; gap: var(--space-6); padding: 0; margin: 0; }
   .links a { color: var(--color-muted); text-decoration: none; }
   .links a:hover { color: var(--color-accent); }

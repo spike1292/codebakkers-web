@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+import Prose from "@codebakkers/ui/components/Prose.astro";
+import { SITE } from "../consts";
+
+const selectedWork = [
+  { title: "nginx tier → CloudFront + SSR origin", note: "Decommissioned a whole ECS/nginx layer; moved routing, redirects and header rewriting to the edge." },
+  { title: "NgModules removal across ~400 projects", note: "Drove the standalone-components migration at monorepo scale." },
+  { title: "Signals & inject() migration", note: "Modernized reactivity and DI across the platform's shared libraries." },
+  { title: "Edge redirects via key-value store", note: "CloudFront + KVS redirects evaluated at the edge." },
+  { title: "Security & CVE remediation", note: "Vulnerability fixes across the front-end platform and its containers." },
+];
+
+const stack = ["Angular", "Nx", "TypeScript", "NgRx", "Angular SSR", "AWS CloudFront", "AWS CDK", "Jest", "Cypress"];
+---
+
+<BaseLayout title="CV — Henk Bakker" description="Henk Bakker — CV and selected platform-engineering work.">
+  <Container narrow>
+    <section>
+      <p class="kicker">CV</p>
+      <h1>Henk Bakker</h1>
+      <Prose>
+        <p>
+          Independent platform engineer and the <strong>functional platform lead</strong> on
+          <strong>Essent</strong>'s Team Atlas — a platform and customer-account-core team owning
+          the shared foundation of a ~400-project Angular / Nx monorepo across six brand apps,
+          front end through to the CloudFront edge. I work through
+          <a href="https://www.codecask.cc">Codecask</a>, the consultancy I co-own.
+        </p>
+        <p>
+          I'm one of the rare engineers who does <strong>both</strong> framework-level refactors at
+          monorepo scale <strong>and</strong> the AWS/edge plumbing — and I build my own tooling and
+          AI-augmented workflows to do it. My work is migration- and modernization-weighted: I move
+          large platforms forward without breaking the teams that depend on them.
+        </p>
+
+        <h2>Selected work</h2>
+      </Prose>
+      <ul class="work">
+        {selectedWork.map((w) => (
+          <li>
+            <span class="wt">{w.title}</span>
+            <span class="wn">{w.note}</span>
+          </li>
+        ))}
+      </ul>
+
+      <Prose>
+        <h2>Stack</h2>
+      </Prose>
+      <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
+
+      <Prose>
+        <h2>Contact</h2>
+        <p>
+          Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
+          <a href={SITE.github}>GitHub</a> ·
+          <a href={SITE.linkedin}>LinkedIn</a>
+        </p>
+      </Prose>
+    </section>
+  </Container>
+</BaseLayout>
+
+<style>
+  section { margin: var(--space-16) 0 var(--space-12); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+  .work { list-style: none; padding: 0; margin: var(--space-4) 0 var(--space-8); max-width: var(--measure); }
+  .work li { padding: var(--space-4) 0; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-1); }
+  .wt { font-weight: 620; }
+  .wn { color: var(--color-muted); font-size: var(--step--1); }
+  .stack { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: var(--space-4) 0 var(--space-8); }
+  .stack li { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-text-soft); background: var(--color-surface); border: 1px solid var(--color-border); padding: 0.2em 0.6em; border-radius: var(--radius-sm); }
+</style>

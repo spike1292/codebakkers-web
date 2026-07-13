@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+import Prose from "@codebakkers/ui/components/Prose.astro";
+import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
+
+const org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "CodeBakkers",
+  alternateName: "CodeBakkers B.V.",
+  url: "https://codebakkers.com",
+  email: "hello@codebakkers.com",
+  founder: { "@type": "Person", name: "Henk Bakker", url: "https://henkbakker.net" },
+  address: { "@type": "PostalAddress", addressLocality: "Uithuizen", addressCountry: "NL" },
+  identifier: [
+    { "@type": "PropertyValue", name: "KVK", value: "90011139" },
+    { "@type": "PropertyValue", name: "BTW", value: "NL865181470B01" },
+  ],
+};
+---
+
+<BaseLayout title="Company — CodeBakkers" description="CodeBakkers B.V. — company profile.">
+  <Container narrow>
+    <section>
+      <p class="kicker">COMPANY</p>
+      <h1>CodeBakkers B.V.</h1>
+      <Prose>
+        <p>
+          <strong>CodeBakkers B.V.</strong> is Henk Bakker's holding company and personal brand —
+          the home of this blog and of independent platform-engineering work: large-scale Angular
+          modernization, front end through to the edge.
+        </p>
+        <p>
+          For consultancy and secondment, Henk works through
+          <a href="https://www.codecask.cc">Codecask</a>. To get in touch, email
+          <a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a>.
+        </p>
+        <h2>Registration</h2>
+        <ul>
+          <li>KVK: <strong>90011139</strong></li>
+          <li>BTW / VAT: <strong>NL865181470B01</strong></li>
+          <li>Based in Uithuizen, the Netherlands</li>
+          <li>Email: <a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a></li>
+        </ul>
+      </Prose>
+    </section>
+  </Container>
+  <JsonLd schema={org} />
+</BaseLayout>
+
+<style>
+  section { margin: var(--space-16) 0 var(--space-12); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+</style>

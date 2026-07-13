@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm build
+
+  quality:
+    runs-on: ubuntu-latest
+    # Best-effort a11y + link checks. Flip continue-on-error to false once tuned.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Link check (both sites)
+        run: |
+          pnpm dlx linkinator apps/codebakkers/dist --recurse --silent
+          pnpm dlx linkinator apps/henkbakker/dist --recurse --silent
+      - name: Accessibility (pa11y-ci)
+        run: |
+          pnpm dlx http-server apps/codebakkers/dist -p 8081 -s &
+          pnpm dlx http-server apps/henkbakker/dist -p 8082 -s &
+          sleep 3
+          pnpm dlx pa11y-ci --config .pa11yci.json

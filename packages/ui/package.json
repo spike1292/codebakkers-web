@@ -7,6 +7,11 @@
     "./styles/global.css": "./src/styles/global.css",
     "./components/*": "./src/components/*"
   },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.1.1",
+    "@fontsource-variable/inter": "^5.1.1",
+    "@fontsource-variable/jetbrains-mono": "^5.1.2"
+  },
   "peerDependencies": {
     "astro": "^5.0.0"
   }

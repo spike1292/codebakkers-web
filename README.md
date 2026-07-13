@@ -1,22 +1,33 @@
 # codebakkers-web
 
 Monorepo for **codebakkers.com** (the blog) and **henkbakker.net** (personal + company promo),
-sharing one design system. Built with Astro, pnpm workspaces + Turborepo, deployed to Cloudflare Pages.
+sharing one design system. Astro · pnpm workspaces · Turborepo · Cloudflare Pages.
 
 ## Structure
 
 ```
 apps/
-  codebakkers/   → codebakkers.com — the blog (canonical home for weekly posts)
-  henkbakker/    → henkbakker.net — personal / company promo (no blog)
+  codebakkers/   → codebakkers.com — blog: index, posts, about, company, search, RSS, 404
+  henkbakker/    → henkbakker.net — promo: landing, cv, faith, privacy, 404
 packages/
-  ui/            → @codebakkers/ui — shared brand: tokens, global CSS, components
+  ui/            → @codebakkers/ui — brand tokens, global CSS, fonts, components
+                    (Header, Footer, ThemeToggle, BaseHead, Analytics, JsonLd, Prose, …)
 ```
+
+## Features
+
+- Unified Pine-green brand; **Fraunces + Inter + JetBrains Mono** self-hosted (no external font calls)
+- **Light/dark toggle** defaulting to OS, no flash of wrong theme
+- Blog: **Shiki** dual-theme code blocks + copy buttons, reading time, TOC on deep-dives,
+  related posts, **Pagefind** static search, RSS
+- **Cloudflare Web Analytics** (cookieless — set `PUBLIC_CF_BEACON_TOKEN`)
+- SEO: JSON-LD (BlogPosting / Person / Organization / Breadcrumb), sitemap, per-site OG images
+- WCAG AA: skip links, landmarks, `aria-current`, reduced-motion, focus styles
+- Content types: weekly `field-report`, monthly `deep-dive`
 
 ## Requirements
 
-- Node 22+ (`.nvmrc`)
-- pnpm 9 (`corepack enable` then `corepack use pnpm@9`)
+- Node 22+ · pnpm 9 (`corepack enable`)
 
 ## Develop
 
@@ -24,60 +35,70 @@ packages/
 pnpm install
 pnpm dev:codebakkers   # http://localhost:4321
 pnpm dev:henkbakker
-# or everything: pnpm dev
 ```
 
-## Build
+> Search only works after a full build (Pagefind indexes `dist/`).
+
+## Build / quality
 
 ```bash
-pnpm build                       # both, via Turborepo
-pnpm --filter codebakkers build  # one site → apps/codebakkers/dist
+pnpm build          # both (codebakkers build also runs `pagefind --site dist`)
+pnpm check          # astro check (types)
+pnpm lint           # eslint
+pnpm format         # prettier --write
 ```
 
-## Deploy — Cloudflare Pages
+## Deploy — Wrangler + GitHub Actions
 
-Create **two** Pages projects from this one repo (Cloudflare Pages supports monorepos):
+`.github/workflows/deploy.yml` builds each app and runs `wrangler pages deploy` on push to `main`
+(and PR previews). Create two Cloudflare Pages projects named **codebakkers** and **henkbakker**,
+then add these GitHub repo secrets:
 
-| Setting | codebakkers.com | henkbakker.net |
-|---|---|---|
-| Production branch | `main` | `main` |
-| Build command | `pnpm --filter codebakkers build` | `pnpm --filter henkbakker build` |
-| Build output directory | `apps/codebakkers/dist` | `apps/henkbakker/dist` |
-| Root directory | `/` (repo root) | `/` (repo root) |
-| Env: `PNPM_VERSION` | `9` | `9` |
+- `CLOUDFLARE_API_TOKEN` (Pages: Edit)
+- `CLOUDFLARE_ACCOUNT_ID`
 
-Cloudflare installs deps from `pnpm-lock.yaml` and auto-deploys on push to `main`.
-Custom domains are added per project in the Pages dashboard.
+`.github/workflows/ci.yml` runs build + type-check + lint + format on every PR, plus a best-effort
+a11y (pa11y-ci) and link-check job.
 
-## DNS — Hostinger → Cloudflare
+## DNS & redirects (Hostinger → Cloudflare)
 
-1. Add each domain as a site in Cloudflare (Cloudflare gives you two nameservers).
-2. In Hostinger → Domains → each domain → change nameservers to the Cloudflare pair.
-3. Back in Cloudflare, add the custom domain to the matching Pages project (records are created for you).
-
-Registration stays at Hostinger; only DNS moves. codecask.cc is untouched (Squarespace).
+1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
+2. Attach each domain to its Pages project.
+3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
+   - `henkbakker.dev/*` → `https://henkbakker.net/$1` (301)
+   - `spike1292.github.io/*` → `https://henkbakker.net/` (301)
+   Old `/blog/*` and `/tags/*` paths on henkbakker.net are handled by `apps/henkbakker/public/_redirects`.
 
 ## The weekly post (Phase 2 — not built yet)
 
-Each Monday a job drafts a post from that week's Essent commits + memory vault + Jira, runs a
-governance filter, and produces:
-- a **PR** to this repo adding `apps/codebakkers/src/content/posts/<slug>.md` (personal voice) — you review + merge;
-- `weekly/<date>/codecask.md` (company voice) and `weekly/<date>/linkedin.md` — for you to paste.
+Each Monday a job drafts from that week's Essent commits + memory vault + Jira (local CLI),
+runs a governance filter, and produces: a **PR** adding `apps/codebakkers/src/content/posts/<slug>.md`
+(personal voice; you review + merge), plus `weekly/<date>/codecask.md` and `weekly/<date>/linkedin.md`
+(company voice; you paste). Monthly, a longer deep-dive. `PLAN.md` and `weekly/` are gitignored.
 
-`PLAN.md` and `weekly/` are gitignored so nothing client-derived lands in this public repo.
-
-## Adding a post manually
-
-Drop a Markdown file in `apps/codebakkers/src/content/posts/`:
+## Adding a post
 
 ```markdown
 ---
 title: "Post title"
 description: "One-line summary for listings + RSS."
 pubDate: 2026-07-13
+type: field-report        # or: deep-dive
 tags: ["angular", "edge"]
 draft: false
 ---
 
 Body in Markdown.
 ```
+
+## Licensing
+
+- **Code** — MIT (`LICENSE`)
+- **Content** (posts + page copy) — CC BY-NC 4.0 (`LICENSE-CONTENT.md`)
+
+## Before first deploy
+
+- Drop your real portrait at `apps/henkbakker/public/henk.jpg` (a placeholder is in place).
+- Replace the LinkedIn URL in `apps/henkbakker/src/consts.ts`.
+- Add the two Cloudflare secrets in GitHub.
+- (Optional) set `PUBLIC_CF_BEACON_TOKEN` to enable analytics.

@@ -2,29 +2,69 @@
 import BaseLayout from "./BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
 import Prose from "@codebakkers/ui/components/Prose.astro";
+import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
+import { SITE } from "../consts";
 
+interface Heading { depth: number; slug: string; text: string; }
+interface Related { slug: string; title: string; }
 interface Props {
   title: string;
   description: string;
   pubDate: Date;
   updatedDate?: Date;
   tags?: string[];
+  author?: string;
+  type?: "field-report" | "deep-dive";
+  readingTime?: string;
+  headings?: Heading[];
+  related?: Related[];
+  slug: string;
 }
-const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
-const fmt = (d: Date) =>
-  d.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
-const iso = (d: Date) => d.toISOString().slice(0, 10);
+const {
+  title, description, pubDate, updatedDate, tags = [], author = SITE.author,
+  type = "field-report", readingTime = "", headings = [], related = [], slug,
+} = Astro.props;
+
+const fmt = (d: Date) => d.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+const iso = (d: Date) => d.toISOString();
+const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+const canonical = new URL(`/posts/${slug}/`, Astro.site).toString();
+const toc = type === "deep-dive" ? headings.filter((h) => h.depth === 2 || h.depth === 3) : [];
+const kicker = type === "deep-dive" ? "DEEP DIVE" : "FIELD REPORT";
+
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: iso(pubDate),
+  dateModified: iso(updatedDate ?? pubDate),
+  author: { "@type": "Person", name: author, url: "https://henkbakker.net" },
+  publisher: { "@type": "Organization", name: "CodeBakkers", url: "https://codebakkers.com" },
+  mainEntityOfPage: canonical,
+  keywords: tags.join(", "),
+};
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Blog", item: SITE.url + "/" },
+    { "@type": "ListItem", position: 2, name: title, item: canonical },
+  ],
+};
 ---
 
-<BaseLayout title={`${title} — CodeBakkers`} description={description}>
+<BaseLayout title={`${title} — CodeBakkers`} description={description} type="article">
   <Container narrow>
     <article>
       <header class="post-header">
-        <p class="kicker">NOTES FROM THE PLATFORM</p>
+        <p class="kicker">{kicker}</p>
         <h1>{title}</h1>
         <p class="meta">
-          <time datetime={iso(pubDate)}>{fmt(pubDate)}</time>
-          {updatedDate && <span> · updated <time datetime={iso(updatedDate)}>{fmt(updatedDate)}</time></span>}
+          <span>{author}</span> ·
+          <time datetime={isoDate(pubDate)}>{fmt(pubDate)}</time>
+          {readingTime && <span> · {readingTime}</span>}
+          {updatedDate && <span> · updated <time datetime={isoDate(updatedDate)}>{fmt(updatedDate)}</time></span>}
         </p>
         {tags.length > 0 && (
           <ul class="tags" aria-label="Tags">
@@ -32,14 +72,39 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
           </ul>
         )}
       </header>
+
+      {toc.length > 0 && (
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">On this page</p>
+          <ul>
+            {toc.map((h) => (
+              <li class={h.depth === 3 ? "sub" : ""}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
       <Prose>
         <slot />
       </Prose>
+
+      {related.length > 0 && (
+        <section class="related" aria-labelledby="related-h">
+          <h2 id="related-h">Related</h2>
+          <ul>
+            {related.map((r) => <li><a href={`/posts/${r.slug}/`}>{r.title}</a></li>)}
+          </ul>
+        </section>
+      )}
+
       <footer class="post-footer">
         <a href="/">← All posts</a>
       </footer>
     </article>
   </Container>
+
+  <JsonLd schema={blogPosting} />
+  <JsonLd schema={breadcrumb} />
 </BaseLayout>
 
 <style>
@@ -48,5 +113,39 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .meta { color: var(--color-muted); font-size: var(--step--1); margin-top: var(--space-3); }
   .tags { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: var(--space-4) 0 0; }
   .tags li { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-muted); background: var(--color-surface); border: 1px solid var(--color-border); padding: 0.1em 0.5em; border-radius: var(--radius-sm); }
+  .toc { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-4) var(--space-6); margin-bottom: var(--space-8); background: var(--color-surface); }
+  .toc-title { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.08em; color: var(--color-muted); margin-bottom: var(--space-2); }
+  .toc ul { list-style: none; padding: 0; margin: 0; }
+  .toc li { padding: var(--space-1) 0; }
+  .toc li.sub { padding-left: var(--space-4); }
+  .toc a { color: var(--color-text-soft); text-decoration: none; }
+  .toc a:hover { color: var(--color-accent); }
+  .related { margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+  .related ul { list-style: none; padding: 0; margin: var(--space-4) 0 0; }
+  .related li { padding: var(--space-2) 0; }
   .post-footer { margin-top: var(--space-12); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
 </style>
+
+<script>
+  // Add copy buttons to code blocks
+  document.querySelectorAll("pre.astro-code").forEach((pre) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-block";
+    pre.parentNode?.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy code to clipboard");
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(pre.innerText);
+        btn.textContent = "Copied";
+        btn.dataset.copied = "true";
+        setTimeout(() => { btn.textContent = "Copy"; btn.dataset.copied = "false"; }, 1500);
+      } catch {}
+    });
+    wrapper.appendChild(btn);
+  });
+</script>

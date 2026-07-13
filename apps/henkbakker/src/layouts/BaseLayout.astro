@@ -3,16 +3,18 @@ import "@codebakkers/ui/styles/global.css";
 import BaseHead from "@codebakkers/ui/components/BaseHead.astro";
 import Header from "@codebakkers/ui/components/Header.astro";
 import Footer from "@codebakkers/ui/components/Footer.astro";
+import Analytics from "@codebakkers/ui/components/Analytics.astro";
 import { SITE } from "../consts";
 
-interface Props { title: string; description?: string; }
-const { title, description = SITE.description } = Astro.props;
+interface Props { title: string; description?: string; type?: "website" | "article"; }
+const { title, description = SITE.description, type = "website" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} site={SITE.title} />
+    <BaseHead title={title} description={description} site={SITE.title} type={type} />
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -20,6 +22,6 @@ const { title, description = SITE.description } = Astro.props;
     <main id="main">
       <slot />
     </main>
-    <Footer brand={SITE.brand} tagline="frontend-to-edge" />
+    <Footer brand={SITE.brand} tagline="frontend-to-edge" social={[...SITE.social]} />
   </body>
 </html>

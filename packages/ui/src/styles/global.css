@@ -12,7 +12,14 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-h1, h2, h3, h4 { line-height: 1.15; font-weight: 680; letter-spacing: -0.02em; color: var(--color-text); }
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  line-height: 1.12;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  color: var(--color-text);
+}
 h1 { font-size: var(--step-3); }
 h2 { font-size: var(--step-2); }
 h3 { font-size: var(--step-1); }
@@ -47,3 +54,35 @@ hr { border: none; border-top: 1px solid var(--color-border); margin: var(--spac
     transition-duration: 0.01ms !important; scroll-behavior: auto !important;
   }
 }
+
+/* Shiki dual-theme code blocks: activate dark palette to match the theme */
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+/* Code block chrome + copy button */
+.code-block { position: relative; }
+.code-block .copy-btn {
+  position: absolute; top: var(--space-2); right: var(--space-2);
+  font: 600 var(--step--1)/1 var(--font-mono);
+  color: var(--color-text-soft); background: var(--color-bg);
+  border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  padding: 0.35em 0.6em; cursor: pointer; opacity: 0; transition: opacity 0.12s;
+}
+.code-block:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn[data-copied="true"] { color: var(--color-accent); border-color: var(--color-accent); }

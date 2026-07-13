@@ -1,0 +1,11 @@
+{
+  "defaults": { "standard": "WCAG2AA", "timeout": 30000 },
+  "urls": [
+    "http://localhost:8081/",
+    "http://localhost:8081/about/",
+    "http://localhost:8081/company/",
+    "http://localhost:8082/",
+    "http://localhost:8082/cv/",
+    "http://localhost:8082/faith/"
+  ]
+}

@@ -8,11 +8,31 @@
     "build": "turbo run build",
     "preview": "turbo run preview",
     "check": "turbo run check",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "dev:codebakkers": "pnpm --filter codebakkers dev",
-    "dev:henkbakker": "pnpm --filter henkbakker dev"
+    "dev:henkbakker": "pnpm --filter henkbakker dev",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,astro,js,mjs,cjs,json,css,md,yml,yaml}": "prettier --write"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-astro": "^1.3.1",
+    "husky": "^9.1.7",
+    "linkinator": "^6.1.2",
+    "lint-staged": "^15.3.0",
+    "pa11y-ci": "^3.1.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
     "turbo": "^2.3.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.19.1",
+    "wrangler": "^3.99.0"
   }
 }

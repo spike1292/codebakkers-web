@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "@codebakkers/ui/components/Container.astro";
+import Prose from "@codebakkers/ui/components/Prose.astro";
+---
+
+<BaseLayout title="Faith — Henk Bakker" description="A little about my faith in Jesus, and my church community.">
+  <Container narrow>
+    <section>
+      <p class="kicker">FAITH</p>
+      <h1>Following Jesus</h1>
+      <Prose>
+        <p>
+          Alongside the engineering, the most important thing about me is that I follow Jesus. My
+          faith isn't a side interest — it shapes how I try to live, work, and treat the people
+          around me.
+        </p>
+        <p>
+          I believe the good news is exactly that: good news, and it's for everyone. That people can
+          know the love and the rescuing power of Jesus for themselves. It's something I care about
+          enough to want to share, gently and honestly, with anyone who's curious.
+        </p>
+        <blockquote>
+          "For I am not ashamed of the gospel, because it is the power of God that brings salvation
+          to everyone who believes." — Romans 1:16
+        </blockquote>
+
+        <h2>My church — Farmhouse Church</h2>
+        <p>
+          I'm part of <a href="https://defarmhouse.nl">Farmhouse Church</a>, a New Testament church
+          in Garsthuizen, Groningen, committed to the Great Commission and to serving people across
+          the region — young and old alike.
+        </p>
+        <p>
+          We gather every Sunday morning at 9:30 (Smydingheweg 46, Garsthuizen). If you'd like to
+          come along, or just want to talk about any of this, you're genuinely welcome — reach out
+          any time.
+        </p>
+        <p><a class="btn" href="https://defarmhouse.nl">Visit Farmhouse Church →</a></p>
+      </Prose>
+    </section>
+  </Container>
+</BaseLayout>
+
+<style>
+  section { margin: var(--space-16) 0 var(--space-12); }
+  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
+  .btn { display: inline-block; font-weight: 600; font-size: var(--step--1); padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--color-accent); color: #fff; text-decoration: none; }
+  .btn:hover { background: var(--color-accent-strong); color: #fff; }
+</style>
