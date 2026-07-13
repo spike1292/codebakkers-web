@@ -91,6 +91,15 @@ draft: false
 Body in Markdown.
 ```
 
+Files can be `.md` or `.mdx`. Use `.mdx` when you want to embed components:
+
+```mdx
+import Callout from "../../components/Callout.astro";
+
+<Callout type="tip">Interactive bits go here.</Callout>
+```
+See `apps/codebakkers/src/content/posts/mdx-template.mdx` for a working example.
+
 ## Licensing
 
 - **Code** — MIT (`LICENSE`)

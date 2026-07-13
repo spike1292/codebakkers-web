@@ -1,0 +1,27 @@
+---
+title: "MDX template (draft)"
+description: "A reference post showing how to use MDX with components. Kept as a draft."
+pubDate: 2026-07-13
+type: field-report
+tags: ["meta"]
+draft: true
+---
+
+import Callout from "../../components/Callout.astro";
+
+This is a normal Markdown post — **bold**, `code`, lists, [links](/).
+
+But because it's `.mdx`, you can also drop in components:
+
+<Callout type="tip" title="Why MDX">
+  Use this when a post needs an interactive chart, a diagram, or a callout like
+  this one. Plain `.md` posts still work exactly as before.
+</Callout>
+
+```ts
+const answer = 42;
+```
+
+<Callout type="warning">
+  Keep components lightweight — the blog ships almost no client JS by default.
+</Callout>

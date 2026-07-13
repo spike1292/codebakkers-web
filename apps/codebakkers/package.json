@@ -10,10 +10,11 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.7.0",
+    "@astrojs/mdx": "^4.2.0",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
     "@codebakkers/ui": "workspace:*",
+    "astro": "^5.7.0",
     "reading-time": "^1.5.0"
   },
   "devDependencies": {

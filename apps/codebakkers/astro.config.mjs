@@ -1,10 +1,11 @@
 import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
 // codebakkers.com — the blog (canonical home for weekly posts)
 export default defineConfig({
   site: "https://codebakkers.com",
-  integrations: [sitemap()],
+  integrations: [mdx(), sitemap()],
   prefetch: true,
   markdown: {
     shikiConfig: {
