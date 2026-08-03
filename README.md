@@ -62,6 +62,8 @@ then add these GitHub repo secrets:
 `.github/workflows/ci.yml` runs build + type-check + lint + format on every PR, plus a best-effort
 a11y (pa11y-ci) and link-check job.
 
+> **Step-by-step setup runbook: [`docs/cloudflare-setup.md`](docs/cloudflare-setup.md)**
+
 ## DNS & redirects (Hostinger → Cloudflare)
 
 1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
