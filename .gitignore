@@ -6,6 +6,8 @@ dist
 *.log
 .env
 .env.*
+!.env.example
+!**/.env.example
 .wrangler
 
 # local planning + weekly outputs — never publish

@@ -116,17 +116,44 @@ rule to have something to intercept.
 > In-app redirects (old `/posts/*`, `/rss.xml`, `/about`, `/search` on codebakkers.com →
 > henkbakker.net) already ship via `apps/codebakkers/public/_redirects` — nothing to configure.
 
-## 7. Web analytics (optional)
+## 7. Web analytics
 
-Cookieless, no consent banner needed.
+Cloudflare Web Analytics — cookieless, no consent banner needed. **Each site has its own beacon
+token**, injected at build time by CI.
+
+### Get the two tokens
 
 1. Dashboard → **Analytics & Logs → Web Analytics → Add a site**.
-2. Add `henkbakker.net`; copy the **beacon token**.
-3. Expose it at build time as `PUBLIC_CF_BEACON_TOKEN` — Pages project → **Settings → Variables and
-   Secrets → Add** (Production _and_ Preview), or add it to the deploy workflow env.
-4. Repeat for `codebakkers.com` (separate token).
+2. Add `codebakkers.com`. When it shows the JS snippet, copy just the **token** — the value of
+   `data-cf-beacon={"token": "…"}`. You don't need the snippet itself; the site already renders it.
+3. Repeat for `henkbakker.net` (a **separate** token).
 
-Without the variable the analytics component renders nothing, which is a safe default.
+> Adding the site under Web Analytics is enough — no DNS or page changes required.
+
+### Add them as GitHub secrets
+
+| Secret name                   | Token for       |
+| ----------------------------- | --------------- |
+| `CF_BEACON_TOKEN_CODEBAKKERS` | codebakkers.com |
+| `CF_BEACON_TOKEN_HENKBAKKER`  | henkbakker.net  |
+
+```bash
+gh secret set CF_BEACON_TOKEN_CODEBAKKERS
+gh secret set CF_BEACON_TOKEN_HENKBAKKER
+```
+
+`.github/workflows/deploy.yml` maps each one to `PUBLIC_CF_BEACON_TOKEN` for that app's build via
+the matrix, so the right token ends up on the right site.
+
+### How it behaves
+
+- Token set → a single deferred `beacon.min.js` is emitted, with `spa: true` so client-side
+  navigations (Astro prefetch) are counted too.
+- Token unset → **nothing is rendered**. That's the default for local dev, PR previews and forks,
+  so no beacon fires and nothing is collected.
+- To test locally, copy `apps/<app>/.env.example` to `.env` and fill in the token.
+
+Data shows up under **Web Analytics** within a few minutes of the first real page view.
 
 ---
 
@@ -138,6 +165,7 @@ Without the variable the analytics component renders nothing, which is a safe de
 - [ ] https://codebakkers.com and https://henkbakker.net serve over HTTPS
 - [ ] `curl -I https://codebakkers.com/rss.xml` → `301` to henkbakker.net
 - [ ] `https://henkbakker.net/search` returns results (Pagefind index ships with the build)
+- [ ] `curl -s https://henkbakker.net | grep cloudflareinsights` → beacon present (analytics wired)
 
 ## Troubleshooting
 
@@ -148,6 +176,7 @@ Without the variable the analytics component renders nothing, which is a safe de
 | `Authentication error [code: 10000]` | Token lacks **Cloudflare Pages · Edit**, or wrong account ID                             |
 | Custom domain stuck "Initializing"   | Zone nameservers not active yet — finish step 2 and wait                                 |
 | Old blog URLs 404                    | `_redirects` only applies to the deployed `codebakkers` project; confirm it's in `dist/` |
+| No analytics data                    | Beacon secret missing/misnamed, or the site isn't added under Web Analytics (step 7)     |
 
 ## Sources
 

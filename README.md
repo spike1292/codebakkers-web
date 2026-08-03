@@ -22,7 +22,7 @@ packages/
 - **Light/dark toggle** defaulting to OS, no flash of wrong theme
 - Blog: **Shiki** dual-theme code blocks + copy buttons, reading time, TOC on deep-dives,
   related posts, **Pagefind** static search, RSS
-- **Cloudflare Web Analytics** (cookieless — set `PUBLIC_CF_BEACON_TOKEN`)
+- **Cloudflare Web Analytics** (cookieless, per-site beacon token via `PUBLIC_CF_BEACON_TOKEN`)
 - SEO: JSON-LD (BlogPosting / Person / Organization / Breadcrumb), sitemap, per-site OG images
 - WCAG AA: skip links, landmarks, `aria-current`, reduced-motion, focus styles
 - Content types: weekly `field-report`, monthly `deep-dive`
@@ -115,4 +115,4 @@ See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
 - Drop your real portrait at `apps/henkbakker/public/henk.jpg` (a placeholder is in place).
 - Replace the LinkedIn URL in `apps/henkbakker/src/consts.ts`.
 - Add the two Cloudflare secrets in GitHub.
-- (Optional) set `PUBLIC_CF_BEACON_TOKEN` to enable analytics.
+- Add the two analytics secrets `CF_BEACON_TOKEN_CODEBAKKERS` / `CF_BEACON_TOKEN_HENKBAKKER` (see `docs/cloudflare-setup.md` §7).

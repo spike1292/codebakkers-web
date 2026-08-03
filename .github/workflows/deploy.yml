@@ -20,15 +20,22 @@ jobs:
         include:
           - app: codebakkers
             project: codebakkers
+            beaconSecret: CF_BEACON_TOKEN_CODEBAKKERS
           - app: henkbakker
             project: henkbakker
+            beaconSecret: CF_BEACON_TOKEN_HENKBAKKER
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter ${{ matrix.app }} build
+      - name: Build ${{ matrix.app }}
+        run: pnpm --filter ${{ matrix.app }} build
+        env:
+          # Each site has its own Cloudflare Web Analytics beacon token.
+          # Unset → the Analytics component renders nothing (safe default).
+          PUBLIC_CF_BEACON_TOKEN: ${{ secrets[matrix.beaconSecret] }}
       - name: Skip deploy (Cloudflare secrets not configured)
         if: env.CF_API_TOKEN == ''
         run: echo "::notice::CLOUDFLARE_API_TOKEN not set — built successfully, skipping deploy."
