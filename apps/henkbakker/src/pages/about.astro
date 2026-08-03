@@ -12,6 +12,23 @@ const selectedWork = [
   { title: "Security & CVE remediation", note: "Vulnerability fixes across the front-end platform and its containers." },
 ];
 
+const companies = [
+  {
+    name: "CodeBakkers",
+    role: "Owner",
+    blurb: "My company — software, made from scratch. The umbrella over everything I do.",
+    href: "https://codebakkers.com",
+    cta: "Visit CodeBakkers",
+  },
+  {
+    name: "Codecask",
+    role: "Co-owner",
+    blurb: "The consultancy I work through — professional geeks delivering working software.",
+    href: "https://www.codecask.cc",
+    cta: "Visit Codecask",
+  },
+];
+
 const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS CloudFront", "AWS CDK", "Angular", "NgRx", "Jest", "Cypress"];
 ---
 
@@ -63,10 +80,24 @@ const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS
       <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
 
       <Prose>
+        <h2>Companies</h2>
+      </Prose>
+      <div class="cards">
+        {companies.map((c) => (
+          <article class="card">
+            <p class="role">{c.role}</p>
+            <h3>{c.name}</h3>
+            <p class="blurb">{c.blurb}</p>
+            <a href={c.href}>{c.cta} →</a>
+          </article>
+        ))}
+      </div>
+
+      <Prose>
         <h2>Elsewhere</h2>
         <p>
-          I write <a href="/blog">field reports from the platform</a> most weeks. Off the clock,
-          my <a href="/faith">faith</a> matters more to me than any of this.
+          I write <a href="/blog">field reports from the platform</a> most weeks. Off the clock, my
+          <a href="/faith">faith</a> matters more to me than any of this.
         </p>
         <h2>Contact</h2>
         <p>
@@ -86,6 +117,12 @@ const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS
   .work li { padding: var(--space-4) 0; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-1); }
   .wt { font-weight: 620; }
   .wn { color: var(--color-muted); font-size: var(--step--1); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: var(--space-4) 0 var(--space-8); }
+  @media (max-width: 40rem) { .cards { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-6); background: var(--color-surface); }
+  .card .role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-muted); }
+  .card h3 { margin: var(--space-1) 0 var(--space-2); }
+  .card .blurb { color: var(--color-text-soft); margin-bottom: var(--space-4); }
   .stack { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: var(--space-4) 0 var(--space-8); }
   .stack li { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-text-soft); background: var(--color-surface); border: 1px solid var(--color-border); padding: 0.2em 0.6em; border-radius: var(--radius-sm); }
 </style>
