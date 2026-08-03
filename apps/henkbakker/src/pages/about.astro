@@ -6,34 +6,36 @@ import { SITE } from "../consts";
 
 const selectedWork = [
   { title: "nginx tier → CloudFront + SSR origin", note: "Decommissioned a whole ECS/nginx layer; moved routing, redirects and header rewriting to the edge." },
-  { title: "NgModules removal across ~400 projects", note: "Drove the standalone-components migration at monorepo scale." },
+  { title: "Framework migration across ~400 projects", note: "Drove the standalone-components migration at monorepo scale, without pausing delivery." },
   { title: "Signals & inject() migration", note: "Modernized reactivity and DI across the platform's shared libraries." },
   { title: "Edge redirects via key-value store", note: "CloudFront + KVS redirects evaluated at the edge." },
   { title: "Security & CVE remediation", note: "Vulnerability fixes across the front-end platform and its containers." },
 ];
 
-const stack = ["Angular", "Nx", "TypeScript", "NgRx", "Angular SSR", "AWS CloudFront", "AWS CDK", "Jest", "Cypress"];
+const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS CloudFront", "AWS CDK", "Angular", "NgRx", "Jest", "Cypress"];
 ---
 
-<BaseLayout title="About — Henk Bakker" description="About Henk Bakker — platform engineer, selected work, and how I work.">
+<BaseLayout title="About — Henk Bakker" description="About Henk Bakker — frontend platform engineer: background, selected work, and how I work.">
   <Container narrow>
     <section>
       <p class="kicker">ABOUT</p>
       <h1>Henk Bakker</h1>
       <Prose>
         <p>
-          I'm an independent platform engineer, and the <strong>functional platform lead</strong> on
-          <strong>Essent</strong>'s Team Atlas — a platform and customer-account-core team that owns
-          the shared foundation of a ~400-project Angular / Nx monorepo across six brand apps, front
-          end through to the CloudFront edge. I work through
+          I'm a <strong>frontend platform engineer</strong>, working at the scale where the platform
+          itself is the product: shared foundations, build and release tooling, and the request path
+          all the way out to the CDN edge. Today I'm the <strong>functional platform lead</strong> on
+          <strong>Essent</strong>'s Team Atlas, which owns that foundation across a ~400-project Nx
+          monorepo serving six brand apps. I work through
           <a href="https://www.codecask.cc">Codecask</a>, the consultancy I co-own, under my own
           company <a href="https://codebakkers.com">CodeBakkers</a>.
         </p>
         <p>
-          I'm one of the rare engineers who does <strong>both</strong> framework-level refactors at
-          monorepo scale <strong>and</strong> the AWS/edge plumbing — and I build my own tooling and
-          AI-augmented workflows to do it. My work is migration- and modernization-weighted: I move
-          large platforms forward without breaking the teams that depend on them.
+          Angular and Nx are where I've gone deepest, but the work isn't framework-shaped: it's
+          dependency graphs, build pipelines, module boundaries, rendering strategy and caching. I do
+          <strong>both</strong> the framework-level refactors and the AWS/edge plumbing, and I build
+          my own tooling to do it. My work is migration- and modernization-weighted: I move large
+          platforms forward without stopping the teams that depend on them.
         </p>
 
         <h2>How I work</h2>

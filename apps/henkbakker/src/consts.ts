@@ -2,7 +2,7 @@ export const SITE = {
   title: "Henk Bakker",
   brand: "Henk Bakker",
   description:
-    "Henk Bakker — large-scale Angular platform modernization, frontend to edge. Independent platform engineer, writing notes from the platform.",
+    "Henk Bakker — frontend platform engineering at scale, frontend to edge. Notes from the platform.",
   tagline: "notes from the platform",
   author: "Henk Bakker",
   url: "https://henkbakker.net",

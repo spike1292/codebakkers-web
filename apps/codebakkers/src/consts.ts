@@ -1,8 +1,8 @@
 export const SITE = {
-  title: "CodeBakkers B.V.",
+  title: "CodeBakkers",
   description:
-    "CodeBakkers — the company behind Henk Bakker's independent engineering work. Find the person at henkbakker.net, the consultancy at codecask.cc.",
-  tagline: "independent engineering",
+    "CodeBakkers — software, made from scratch. The company behind Henk Bakker's engineering work. Find the person at henkbakker.net, the consultancy at codecask.cc.",
+  tagline: "software, made from scratch",
   url: "https://codebakkers.com",
   nav: [{ href: "/company", label: "Company" }],
   social: [{ label: "Email", href: "mailto:hello@codebakkers.com" }],
