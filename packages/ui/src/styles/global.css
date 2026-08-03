@@ -26,7 +26,6 @@ h2,
 h3,
 h4 {
   font-family: var(--font-serif);
-  font-optical-sizing: auto;
   line-height: 1.12;
   font-weight: 560;
   letter-spacing: -0.015em;

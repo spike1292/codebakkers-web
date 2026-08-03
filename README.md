@@ -18,7 +18,10 @@ packages/
 
 ## Features
 
-- Unified Pine-green brand; **Fraunces + Inter + JetBrains Mono** self-hosted (no external font calls)
+- Unified Pine-green brand; **Fraunces + Inter + JetBrains Mono** self-hosted (no external font calls).
+  `packages/ui/src/components/Fonts.astro` declares the **latin subset of the wght axis only**
+  (3 files, ~122 KB) and preloads the two render-critical faces — importing the Fontsource
+  packages wholesale would ship 16 @font-face rules across every subset.
 - **Light/dark toggle** defaulting to OS, no flash of wrong theme
 - Blog: **Shiki** dual-theme code blocks + copy buttons, reading time, TOC on deep-dives,
   related posts, **Pagefind** static search, RSS

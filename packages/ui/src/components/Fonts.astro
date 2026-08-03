@@ -1,0 +1,41 @@
+---
+/**
+ * Self-hosted fonts, hand-declared for performance.
+ *
+ * Importing the Fontsource packages wholesale (`import "@fontsource-variable/inter"`) ships
+ * @font-face rules for every subset — Cyrillic, Greek, Vietnamese, latin-ext — and pulls the
+ * heavier axis files. These sites are English-only, so we declare the **latin** subset of the
+ * **wght** axis and nothing else: three files, ~121 KB total, one request per family.
+ *
+ * Inter (body) and Fraunces (headings) are preloaded so the browser starts fetching them from
+ * the initial HTML instead of waiting for the CSS to parse. JetBrains Mono is deliberately not
+ * preloaded — it only styles small accents (dates, kickers, the {CB} mark).
+ */
+import inter from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import fraunces from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import mono from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url";
+
+// Latin subset, verbatim from Fontsource's own CSS.
+const LATIN =
+  "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD";
+
+const face = (family: string, src: string, weight: string) => `
+@font-face {
+  font-family: "${family}";
+  font-style: normal;
+  font-weight: ${weight};
+  font-display: swap;
+  src: url("${src}") format("woff2-variations");
+  unicode-range: ${LATIN};
+}`;
+
+const css = [
+  face("Inter Variable", inter, "100 900"),
+  face("Fraunces Variable", fraunces, "100 900"),
+  face("JetBrains Mono Variable", mono, "100 800"),
+].join("\n");
+---
+
+<link rel="preload" href={inter} as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href={fraunces} as="font" type="font/woff2" crossorigin="anonymous" />
+<style is:inline set:html={css}></style>
