@@ -28,7 +28,7 @@ jobs:
             beaconSecret: CF_BEACON_TOKEN_HENKBAKKER
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy ${{ matrix.project }} to Cloudflare Pages
         if: env.CF_API_TOKEN != ''
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

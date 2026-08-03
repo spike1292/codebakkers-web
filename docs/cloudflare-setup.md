@@ -167,6 +167,14 @@ Data shows up under **Web Analytics** within a few minutes of the first real pag
 - [ ] `https://henkbakker.net/search` returns results (Pagefind index ships with the build)
 - [ ] `curl -s https://henkbakker.net | grep cloudflareinsights` → beacon present (analytics wired)
 
+## Action versions
+
+CI pins `pnpm/action-setup@v6` and `cloudflare/wrangler-action@v4` — the majors that target
+Node 24. Older majors still work but emit a Node 20 deprecation warning on every run.
+
+**Note:** `wrangler-action@v4` installs **Wrangler v4** by default (independent of the `wrangler`
+devDependency used locally). Pin `wranglerVersion` in the workflow if you ever need v3.
+
 ## Troubleshooting
 
 | Symptom                              | Cause / fix                                                                              |
