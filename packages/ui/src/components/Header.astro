@@ -2,31 +2,40 @@
 import Container from "./Container.astro";
 import Logo from "./Logo.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-interface NavItem { href: string; label: string; }
-interface Props { brand?: string; brandHref?: string; nav?: NavItem[]; }
+interface NavItem {
+  href: string;
+  label: string;
+}
+interface Props {
+  brand?: string;
+  brandHref?: string;
+  nav?: NavItem[];
+}
 const { brand = "CodeBakkers", brandHref = "/", nav = [] } = Astro.props;
 const path = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === "/" ? path === "/" : path.startsWith(href);
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 ---
+
 <header class="site-header">
   <Container>
     <div class="bar">
       <Logo label={brand} href={brandHref} />
       <div class="right">
-        {nav.length > 0 && (
-          <nav aria-label="Primary">
-            <ul>
-              {nav.map((item) => (
-                <li>
-                  <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+        {
+          nav.length > 0 && (
+            <nav aria-label="Primary">
+              <ul>
+                {nav.map((item) => (
+                  <li>
+                    <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
         <ThemeToggle />
       </div>
     </div>
@@ -36,12 +45,46 @@ const isActive = (href: string) =>
   .site-header {
     border-bottom: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--color-bg) 88%, transparent);
-    position: sticky; top: 0; backdrop-filter: saturate(1.2) blur(8px); z-index: 10;
+    position: sticky;
+    top: 0;
+    backdrop-filter: saturate(1.2) blur(8px);
+    z-index: 10;
   }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); min-height: 4rem; }
-  .right { display: flex; align-items: center; gap: var(--space-6); }
-  nav ul { list-style: none; display: flex; gap: var(--space-6); padding: 0; margin: 0; }
-  nav a { color: var(--color-text-soft); text-decoration: none; font-weight: 500; font-size: var(--step--1); }
-  nav a:hover, nav a[aria-current="page"] { color: var(--color-accent); }
-  @media (max-width: 30rem) { .right { gap: var(--space-4); } nav ul { gap: var(--space-4); } }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    min-height: 4rem;
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: var(--space-6);
+    padding: 0;
+    margin: 0;
+  }
+  nav a {
+    color: var(--color-text-soft);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--step--1);
+  }
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--color-accent);
+  }
+  @media (max-width: 30rem) {
+    .right {
+      gap: var(--space-4);
+    }
+    nav ul {
+      gap: var(--space-4);
+    }
+  }
 </style>

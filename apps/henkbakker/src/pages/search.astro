@@ -10,8 +10,8 @@ import Container from "@codebakkers/ui/components/Container.astro";
       <h1>Search the archive</h1>
       <div id="search" class="pf"></div>
       <p id="search-fallback" class="fallback" hidden>
-        The search index hasn't been built yet. Run <code>pnpm --filter henkbakker build</code>,
-        or browse <a href="/blog">all posts</a>.
+        The search index hasn't been built yet. Run <code>pnpm --filter henkbakker build</code>, or
+        browse <a href="/blog">all posts</a>.
       </p>
       <noscript><p>Search needs JavaScript. Browse <a href="/">all posts</a> instead.</p></noscript>
     </section>
@@ -23,17 +23,17 @@ import Container from "@codebakkers/ui/components/Container.astro";
   // Load them at runtime so the dev server doesn't 404 on missing files.
   (function () {
     function fallback() {
-      var el = document.getElementById("search-fallback");
+      const el = document.getElementById("search-fallback");
       if (el) el.hidden = false;
     }
     window.addEventListener("DOMContentLoaded", function () {
-      var css = document.createElement("link");
+      const css = document.createElement("link");
       css.rel = "stylesheet";
       css.href = "/pagefind/pagefind-ui.css";
       css.onerror = fallback;
       document.head.appendChild(css);
 
-      var js = document.createElement("script");
+      const js = document.createElement("script");
       js.src = "/pagefind/pagefind-ui.js";
       js.onerror = fallback;
       js.onload = function () {
@@ -49,8 +49,26 @@ import Container from "@codebakkers/ui/components/Container.astro";
 </script>
 
 <style>
-  section { margin: var(--space-16) 0 var(--space-12); }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .fallback { margin-top: var(--space-6); color: var(--color-muted); }
-  .pf { margin-top: var(--space-6); --pagefind-ui-primary: var(--color-accent); --pagefind-ui-font: var(--font-sans); --pagefind-ui-background: var(--color-bg); --pagefind-ui-text: var(--color-text); --pagefind-ui-border: var(--color-border); }
+  section {
+    margin: var(--space-16) 0 var(--space-12);
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .fallback {
+    margin-top: var(--space-6);
+    color: var(--color-muted);
+  }
+  .pf {
+    margin-top: var(--space-6);
+    --pagefind-ui-primary: var(--color-accent);
+    --pagefind-ui-font: var(--font-sans);
+    --pagefind-ui-background: var(--color-bg);
+    --pagefind-ui-text: var(--color-text);
+    --pagefind-ui-border: var(--color-border);
+  }
 </style>

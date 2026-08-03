@@ -69,7 +69,7 @@ a11y (pa11y-ci) and link-check job.
 3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
    - `henkbakker.dev/*` → `https://henkbakker.net/$1` (301)
    - `spike1292.github.io/*` → `https://henkbakker.net/` (301)
-   Old `/blog/*` and `/tags/*` paths on henkbakker.net are handled by `apps/henkbakker/public/_redirects`.
+     Old `/blog/*` and `/tags/*` paths on henkbakker.net are handled by `apps/henkbakker/public/_redirects`.
 
 ## The weekly post (Phase 2 — not built yet)
 
@@ -85,7 +85,7 @@ runs a governance filter, and produces: a **PR** adding `apps/henkbakker/src/con
 title: "Post title"
 description: "One-line summary for listings + RSS."
 pubDate: 2026-07-13
-type: field-report        # or: deep-dive
+type: field-report # or: deep-dive
 tags: ["angular", "edge"]
 draft: false
 ---
@@ -100,6 +100,7 @@ import Callout from "../../components/Callout.astro";
 
 <Callout type="tip">Interactive bits go here.</Callout>
 ```
+
 See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
 
 ## Licensing

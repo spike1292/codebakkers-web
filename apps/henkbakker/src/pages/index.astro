@@ -28,7 +28,18 @@ const person = {
   jobTitle: "Frontend platform engineer — platform engineering at scale, frontend to edge",
   sameAs: [SITE.github, SITE.linkedin],
   worksFor: { "@type": "Organization", name: "Codecask", url: "https://www.codecask.cc" },
-  knowsAbout: ["Frontend platform engineering", "Monorepos", "Nx", "Angular", "TypeScript", "Build systems", "CI/CD", "AWS CloudFront", "AWS CDK", "Web performance"],
+  knowsAbout: [
+    "Frontend platform engineering",
+    "Monorepos",
+    "Nx",
+    "Angular",
+    "TypeScript",
+    "Build systems",
+    "CI/CD",
+    "AWS CloudFront",
+    "AWS CDK",
+    "Web performance",
+  ],
 };
 ---
 
@@ -37,18 +48,29 @@ const person = {
     <section class="hero" aria-labelledby="hero-h">
       <div class="hero-text">
         <p class="kicker">HENK BAKKER · CODEBAKKERS</p>
-        <h1 id="hero-h">Frontend platform engineering at scale — <span class="accent">frontend&#8209;to&#8209;edge</span>.</h1>
+        <h1 id="hero-h">
+          Frontend platform engineering at scale — <span class="accent"
+            >frontend&#8209;to&#8209;edge</span
+          >.
+        </h1>
         <p class="lead">
           I build and modernize the frontend platforms large teams ship on — the shared foundation,
-          the build and release pipeline, and the CDN edge it all runs behind. Currently doing exactly
-          that for Essent, across a ~400-project monorepo serving six brand apps.
+          the build and release pipeline, and the CDN edge it all runs behind. Currently doing
+          exactly that for Essent, across a ~400-project monorepo serving six brand apps.
         </p>
         <div class="cta">
           <a class="btn" href="/#contact">Work with me</a>
           <a class="btn ghost" href="/blog">Read the blog →</a>
         </div>
       </div>
-      <img class="portrait" src="/henk.jpeg" width="240" height="240" alt="Henk Bakker" loading="eager" />
+      <img
+        class="portrait"
+        src="/henk.jpeg"
+        width="240"
+        height="240"
+        alt="Henk Bakker"
+        loading="eager"
+      />
     </section>
 
     <section id="work" class="block" aria-labelledby="work-h">
@@ -67,24 +89,31 @@ const person = {
         deep-dive each month. <a href="/rss.xml">RSS</a>.
       </p>
       <ul class="posts">
-        {posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.id}/`}>
-              <time class="date" datetime={iso(post.data.pubDate)}>{fmt(post.data.pubDate)}</time>
-              <span class="body">
-                <span class="ptitle">{post.data.title}</span>
-                <span class="pdesc">{post.data.description}</span>
-              </span>
-            </a>
-          </li>
-        ))}
+        {
+          posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`}>
+                <time class="date" datetime={iso(post.data.pubDate)}>
+                  {fmt(post.data.pubDate)}
+                </time>
+                <span class="body">
+                  <span class="ptitle">{post.data.title}</span>
+                  <span class="pdesc">{post.data.description}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
       </ul>
       {posts.length === 0 && <p class="empty">First post lands Monday.</p>}
     </section>
 
     <section id="contact" class="block" aria-labelledby="contact-h">
       <h2 id="contact-h">Contact</h2>
-      <p class="lead">Building or modernizing a frontend platform and want a hand at the foundation, build, or edge layers? Get in touch.</p>
+      <p class="lead">
+        Building or modernizing a frontend platform and want a hand at the foundation, build, or
+        edge layers? Get in touch.
+      </p>
       <p class="email"><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
     </section>
   </Container>
@@ -92,37 +121,176 @@ const person = {
 </BaseLayout>
 
 <style>
-  .hero { display: grid; grid-template-columns: 1fr auto; gap: var(--space-8); align-items: center; margin: var(--space-16) 0 var(--space-12); }
-  .hero-text { max-width: var(--measure); }
-  .portrait { border-radius: 50%; object-fit: cover; border: 1px solid var(--color-border); background: var(--color-surface); }
-  @media (max-width: 46rem) { .hero { grid-template-columns: 1fr; } .portrait { width: 120px; height: 120px; order: -1; } }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .hero h1 { font-size: var(--step-4); }
-  .accent { color: var(--color-accent); }
-  .lead { color: var(--color-text-soft); font-size: var(--step-1); margin-top: var(--space-4); }
-  .cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
-  .btn { display: inline-block; font-weight: 600; font-size: var(--step--1); padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--color-accent); color: #fff; text-decoration: none; }
-  .btn:hover { background: var(--color-accent-strong); color: #fff; }
-  .btn.ghost { background: transparent; color: var(--color-accent-strong); border: 1px solid var(--color-border); }
-  .block { margin: var(--space-16) 0; }
-  .block h2 { max-width: var(--measure); }
-  .work { list-style: none; padding: 0; margin: var(--space-6) 0 0; max-width: var(--measure); }
-  .work li { position: relative; padding-left: var(--space-6); margin-bottom: var(--space-4); color: var(--color-text-soft); }
-  .work li::before { content: "→"; position: absolute; left: 0; color: var(--color-accent); font-family: var(--font-mono); }
-  .more { margin-top: var(--space-4); }
-  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); max-width: var(--measure); }
-  .all { font-family: var(--font-mono); font-size: var(--step--1); text-decoration: none; color: var(--color-accent-strong); white-space: nowrap; }
-  .all:hover { color: var(--color-accent); }
-  .sub { color: var(--color-muted); margin-top: var(--space-2); max-width: var(--measure); }
-  .posts { list-style: none; padding: 0; margin: var(--space-6) 0 0; }
-  .posts li + li { border-top: 1px solid var(--color-border); }
-  .posts a { display: grid; grid-template-columns: 6rem 1fr; gap: var(--space-4); padding: var(--space-5) 0; text-decoration: none; color: inherit; align-items: baseline; }
-  .date { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-muted); padding-top: 0.25em; }
-  .body { display: flex; flex-direction: column; gap: var(--space-1); }
-  .ptitle { font-size: var(--step-1); font-weight: 620; letter-spacing: -0.02em; }
-  .pdesc { color: var(--color-muted); }
-  .posts a:hover .ptitle { color: var(--color-accent); }
-  .empty { color: var(--color-muted); padding: var(--space-6) 0; }
-  @media (max-width: 34rem) { .posts a { grid-template-columns: 1fr; gap: var(--space-1); } }
-  .email { font-size: var(--step-1); margin-top: var(--space-4); }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-8);
+    align-items: center;
+    margin: var(--space-16) 0 var(--space-12);
+  }
+  .hero-text {
+    max-width: var(--measure);
+  }
+  .portrait {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  @media (max-width: 46rem) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      width: 120px;
+      height: 120px;
+      order: -1;
+    }
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .hero h1 {
+    font-size: var(--step-4);
+  }
+  .accent {
+    color: var(--color-accent);
+  }
+  .lead {
+    color: var(--color-text-soft);
+    font-size: var(--step-1);
+    margin-top: var(--space-4);
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    font-size: var(--step--1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+  }
+  .btn:hover {
+    background: var(--color-accent-strong);
+    color: #fff;
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--color-accent-strong);
+    border: 1px solid var(--color-border);
+  }
+  .block {
+    margin: var(--space-16) 0;
+  }
+  .block h2 {
+    max-width: var(--measure);
+  }
+  .work {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+    max-width: var(--measure);
+  }
+  .work li {
+    position: relative;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+    color: var(--color-text-soft);
+  }
+  .work li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+  }
+  .more {
+    margin-top: var(--space-4);
+  }
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    max-width: var(--measure);
+  }
+  .all {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    text-decoration: none;
+    color: var(--color-accent-strong);
+    white-space: nowrap;
+  }
+  .all:hover {
+    color: var(--color-accent);
+  }
+  .sub {
+    color: var(--color-muted);
+    margin-top: var(--space-2);
+    max-width: var(--measure);
+  }
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+  }
+  .posts li + li {
+    border-top: 1px solid var(--color-border);
+  }
+  .posts a {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    text-decoration: none;
+    color: inherit;
+    align-items: baseline;
+  }
+  .date {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+    padding-top: 0.25em;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .ptitle {
+    font-size: var(--step-1);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+  }
+  .pdesc {
+    color: var(--color-muted);
+  }
+  .posts a:hover .ptitle {
+    color: var(--color-accent);
+  }
+  .empty {
+    color: var(--color-muted);
+    padding: var(--space-6) 0;
+  }
+  @media (max-width: 34rem) {
+    .posts a {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+  .email {
+    font-size: var(--step-1);
+    margin-top: var(--space-4);
+  }
 </style>

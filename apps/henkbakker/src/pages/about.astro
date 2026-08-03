@@ -5,11 +5,26 @@ import Prose from "@codebakkers/ui/components/Prose.astro";
 import { SITE } from "../consts";
 
 const selectedWork = [
-  { title: "nginx tier → CloudFront + SSR origin", note: "Decommissioned a whole ECS/nginx layer; moved routing, redirects and header rewriting to the edge." },
-  { title: "Framework migration across ~400 projects", note: "Drove the standalone-components migration at monorepo scale, without pausing delivery." },
-  { title: "Signals & inject() migration", note: "Modernized reactivity and DI across the platform's shared libraries." },
-  { title: "Edge redirects via key-value store", note: "CloudFront + KVS redirects evaluated at the edge." },
-  { title: "Security & CVE remediation", note: "Vulnerability fixes across the front-end platform and its containers." },
+  {
+    title: "nginx tier → CloudFront + SSR origin",
+    note: "Decommissioned a whole ECS/nginx layer; moved routing, redirects and header rewriting to the edge.",
+  },
+  {
+    title: "Framework migration across ~400 projects",
+    note: "Drove the standalone-components migration at monorepo scale, without pausing delivery.",
+  },
+  {
+    title: "Signals & inject() migration",
+    note: "Modernized reactivity and DI across the platform's shared libraries.",
+  },
+  {
+    title: "Edge redirects via key-value store",
+    note: "CloudFront + KVS redirects evaluated at the edge.",
+  },
+  {
+    title: "Security & CVE remediation",
+    note: "Vulnerability fixes across the front-end platform and its containers.",
+  },
 ];
 
 const companies = [
@@ -29,10 +44,24 @@ const companies = [
   },
 ];
 
-const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS CloudFront", "AWS CDK", "Angular", "NgRx", "Jest", "Cypress"];
+const stack = [
+  "Nx monorepos",
+  "TypeScript",
+  "Build & CI pipelines",
+  "SSR",
+  "AWS CloudFront",
+  "AWS CDK",
+  "Angular",
+  "NgRx",
+  "Jest",
+  "Cypress",
+];
 ---
 
-<BaseLayout title="About — Henk Bakker" description="About Henk Bakker — frontend platform engineer: background, selected work, and how I work.">
+<BaseLayout
+  title="About — Henk Bakker"
+  description="About Henk Bakker — frontend platform engineer: background, selected work, and how I work."
+>
   <Container narrow>
     <section>
       <p class="kicker">ABOUT</p>
@@ -49,36 +78,42 @@ const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS
         </p>
         <p>
           Angular and Nx are where I've gone deepest, but the work isn't framework-shaped: it's
-          dependency graphs, build pipelines, module boundaries, rendering strategy and caching. I do
-          <strong>both</strong> the framework-level refactors and the AWS/edge plumbing, and I build
-          my own tooling to do it. My work is migration- and modernization-weighted: I move large
-          platforms forward without stopping the teams that depend on them.
+          dependency graphs, build pipelines, module boundaries, rendering strategy and caching. I
+          do
+          <strong>both</strong> the framework-level refactors and the AWS/edge plumbing, and I build my
+          own tooling to do it. My work is migration- and modernization-weighted: I move large platforms
+          forward without stopping the teams that depend on them.
         </p>
 
         <h2>Faith</h2>
         <p>
           Before any of the engineering: I follow Jesus. It shapes how I try to live, work, and
-          treat the people around me — and it's the part of my life I'd most want you to know
-          about. <a href="/faith">More about that here</a>.
+          treat the people around me — and it's the part of my life I'd most want you to know about. <a
+            href="/faith">More about that here</a
+          >.
         </p>
 
         <h2>How I work</h2>
         <ul>
           <li><strong>Evidence over assumption</strong> — pull the real data before deciding.</li>
           <li><strong>Kill what's provably dead</strong> — YAGNI, applied honestly.</li>
-          <li><strong>Document the why, keep the code terse</strong> — rationale belongs in docs.</li>
+          <li>
+            <strong>Document the why, keep the code terse</strong> — rationale belongs in docs.
+          </li>
           <li><strong>Engineer my own leverage</strong> — better tooling beats working longer.</li>
         </ul>
 
         <h2>Selected work</h2>
       </Prose>
       <ul class="work">
-        {selectedWork.map((w) => (
-          <li>
-            <span class="wt">{w.title}</span>
-            <span class="wn">{w.note}</span>
-          </li>
-        ))}
+        {
+          selectedWork.map((w) => (
+            <li>
+              <span class="wt">{w.title}</span>
+              <span class="wn">{w.note}</span>
+            </li>
+          ))
+        }
       </ul>
 
       <Prose>
@@ -90,14 +125,16 @@ const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS
         <h2>Companies</h2>
       </Prose>
       <div class="cards">
-        {companies.map((c) => (
-          <article class="card">
-            <p class="role">{c.role}</p>
-            <h3>{c.name}</h3>
-            <p class="blurb">{c.blurb}</p>
-            <a href={c.href}>{c.cta} →</a>
-          </article>
-        ))}
+        {
+          companies.map((c) => (
+            <article class="card">
+              <p class="role">{c.role}</p>
+              <h3>{c.name}</h3>
+              <p class="blurb">{c.blurb}</p>
+              <a href={c.href}>{c.cta} →</a>
+            </article>
+          ))
+        }
       </div>
 
       <Prose>
@@ -115,18 +152,80 @@ const stack = ["Nx monorepos", "TypeScript", "Build & CI pipelines", "SSR", "AWS
 </BaseLayout>
 
 <style>
-  section { margin: var(--space-16) 0 var(--space-12); }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .work { list-style: none; padding: 0; margin: var(--space-4) 0 var(--space-8); max-width: var(--measure); }
-  .work li { padding: var(--space-4) 0; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-1); }
-  .wt { font-weight: 620; }
-  .wn { color: var(--color-muted); font-size: var(--step--1); }
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: var(--space-4) 0 var(--space-8); }
-  @media (max-width: 40rem) { .cards { grid-template-columns: 1fr; } }
-  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-6); background: var(--color-surface); }
-  .card .role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-muted); }
-  .card h3 { margin: var(--space-1) 0 var(--space-2); }
-  .card .blurb { color: var(--color-text-soft); margin-bottom: var(--space-4); }
-  .stack { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: var(--space-4) 0 var(--space-8); }
-  .stack li { font-family: var(--font-mono); font-size: var(--step--1); color: var(--color-text-soft); background: var(--color-surface); border: 1px solid var(--color-border); padding: 0.2em 0.6em; border-radius: var(--radius-sm); }
+  section {
+    margin: var(--space-16) 0 var(--space-12);
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .work {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 var(--space-8);
+    max-width: var(--measure);
+  }
+  .work li {
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .wt {
+    font-weight: 620;
+  }
+  .wn {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 var(--space-8);
+  }
+  @media (max-width: 40rem) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+  .card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    background: var(--color-surface);
+  }
+  .card .role {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+  .card h3 {
+    margin: var(--space-1) 0 var(--space-2);
+  }
+  .card .blurb {
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-4);
+  }
+  .stack {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    margin: var(--space-4) 0 var(--space-8);
+  }
+  .stack li {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--color-text-soft);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.2em 0.6em;
+    border-radius: var(--radius-sm);
+  }
 </style>

@@ -47,14 +47,18 @@ const org = {
 
     <section aria-label="Where to go next">
       <div class="cards">
-        {destinations.map((d) => (
-          <article class="card">
-            <p class="card-kicker">{d.kicker}</p>
-            <h2>{d.name}</h2>
-            <p class="blurb">{d.blurb}</p>
-            <a class="go" href={d.href}>{d.cta} →</a>
-          </article>
-        ))}
+        {
+          destinations.map((d) => (
+            <article class="card">
+              <p class="card-kicker">{d.kicker}</p>
+              <h2>{d.name}</h2>
+              <p class="blurb">{d.blurb}</p>
+              <a class="go" href={d.href}>
+                {d.cta} →
+              </a>
+            </article>
+          ))
+        }
       </div>
     </section>
 
@@ -70,18 +74,72 @@ const org = {
 </BaseLayout>
 
 <style>
-  .hero { margin: var(--space-16) 0 var(--space-12); max-width: var(--measure); }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .hero h1 { font-size: var(--step-4); }
-  .accent { color: var(--color-accent); }
-  .lead { color: var(--color-text-soft); font-size: var(--step-1); margin-top: var(--space-4); }
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
-  @media (max-width: 44rem) { .cards { grid-template-columns: 1fr; } }
-  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-8); background: var(--color-surface); display: flex; flex-direction: column; }
-  .card-kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-muted); }
-  .card h2 { margin: var(--space-2) 0 var(--space-3); }
-  .blurb { color: var(--color-text-soft); margin-bottom: var(--space-6); flex: 1; }
-  .go { font-family: var(--font-mono); font-weight: 600; text-decoration: none; color: var(--color-accent-strong); }
-  .go:hover { color: var(--color-accent); }
-  .foot { margin: var(--space-16) 0 var(--space-8); color: var(--color-muted); font-size: var(--step--1); }
+  .hero {
+    margin: var(--space-16) 0 var(--space-12);
+    max-width: var(--measure);
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .hero h1 {
+    font-size: var(--step-4);
+  }
+  .accent {
+    color: var(--color-accent);
+  }
+  .lead {
+    color: var(--color-text-soft);
+    font-size: var(--step-1);
+    margin-top: var(--space-4);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+  @media (max-width: 44rem) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+  .card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-8);
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-muted);
+  }
+  .card h2 {
+    margin: var(--space-2) 0 var(--space-3);
+  }
+  .blurb {
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-6);
+    flex: 1;
+  }
+  .go {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent-strong);
+  }
+  .go:hover {
+    color: var(--color-accent);
+  }
+  .foot {
+    margin: var(--space-16) 0 var(--space-8);
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
 </style>

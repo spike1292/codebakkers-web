@@ -25,6 +25,7 @@ const {
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const imageUrl = image.startsWith("http") ? image : new URL(image, Astro.site).toString();
 ---
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{title}</title>
@@ -49,10 +50,10 @@ const imageUrl = image.startsWith("http") ? image : new URL(image, Astro.site).t
 <script is:inline>
   (function () {
     try {
-      var t = localStorage.getItem("theme");
+      const t = localStorage.getItem("theme");
       if (t === "dark" || t === "light") {
         document.documentElement.setAttribute("data-theme", t);
       }
-    } catch (e) {}
+    } catch {}
   })();
 </script>

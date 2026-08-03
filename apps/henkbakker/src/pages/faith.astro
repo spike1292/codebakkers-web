@@ -4,7 +4,10 @@ import Container from "@codebakkers/ui/components/Container.astro";
 import Prose from "@codebakkers/ui/components/Prose.astro";
 ---
 
-<BaseLayout title="Faith — Henk Bakker" description="A little about my faith in Jesus, and my church community.">
+<BaseLayout
+  title="Faith — Henk Bakker"
+  description="A little about my faith in Jesus, and my church community."
+>
   <Container narrow>
     <section>
       <p class="kicker">FAITH</p>
@@ -43,8 +46,28 @@ import Prose from "@codebakkers/ui/components/Prose.astro";
 </BaseLayout>
 
 <style>
-  section { margin: var(--space-16) 0 var(--space-12); }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .btn { display: inline-block; font-weight: 600; font-size: var(--step--1); padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--color-accent); color: #fff; text-decoration: none; }
-  .btn:hover { background: var(--color-accent-strong); color: #fff; }
+  section {
+    margin: var(--space-16) 0 var(--space-12);
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    font-size: var(--step--1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+  }
+  .btn:hover {
+    background: var(--color-accent-strong);
+    color: #fff;
+  }
 </style>

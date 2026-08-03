@@ -8,13 +8,27 @@ import Container from "@codebakkers/ui/components/Container.astro";
     <section>
       <p class="kicker">404</p>
       <h1>Nothing here</h1>
-      <p class="lead">The link is broken or the page has moved. Head back to the <a href="/">homepage</a>.</p>
+      <p class="lead">
+        The link is broken or the page has moved. Head back to the <a href="/">homepage</a>.
+      </p>
     </section>
   </Container>
 </BaseLayout>
 
 <style>
-  section { margin: var(--space-16) 0; }
-  .kicker { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em; color: var(--color-accent-strong); margin-bottom: var(--space-3); }
-  .lead { color: var(--color-text-soft); font-size: var(--step-1); margin-top: var(--space-4); }
+  section {
+    margin: var(--space-16) 0;
+  }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    color: var(--color-accent-strong);
+    margin-bottom: var(--space-3);
+  }
+  .lead {
+    color: var(--color-text-soft);
+    font-size: var(--step-1);
+    margin-top: var(--space-4);
+  }
 </style>

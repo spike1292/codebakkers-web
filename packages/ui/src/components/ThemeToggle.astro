@@ -1,55 +1,114 @@
 ---
 // Light/dark toggle. Defaults to OS; remembers an explicit choice.
 ---
+
 <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
-  <svg class="icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" />
+  <svg
+    class="icon icon-sun"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle><path
+      d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"
+    ></path>
   </svg>
-  <svg class="icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+  <svg
+    class="icon icon-moon"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
   </svg>
 </button>
 
 <style>
   .theme-toggle {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 2.25rem; height: 2.25rem; padding: 0;
-    background: transparent; border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm); color: var(--color-text-soft); cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-soft);
+    cursor: pointer;
   }
-  .theme-toggle:hover { color: var(--color-accent); border-color: var(--color-accent); }
-  .icon { display: none; }
+  .theme-toggle:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .icon {
+    display: none;
+  }
 </style>
 
 <style is:global>
-  :root .icon-sun { display: inline; }
-  :root .icon-moon { display: none; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .icon-sun { display: none; }
-    :root:not([data-theme="light"]) .icon-moon { display: inline; }
+  :root .icon-sun {
+    display: inline;
   }
-  :root[data-theme="dark"] .icon-sun { display: none; }
-  :root[data-theme="dark"] .icon-moon { display: inline; }
-  :root[data-theme="light"] .icon-sun { display: inline; }
-  :root[data-theme="light"] .icon-moon { display: none; }
+  :root .icon-moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .icon-sun {
+      display: none;
+    }
+    :root:not([data-theme="light"]) .icon-moon {
+      display: inline;
+    }
+  }
+  :root[data-theme="dark"] .icon-sun {
+    display: none;
+  }
+  :root[data-theme="dark"] .icon-moon {
+    display: inline;
+  }
+  :root[data-theme="light"] .icon-sun {
+    display: inline;
+  }
+  :root[data-theme="light"] .icon-moon {
+    display: none;
+  }
 </style>
 
 <script is:inline>
   (function () {
-    var root = document.documentElement;
+    const root = document.documentElement;
     function effective() {
-      return root.getAttribute("data-theme")
-        || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      return (
+        root.getAttribute("data-theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      );
     }
     function label(el) {
-      el.setAttribute("aria-label", effective() === "dark" ? "Switch to light theme" : "Switch to dark theme");
+      el.setAttribute(
+        "aria-label",
+        effective() === "dark" ? "Switch to light theme" : "Switch to dark theme",
+      );
     }
     document.querySelectorAll("[data-theme-toggle]").forEach(function (btn) {
       label(btn);
       btn.addEventListener("click", function () {
-        var next = effective() === "dark" ? "light" : "dark";
+        const next = effective() === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", next);
-        try { localStorage.setItem("theme", next); } catch (e) {}
+        try {
+          localStorage.setItem("theme", next);
+        } catch {}
         document.querySelectorAll("[data-theme-toggle]").forEach(label);
       });
     });
