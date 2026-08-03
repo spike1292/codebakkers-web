@@ -1,8 +1,6 @@
 ---
-// Self-hosted variable fonts (no external font request)
-import "@fontsource-variable/fraunces";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/jetbrains-mono";
+// Self-hosted fonts — see Fonts.astro (latin subset only, preloaded)
+import Fonts from "./Fonts.astro";
 
 interface Props {
   title: string;
@@ -28,6 +26,7 @@ const imageUrl = image.startsWith("http") ? image : new URL(image, Astro.site).t
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<Fonts />
 <title>{title}</title>
 {description && <meta name="description" content={description} />}
 <link rel="canonical" href={url} />
