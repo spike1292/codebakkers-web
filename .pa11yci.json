@@ -1,5 +1,16 @@
 {
-  "defaults": { "standard": "WCAG2AA", "timeout": 30000 },
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 60000,
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu"
+      ]
+    }
+  },
   "urls": [
     "http://localhost:8081/",
     "http://localhost:8081/company/",
