@@ -30,10 +30,12 @@ jobs:
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - name: Link check (both sites)
+      - name: Link check (internal links only)
+        # Skip external URLs: codebakkers.com / henkbakker.net / codecask.cc aren't
+        # necessarily live yet, and third-party sites shouldn't be able to fail our CI.
         run: |
-          pnpm dlx linkinator apps/codebakkers/dist --recurse --silent
-          pnpm dlx linkinator apps/henkbakker/dist --recurse --silent
+          pnpm dlx linkinator apps/codebakkers/dist --recurse --silent --skip "^https?://"
+          pnpm dlx linkinator apps/henkbakker/dist --recurse --silent --skip "^https?://"
       - name: Accessibility (pa11y-ci)
         run: |
           pnpm dlx http-server apps/codebakkers/dist -p 8081 -s &

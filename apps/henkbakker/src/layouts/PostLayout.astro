@@ -232,7 +232,7 @@ const breadcrumb = {
 
 <script>
   // Add copy buttons to code blocks
-  document.querySelectorAll("pre.astro-code").forEach((pre) => {
+  document.querySelectorAll<HTMLPreElement>("pre.astro-code").forEach((pre) => {
     const wrapper = document.createElement("div");
     wrapper.className = "code-block";
     pre.parentNode?.insertBefore(wrapper, pre);
