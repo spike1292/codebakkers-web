@@ -14,3 +14,6 @@ weekly/
 
 # personal source docs — never publish/commit
 private/
+
+# generated search index (mirrored from dist for dev)
+apps/*/public/pagefind/

@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && pnpm run sync:search",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "sync:search": "rm -rf public/pagefind && cp -r dist/pagefind public/pagefind"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",
