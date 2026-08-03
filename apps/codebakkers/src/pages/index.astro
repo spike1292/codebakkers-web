@@ -65,12 +65,12 @@ const org = {
                     width={72}
                     height={72}
                     alt={d.media.alt}
-                    loading="lazy"
                     decoding="async"
+                    loading="eager"
                   />
                 ) : (
                   /* SVG — astro:assets doesn't optimise these, so it stays a plain img */
-                  <img src={d.media.src} alt={d.media.alt} loading="lazy" decoding="async" />
+                  <img src={d.media.src} alt={d.media.alt} decoding="async" />
                 )}
               </div>
               <p class="card-kicker">{d.kicker}</p>
