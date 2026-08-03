@@ -19,7 +19,7 @@ const beacon = token ? JSON.stringify({ token, spa }) : null;
 {
   beacon && (
     <script
-      defer
+      type="module"
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon={beacon}
     />
