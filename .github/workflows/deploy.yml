@@ -16,6 +16,8 @@ jobs:
       # Job-level env so steps can test for presence (the secrets context isn't available in job-level `if`).
       CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     strategy:
+      # Report both apps independently — otherwise one failure cancels the other's logs.
+      fail-fast: false
       matrix:
         include:
           - app: codebakkers

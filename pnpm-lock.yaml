@@ -65,6 +65,9 @@ importers:
       astro:
         specifier: ^5.7.0
         version: 5.18.2(@types/node@26.1.2)(jiti@2.6.1)(rollup@4.62.2)(typescript@5.9.3)(yaml@2.9.0)
+      sharp:
+        specifier: ^0.34.0
+        version: 0.34.5
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.4
@@ -93,6 +96,9 @@ importers:
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
+      sharp:
+        specifier: ^0.34.0
+        version: 0.34.5
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.4
