@@ -13,5 +13,5 @@ export default defineConfig({
       wrap: true,
     },
   },
-  vite: { ssr: { noExternal: ["@codebakkers/ui"] } },
+  vite: { ssr: { noExternal: ["@codebakkers/ui", /^@fontsource/] } },
 });

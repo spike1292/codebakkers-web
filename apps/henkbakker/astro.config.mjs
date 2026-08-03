@@ -6,5 +6,5 @@ export default defineConfig({
   site: "https://henkbakker.net",
   integrations: [sitemap()],
   prefetch: true,
-  vite: { ssr: { noExternal: ["@codebakkers/ui"] } },
+  vite: { ssr: { noExternal: ["@codebakkers/ui", /^@fontsource/] } },
 });
