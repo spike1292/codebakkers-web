@@ -13,7 +13,15 @@ interface Props {
   type?: "website" | "article";
   rss?: boolean;
 }
-const { title, description = "", site, canonical, image = "/og.png", type = "website" } = Astro.props;
+const {
+  title,
+  description = "",
+  site,
+  canonical,
+  image = "/og.png",
+  type = "website",
+  rss = false,
+} = Astro.props;
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const imageUrl = image.startsWith("http") ? image : new URL(image, Astro.site).toString();
 ---
