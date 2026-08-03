@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
 import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
+import { Picture } from "astro:assets";
+import portrait from "../assets/henk.jpeg";
 import { SITE } from "../consts";
 
 const destinations = [
@@ -9,18 +11,18 @@ const destinations = [
     kicker: "THE PERSON",
     name: "Henk Bakker",
     href: "https://henkbakker.net",
-    media: { kind: "photo" as const, src: "/henk.jpeg", alt: "Henk Bakker" },
+    media: { kind: "photo" as const, src: portrait, alt: "Henk Bakker" },
     blurb:
-      "Frontend platform engineering at scale — frontend to edge. Background, selected work, and weekly notes from the platform.",
+      "Frontend platform engineering at scale — frontend to edge. Get to know Henk, the person behind CodeBakkers, and his work on open source, web performance, and frontend architecture.",
     cta: "henkbakker.net",
   },
   {
-    kicker: "THE FIRM",
-    name: "Codecask",
+    kicker: "THE CONSULTANCY",
+    name: "CodeCask",
     href: "https://www.codecask.cc",
     media: { kind: "logo" as const, src: "/codecask-logo.svg", alt: "Code Cask" },
     blurb:
-      "The consultancy — professional geeks delivering working software. Engage a team for your platform, front end, or cloud work.",
+      "Professional geeks delivering working software. Contact CodeCask for your platform, front end, or cloud work.",
     cta: "codecask.cc",
   },
 ];
@@ -32,7 +34,7 @@ const org = {
   url: SITE.url,
   email: SITE.email,
   founder: { "@type": "Person", name: "Henk Bakker", url: "https://henkbakker.net" },
-  subOrganization: { "@type": "Organization", name: "Codecask", url: "https://www.codecask.cc" },
+  subOrganization: { "@type": "Organization", name: "CodeCask", url: "https://www.codecask.cc" },
 };
 ---
 
@@ -42,8 +44,8 @@ const org = {
       <p class="kicker">CODEBAKKERS</p>
       <h1 id="hero-h">Software, <span class="accent">made from scratch</span>.</h1>
       <p class="lead">
-        CodeBakkers is Henk Bakker's company — frontend platform engineering at scale, built
-        properly rather than quickly. Looking for the person or the firm? Both are one click away.
+        CodeBakkers is Henk Bakker's personal brand and company. Looking for consultancy or
+        front-end expertise? Henk works through <a href="https://www.codecask.cc">CodeCask</a>.
       </p>
     </section>
 
@@ -53,14 +55,23 @@ const org = {
           destinations.map((d) => (
             <article class="card">
               <div class={`media ${d.media.kind}`}>
-                <img
-                  src={d.media.src}
-                  alt={d.media.alt}
-                  loading="lazy"
-                  decoding="async"
-                  width={d.media.kind === "photo" ? 72 : undefined}
-                  height={d.media.kind === "photo" ? 72 : undefined}
-                />
+                {d.media.kind === "photo" ? (
+                  <Picture
+                    src={d.media.src}
+                    formats={["avif", "webp"]}
+                    fallbackFormat="jpeg"
+                    widths={[72, 144]}
+                    sizes="72px"
+                    width={72}
+                    height={72}
+                    alt={d.media.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  /* SVG — astro:assets doesn't optimise these, so it stays a plain img */
+                  <img src={d.media.src} alt={d.media.alt} loading="lazy" decoding="async" />
+                )}
               </div>
               <p class="card-kicker">{d.kicker}</p>
               <h2>{d.name}</h2>
@@ -135,7 +146,7 @@ const org = {
     margin-bottom: var(--space-4);
     min-height: 72px;
   }
-  .media.photo img {
+  .media.photo :global(img) {
     width: 72px;
     height: 72px;
     border-radius: 50%;
@@ -150,7 +161,8 @@ const org = {
     border-radius: var(--radius-sm);
     padding: var(--space-3) var(--space-4);
   }
-  .media.logo img {
+  .media.logo img,
+  .media.logo :global(img) {
     height: 40px;
     width: auto;
     max-width: 100%;

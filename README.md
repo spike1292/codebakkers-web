@@ -22,6 +22,9 @@ packages/
 - **Light/dark toggle** defaulting to OS, no flash of wrong theme
 - Blog: **Shiki** dual-theme code blocks + copy buttons, reading time, TOC on deep-dives,
   related posts, **Pagefind** static search, RSS
+- **Build-time image optimization** — `astro:assets` `<Picture>` (AVIF + WebP + JPEG fallback,
+  responsive `widths`/`sizes`). Source images live in `apps/*/src/assets/`, **not** `public/`:
+  files in `public/` are copied verbatim and never optimized.
 - **Cloudflare Web Analytics** (cookieless, per-site beacon token via `PUBLIC_CF_BEACON_TOKEN`)
 - SEO: JSON-LD (BlogPosting / Person / Organization / Breadcrumb), sitemap, per-site OG images
 - WCAG AA: skip links, landmarks, `aria-current`, reduced-motion, focus styles
@@ -116,7 +119,7 @@ See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
   with the real one from <https://www.codecask.cc/s/codecask-logo-transparant-rectangular.svg>
   (same filename — no code changes needed).
 
-- Drop your real portrait at `apps/henkbakker/public/henk.jpeg` (also copied to `apps/codebakkers/public/` for the hub card).
+- Portrait lives at `apps/*/src/assets/henk.jpeg` (optimized at build). Replace the file to change it — no code changes.
 - Replace the LinkedIn URL in `apps/henkbakker/src/consts.ts`.
 - Add the two Cloudflare secrets in GitHub.
 - Add the two analytics secrets `CF_BEACON_TOKEN_CODEBAKKERS` / `CF_BEACON_TOKEN_HENKBAKKER` (see `docs/cloudflare-setup.md` §7).

@@ -2,7 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
 import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
+import { Picture } from "astro:assets";
 import { getCollection } from "astro:content";
+import portrait from "../assets/henk.jpeg";
 import { SITE } from "../consts";
 
 const work = [
@@ -63,13 +65,18 @@ const person = {
           <a class="btn ghost" href="/blog">Read the blog →</a>
         </div>
       </div>
-      <img
+      <Picture
         class="portrait"
-        src="/henk.jpeg"
-        width="240"
-        height="240"
+        src={portrait}
+        formats={["avif", "webp"]}
+        fallbackFormat="jpeg"
+        widths={[120, 240, 480]}
+        sizes="(max-width: 46rem) 120px, 240px"
+        width={240}
+        height={240}
         alt="Henk Bakker"
         loading="eager"
+        fetchpriority="high"
       />
     </section>
 
@@ -130,6 +137,9 @@ const person = {
   }
   .hero-text {
     max-width: var(--measure);
+  }
+  .hero :global(picture) {
+    display: block;
   }
   .portrait {
     border-radius: 50%;
