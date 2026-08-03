@@ -1,0 +1,6 @@
+# Blog moved to henkbakker.net (2026-08).
+/posts/*   https://henkbakker.net/blog/   301
+/blog/*    https://henkbakker.net/blog/   301
+/rss.xml   https://henkbakker.net/rss.xml 301
+/about     https://henkbakker.net/about   301
+/search    https://henkbakker.net/search  301

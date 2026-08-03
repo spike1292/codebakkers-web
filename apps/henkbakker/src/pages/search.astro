@@ -10,8 +10,8 @@ import Container from "@codebakkers/ui/components/Container.astro";
       <h1>Search the archive</h1>
       <div id="search" class="pf"></div>
       <p id="search-fallback" class="fallback" hidden>
-        The search index hasn't been built yet. Run <code>pnpm --filter codebakkers build</code>,
-        or browse <a href="/">all posts</a>.
+        The search index hasn't been built yet. Run <code>pnpm --filter henkbakker build</code>,
+        or browse <a href="/blog">all posts</a>.
       </p>
       <noscript><p>Search needs JavaScript. Browse <a href="/">all posts</a> instead.</p></noscript>
     </section>
@@ -19,7 +19,7 @@ import Container from "@codebakkers/ui/components/Container.astro";
 </BaseLayout>
 
 <script is:inline>
-  // Pagefind assets only exist after a build (`pnpm --filter codebakkers build`).
+  // Pagefind assets only exist after a build (`pnpm --filter henkbakker build`).
   // Load them at runtime so the dev server doesn't 404 on missing files.
   (function () {
     function fallback() {

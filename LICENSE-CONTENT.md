@@ -1,6 +1,6 @@
 # Content license
 
-All written content in this repository — blog posts (`apps/codebakkers/src/content/`)
+All written content in this repository — blog posts (`apps/henkbakker/src/content/`)
 and page copy — is © 2026 Henk Bakker and licensed under
 **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 

@@ -7,8 +7,10 @@ sharing one design system. Astro · pnpm workspaces · Turborepo · Cloudflare P
 
 ```
 apps/
-  codebakkers/   → codebakkers.com — blog: index, posts, about, company, search, RSS, 404
-  henkbakker/    → henkbakker.net — promo: landing, cv, faith, privacy, 404
+  codebakkers/   → codebakkers.com — umbrella hub: /, /company, /privacy, 404
+                    (routes visitors: person → henkbakker.net, firm → codecask.cc)
+  henkbakker/    → henkbakker.net — personal site + THE BLOG:
+                    /, /blog, /blog/<slug>, /about, /faith, /search, /rss.xml, /privacy, 404
 packages/
   ui/            → @codebakkers/ui — brand tokens, global CSS, fonts, components
                     (Header, Footer, ThemeToggle, BaseHead, Analytics, JsonLd, Prose, …)
@@ -37,12 +39,12 @@ pnpm dev:codebakkers   # http://localhost:4321
 pnpm dev:henkbakker
 ```
 
-> Search only works after a full build (Pagefind indexes `dist/`).
+> Search only works after a full build (Pagefind indexes `dist/`), and lives on **henkbakker**.
 
 ## Build / quality
 
 ```bash
-pnpm build          # both (codebakkers build also runs `pagefind --site dist`)
+pnpm build          # both (henkbakker build also runs `pagefind --site dist`)
 pnpm check          # astro check (types)
 pnpm lint           # eslint
 pnpm format         # prettier --write
@@ -72,7 +74,7 @@ a11y (pa11y-ci) and link-check job.
 ## The weekly post (Phase 2 — not built yet)
 
 Each Monday a job drafts from that week's Essent commits + memory vault + Jira (local CLI),
-runs a governance filter, and produces: a **PR** adding `apps/codebakkers/src/content/posts/<slug>.md`
+runs a governance filter, and produces: a **PR** adding `apps/henkbakker/src/content/posts/<slug>.md`
 (personal voice; you review + merge), plus `weekly/<date>/codecask.md` and `weekly/<date>/linkedin.md`
 (company voice; you paste). Monthly, a longer deep-dive. `PLAN.md` and `weekly/` are gitignored.
 
@@ -98,7 +100,7 @@ import Callout from "../../components/Callout.astro";
 
 <Callout type="tip">Interactive bits go here.</Callout>
 ```
-See `apps/codebakkers/src/content/posts/mdx-template.mdx` for a working example.
+See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
 
 ## Licensing
 

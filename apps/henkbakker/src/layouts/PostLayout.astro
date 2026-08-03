@@ -28,7 +28,7 @@ const {
 const fmt = (d: Date) => d.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
 const iso = (d: Date) => d.toISOString();
 const isoDate = (d: Date) => d.toISOString().slice(0, 10);
-const canonical = new URL(`/posts/${slug}/`, Astro.site).toString();
+const canonical = new URL(`/blog/${slug}/`, Astro.site).toString();
 const toc = type === "deep-dive" ? headings.filter((h) => h.depth === 2 || h.depth === 3) : [];
 const kicker = type === "deep-dive" ? "DEEP DIVE" : "FIELD REPORT";
 
@@ -40,7 +40,7 @@ const blogPosting = {
   datePublished: iso(pubDate),
   dateModified: iso(updatedDate ?? pubDate),
   author: { "@type": "Person", name: author, url: "https://henkbakker.net" },
-  publisher: { "@type": "Organization", name: "CodeBakkers", url: "https://codebakkers.com" },
+  publisher: { "@type": "Person", name: SITE.author, url: SITE.url },
   mainEntityOfPage: canonical,
   keywords: tags.join(", "),
 };
@@ -48,13 +48,13 @@ const breadcrumb = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Blog", item: SITE.url + "/" },
+    { "@type": "ListItem", position: 1, name: "Blog", item: SITE.url + "/blog/" },
     { "@type": "ListItem", position: 2, name: title, item: canonical },
   ],
 };
 ---
 
-<BaseLayout title={`${title} — CodeBakkers`} description={description} type="article">
+<BaseLayout title={`${title} — Henk Bakker`} description={description} type="article">
   <Container narrow>
     <article>
       <header class="post-header">
@@ -92,13 +92,13 @@ const breadcrumb = {
         <section class="related" aria-labelledby="related-h">
           <h2 id="related-h">Related</h2>
           <ul>
-            {related.map((r) => <li><a href={`/posts/${r.slug}/`}>{r.title}</a></li>)}
+            {related.map((r) => <li><a href={`/blog/${r.slug}/`}>{r.title}</a></li>)}
           </ul>
         </section>
       )}
 
       <footer class="post-footer">
-        <a href="/">← All posts</a>
+        <a href="/blog/">← All posts</a>
       </footer>
     </article>
   </Container>

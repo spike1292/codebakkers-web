@@ -6,14 +6,28 @@ import Footer from "@codebakkers/ui/components/Footer.astro";
 import Analytics from "@codebakkers/ui/components/Analytics.astro";
 import { SITE } from "../consts";
 
-interface Props { title: string; description?: string; type?: "website" | "article"; }
-const { title, description = SITE.description, type = "website" } = Astro.props;
+interface Props {
+  title: string;
+  description?: string;
+  type?: "website" | "article";
+  canonical?: string;
+  image?: string;
+}
+const { title, description = SITE.description, type = "website", canonical, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} site={SITE.title} type={type} />
+    <BaseHead
+      title={title}
+      description={description}
+      site={SITE.title}
+      type={type}
+      canonical={canonical}
+      image={image}
+      rss={true}
+    />
     <Analytics />
   </head>
   <body>

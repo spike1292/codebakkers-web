@@ -15,18 +15,19 @@ const selectedWork = [
 const stack = ["Angular", "Nx", "TypeScript", "NgRx", "Angular SSR", "AWS CloudFront", "AWS CDK", "Jest", "Cypress"];
 ---
 
-<BaseLayout title="CV — Henk Bakker" description="Henk Bakker — CV and selected platform-engineering work.">
+<BaseLayout title="About — Henk Bakker" description="About Henk Bakker — platform engineer, selected work, and how I work.">
   <Container narrow>
     <section>
-      <p class="kicker">CV</p>
+      <p class="kicker">ABOUT</p>
       <h1>Henk Bakker</h1>
       <Prose>
         <p>
-          Independent platform engineer and the <strong>functional platform lead</strong> on
-          <strong>Essent</strong>'s Team Atlas — a platform and customer-account-core team owning
-          the shared foundation of a ~400-project Angular / Nx monorepo across six brand apps,
-          front end through to the CloudFront edge. I work through
-          <a href="https://www.codecask.cc">Codecask</a>, the consultancy I co-own.
+          I'm an independent platform engineer, and the <strong>functional platform lead</strong> on
+          <strong>Essent</strong>'s Team Atlas — a platform and customer-account-core team that owns
+          the shared foundation of a ~400-project Angular / Nx monorepo across six brand apps, front
+          end through to the CloudFront edge. I work through
+          <a href="https://www.codecask.cc">Codecask</a>, the consultancy I co-own, under my own
+          company <a href="https://codebakkers.com">CodeBakkers</a>.
         </p>
         <p>
           I'm one of the rare engineers who does <strong>both</strong> framework-level refactors at
@@ -34,6 +35,14 @@ const stack = ["Angular", "Nx", "TypeScript", "NgRx", "Angular SSR", "AWS CloudF
           AI-augmented workflows to do it. My work is migration- and modernization-weighted: I move
           large platforms forward without breaking the teams that depend on them.
         </p>
+
+        <h2>How I work</h2>
+        <ul>
+          <li><strong>Evidence over assumption</strong> — pull the real data before deciding.</li>
+          <li><strong>Kill what's provably dead</strong> — YAGNI, applied honestly.</li>
+          <li><strong>Document the why, keep the code terse</strong> — rationale belongs in docs.</li>
+          <li><strong>Engineer my own leverage</strong> — better tooling beats working longer.</li>
+        </ul>
 
         <h2>Selected work</h2>
       </Prose>
@@ -52,6 +61,11 @@ const stack = ["Angular", "Nx", "TypeScript", "NgRx", "Angular SSR", "AWS CloudF
       <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
 
       <Prose>
+        <h2>Elsewhere</h2>
+        <p>
+          I write <a href="/blog">field reports from the platform</a> most weeks. Off the clock,
+          my <a href="/faith">faith</a> matters more to me than any of this.
+        </p>
         <h2>Contact</h2>
         <p>
           Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
