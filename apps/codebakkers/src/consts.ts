@@ -1,5 +1,5 @@
 export const SITE = {
-  title: "CodeBakkers",
+  title: "CodeBakkers B.V.",
   description:
     "CodeBakkers — the company behind Henk Bakker's independent engineering work. Find the person at henkbakker.net, the consultancy at codecask.cc.",
   tagline: "independent engineering",
