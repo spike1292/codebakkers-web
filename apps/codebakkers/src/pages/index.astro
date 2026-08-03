@@ -9,6 +9,7 @@ const destinations = [
     kicker: "THE PERSON",
     name: "Henk Bakker",
     href: "https://henkbakker.net",
+    media: { kind: "photo" as const, src: "/henk.jpeg", alt: "Henk Bakker" },
     blurb:
       "Frontend platform engineering at scale — frontend to edge. Background, selected work, and weekly notes from the platform.",
     cta: "henkbakker.net",
@@ -17,6 +18,7 @@ const destinations = [
     kicker: "THE FIRM",
     name: "Codecask",
     href: "https://www.codecask.cc",
+    media: { kind: "logo" as const, src: "/codecask-logo.svg", alt: "Code Cask" },
     blurb:
       "The consultancy — professional geeks delivering working software. Engage a team for your platform, front end, or cloud work.",
     cta: "codecask.cc",
@@ -50,6 +52,16 @@ const org = {
         {
           destinations.map((d) => (
             <article class="card">
+              <div class={`media ${d.media.kind}`}>
+                <img
+                  src={d.media.src}
+                  alt={d.media.alt}
+                  loading="lazy"
+                  decoding="async"
+                  width={d.media.kind === "photo" ? 72 : undefined}
+                  height={d.media.kind === "photo" ? 72 : undefined}
+                />
+              </div>
               <p class="card-kicker">{d.kicker}</p>
               <h2>{d.name}</h2>
               <p class="blurb">{d.blurb}</p>
@@ -113,6 +125,36 @@ const org = {
     background: var(--color-surface);
     display: flex;
     flex-direction: column;
+  }
+  /* Card media: round portrait for the person, logo on a light tile for the firm.
+     The logo is an external SVG in an <img>, so it can't inherit currentColor —
+     hence the fixed light tile, which keeps it legible in both themes. */
+  .media {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    min-height: 72px;
+  }
+  .media.photo img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .media.logo {
+    align-self: flex-start;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+  }
+  .media.logo img {
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    display: block;
   }
   .card-kicker {
     font-family: var(--font-mono);

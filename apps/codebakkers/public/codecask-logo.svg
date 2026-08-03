@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="Code Cask">
+  <title>Code Cask</title>
+  <!--
+    PLACEHOLDER wordmark. Replace this file with the real logo:
+    https://www.codecask.cc/s/codecask-logo-transparant-rectangular.svg
+    (save it as apps/codebakkers/public/codecask-logo.svg — no code changes needed)
+  -->
+  <g fill="none" stroke="currentColor" stroke-width="4">
+    <!-- cask -->
+    <ellipse cx="36" cy="36" rx="16" ry="26" />
+    <path d="M20 24h32M20 48h32" stroke-width="3" />
+  </g>
+  <text
+    x="70"
+    y="46"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="30"
+    font-weight="700"
+    letter-spacing="-0.5"
+    fill="currentColor"
+  >Code Cask</text>
+</svg>

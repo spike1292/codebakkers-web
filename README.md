@@ -112,7 +112,11 @@ See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
 
 ## Before first deploy
 
-- Drop your real portrait at `apps/henkbakker/public/henk.jpg` (a placeholder is in place).
+- Replace the **placeholder Codecask logo** at `apps/codebakkers/public/codecask-logo.svg`
+  with the real one from <https://www.codecask.cc/s/codecask-logo-transparant-rectangular.svg>
+  (same filename — no code changes needed).
+
+- Drop your real portrait at `apps/henkbakker/public/henk.jpeg` (also copied to `apps/codebakkers/public/` for the hub card).
 - Replace the LinkedIn URL in `apps/henkbakker/src/consts.ts`.
 - Add the two Cloudflare secrets in GitHub.
 - Add the two analytics secrets `CF_BEACON_TOKEN_CODEBAKKERS` / `CF_BEACON_TOKEN_HENKBAKKER` (see `docs/cloudflare-setup.md` §7).
