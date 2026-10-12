@@ -1,12 +1,13 @@
 # codebakkers-web
 
 Monorepo for **codebakkers.com** — personal site, blog and company page. **henkbakker.net**
-redirects to it. Astro · pnpm workspaces · Turborepo · Cloudflare Pages.
+redirects to it via `apps/henkbakker/_redirects`. Astro · pnpm workspaces · Turborepo · Cloudflare Pages.
 
 ## Structure
 
 ```
 apps/
+  henkbakker/    → henkbakker.net — only a `_redirects` file, 301 to codebakkers.com
   codebakkers/   → codebakkers.com — personal site + THE BLOG + company:
                     /, /blog, /blog/<slug>, /about, /faith, /company, /search, /rss.xml, /privacy, 404
 packages/
@@ -56,7 +57,7 @@ pnpm format         # prettier --write
 ## Deploy — Wrangler + GitHub Actions
 
 `.github/workflows/deploy.yml` builds the app and runs `wrangler pages deploy` on push to `main`
-(and PR previews). Create a Cloudflare Pages project named **codebakkers**,
+(and PR previews). Create two Cloudflare Pages projects named **codebakkers** and **henkbakker** (redirect-only),
 then add these GitHub repo secrets:
 
 - `CLOUDFLARE_API_TOKEN` (Pages: Edit)
@@ -72,7 +73,6 @@ a11y (pa11y-ci) and link-check job.
 1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
 2. Attach codebakkers.com to the Pages project.
 3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
-   - `henkbakker.net/*` → `https://codebakkers.com/$1` (301)
    - `henkbakker.dev/*` → `https://codebakkers.com/$1` (301)
    - `spike1292.github.io/*` → `https://codebakkers.com/` (301)
      Old `/posts/*` and `/tags/*` paths are handled by `apps/codebakkers/public/_redirects`.

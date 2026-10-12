@@ -23,6 +23,12 @@ jobs:
           - app: codebakkers
             project: codebakkers
             beaconSecret: CF_BEACON_TOKEN_CODEBAKKERS
+            build: true
+            dir: apps/codebakkers/dist
+          - app: henkbakker
+            project: henkbakker
+            build: false
+            dir: apps/henkbakker
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v6
@@ -30,6 +36,7 @@ jobs:
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - name: Build ${{ matrix.app }}
+        if: matrix.build
         run: pnpm --filter ${{ matrix.app }} build
         env:
           # Each site has its own Cloudflare Web Analytics beacon token.
@@ -45,4 +52,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy apps/${{ matrix.app }}/dist --project-name=${{ matrix.project }} --branch=${{ github.head_ref || github.ref_name }}
+          command: pages deploy ${{ matrix.dir }} --project-name=${{ matrix.project }} --branch=${{ github.head_ref || github.ref_name }}
