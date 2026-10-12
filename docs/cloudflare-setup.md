@@ -29,7 +29,9 @@ Registration stays at Hostinger; only DNS moves.
 
 Propagation is usually minutes, but can take up to 24h. Cloudflare emails you when each zone is active.
 
-> If you also still hold **henkbakker.dev**, add it as a zone too — step 6 redirects it.
+> **henkbakker.dev** is registered at TransIP. Add it as a zone too, then in TransIP → **Domein &
+> Hosting** → `henkbakker.dev` → **Nameservers**, replace the `nsone.net` servers with the two
+> Cloudflare nameservers. Registration stays at TransIP; only DNS moves.
 
 ## 3. Create the two Pages projects
 
@@ -87,10 +89,10 @@ Push to `main` — the site should deploy. Check **Actions → Deploy**.
 
 Per project: Cloudflare dashboard → **Workers & Pages** → select project → **Custom domains** → **Set up a domain**.
 
-| Project       | Domains                                  |
-| ------------- | ---------------------------------------- |
-| `codebakkers` | `codebakkers.com`, `www.codebakkers.com` |
-| `henkbakker`  | `henkbakker.net`, `www.henkbakker.net`   |
+| Project       | Domains                                                                        |
+| ------------- | ------------------------------------------------------------------------------ |
+| `codebakkers` | `codebakkers.com`, `www.codebakkers.com`                                       |
+| `henkbakker`  | `henkbakker.net`, `www.henkbakker.net`, `henkbakker.dev`, `www.henkbakker.dev` |
 
 Because the zones live in the same account, Cloudflare creates the DNS records itself. HTTPS certs
 issue automatically (a few minutes).
@@ -99,23 +101,11 @@ issue automatically (a few minutes).
 
 `henkbakker.net`, `henkbakker.dev` and the old GitHub Pages site should point at `codebakkers.com`.
 
-**henkbakker.net** — nothing to configure. CI deploys `apps/henkbakker/_redirects`
-(`/* → https://codebakkers.com/:splat`) to the `henkbakker` Pages project, which keeps the
-`henkbakker.net` + `www` custom domains from step 5.
+**henkbakker.net** and **henkbakker.dev** — nothing to configure. CI deploys `apps/henkbakker/_redirects`
+(`/* → https://codebakkers.com/:splat`) to the `henkbakker` Pages project, which holds the
+`henkbakker.net` and `henkbakker.dev` custom domains (+ `www`) from step 5.
 
-**henkbakker.dev** — in that zone: **Rules → Redirect Rules → Create rule**
-
-- Name: `dev → codebakkers`
-- If: _Hostname_ equals `henkbakker.dev` (add a second rule, or an `or`, for `www.henkbakker.dev`)
-- Then: **Dynamic** redirect, **301**, expression:
-  `concat("https://codebakkers.com", http.request.uri.path)`
-- Preserve query string: on
-
-You'll also need a proxied placeholder DNS record (e.g. `A @ 192.0.2.1`, orange cloud on) for the
-rule to have something to intercept.
-
-**spike1292.github.io** — that's GitHub's domain, so redirect from the old repo instead: keep a
-meta-refresh to codebakkers.com there, or simply archive it. Not Cloudflare's concern.
+**spike1292.github.io** — repo archived and GitHub Pages disabled (2026-10). Not Cloudflare's concern.
 
 > In-app redirects (old `/posts/*`, `/about`) ship via `apps/codebakkers/public/_redirects` — nothing to configure.
 
