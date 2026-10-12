@@ -1,4 +1,4 @@
-# henkbakker.net → codebakkers.com is a Cloudflare Redirect Rule (docs/cloudflare-setup.md §6).
+# henkbakker.net → codebakkers.com lives in apps/henkbakker/_redirects.
 # Old codebakkers.com blog paths.
 /posts/*  /blog/  301
 # Old henkbakker.net (Jekyll) sections retired — send to homepage.

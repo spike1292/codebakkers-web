@@ -39,10 +39,11 @@ Install/authenticate Wrangler locally (it's already a devDependency):
 pnpm wrangler login
 ```
 
-Create the project — the name must match the `--project-name` values in `.github/workflows/deploy.yml`:
+Create both projects — names must match the `--project-name` values in `.github/workflows/deploy.yml`:
 
 ```bash
 pnpm wrangler pages project create codebakkers --production-branch main
+pnpm wrangler pages project create henkbakker  --production-branch main  # redirect-only
 ```
 
 Each gets a `*.pages.dev` URL you can test against before DNS is live.
@@ -89,6 +90,7 @@ Per project: Cloudflare dashboard → **Workers & Pages** → select project →
 | Project       | Domains                                  |
 | ------------- | ---------------------------------------- |
 | `codebakkers` | `codebakkers.com`, `www.codebakkers.com` |
+| `henkbakker`  | `henkbakker.net`, `www.henkbakker.net`   |
 
 Because the zones live in the same account, Cloudflare creates the DNS records itself. HTTPS certs
 issue automatically (a few minutes).
@@ -97,21 +99,13 @@ issue automatically (a few minutes).
 
 `henkbakker.net`, `henkbakker.dev` and the old GitHub Pages site should point at `codebakkers.com`.
 
-**henkbakker.net** — in that zone: **Rules → Redirect Rules → Create rule**
-
-- Name: `net → codebakkers`
-- If: _Hostname_ equals `henkbakker.net` (add an `or` for `www.henkbakker.net`)
-- Then: **Dynamic** redirect, **301**, expression:
-  `concat("https://codebakkers.com", http.request.uri.path)`
-- Preserve query string: on
-
-The old `henkbakker` Pages project can stay attached while the rule is live (the rule runs first).
-Once `curl -I https://henkbakker.net/blog/` shows the 301, remove its custom domains and delete it.
-Keep a proxied DNS record on the apex and `www` so the rule has something to intercept.
+**henkbakker.net** — nothing to configure. CI deploys `apps/henkbakker/_redirects`
+(`/* → https://codebakkers.com/:splat`) to the `henkbakker` Pages project, which keeps the
+`henkbakker.net` + `www` custom domains from step 5.
 
 **henkbakker.dev** — in that zone: **Rules → Redirect Rules → Create rule**
 
-- Name: `dev → net`
+- Name: `dev → codebakkers`
 - If: _Hostname_ equals `henkbakker.dev` (add a second rule, or an `or`, for `www.henkbakker.dev`)
 - Then: **Dynamic** redirect, **301**, expression:
   `concat("https://codebakkers.com", http.request.uri.path)`
@@ -164,7 +158,7 @@ Data shows up under **Web Analytics** within a few minutes of the first real pag
 ## Verify
 
 - [ ] Both zones **Active** in Cloudflare
-- [ ] `pnpm wrangler pages project list` shows `codebakkers`
+- [ ] `pnpm wrangler pages project list` shows `codebakkers` + `henkbakker`
 - [ ] Actions → **Deploy** green, no "skipping deploy" notice
 - [ ] https://codebakkers.com serves over HTTPS
 - [ ] `curl -I https://henkbakker.net/blog/` → `301` to https://codebakkers.com/blog/
