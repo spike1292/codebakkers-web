@@ -1,10 +1,25 @@
 export const SITE = {
   title: "CodeBakkers",
+  brand: "CodeBakkers",
   description:
-    "CodeBakkers — baked in, not bolted on. The company behind Henk Bakker's engineering work. Find the person at henkbakker.net, the consultancy at codecask.cc.",
-  tagline: "baked in, not bolted on",
+    "Henk Bakker — frontend platform engineering at scale, frontend to edge. Notes from the platform.",
+  tagline: "notes from the platform",
+  author: "Henk Bakker",
   url: "https://codebakkers.com",
-  nav: [{ href: "/company", label: "Company" }],
-  social: [{ label: "Email", href: "mailto:hello@codebakkers.com" }],
+  nav: [
+    { href: "/blog", label: "Blog" },
+    { href: "/about", label: "About" },
+    { href: "/faith", label: "Faith" },
+    { href: "/company", label: "Company" },
+    { href: "/search", label: "Search" },
+  ],
+  social: [
+    { label: "Email", href: "mailto:hello@codebakkers.com" },
+    { label: "GitHub", href: "https://github.com/spike1292" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/henkhbakker/" },
+    { label: "RSS", href: "/rss.xml" },
+  ],
+  github: "https://github.com/spike1292",
+  linkedin: "https://www.linkedin.com/in/henkhbakker/",
   email: "hello@codebakkers.com",
 } as const;

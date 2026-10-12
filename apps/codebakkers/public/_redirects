@@ -1,6 +1,6 @@
-# Blog moved to henkbakker.net (2026-08).
-/posts/*   https://henkbakker.net/blog/   301
-/blog/*    https://henkbakker.net/blog/   301
-/rss.xml   https://henkbakker.net/rss.xml 301
-/about     https://henkbakker.net/about   301
-/search    https://henkbakker.net/search  301
+# henkbakker.net → codebakkers.com is a Cloudflare Redirect Rule (docs/cloudflare-setup.md §6).
+# Old codebakkers.com blog paths.
+/posts/*  /blog/  301
+# Old henkbakker.net (Jekyll) sections retired — send to homepage.
+/tags/*   /   301
+/tag/*    /   301

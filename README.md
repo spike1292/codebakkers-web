@@ -1,16 +1,14 @@
 # codebakkers-web
 
-Monorepo for **codebakkers.com** (the blog) and **henkbakker.net** (personal + company promo),
-sharing one design system. Astro · pnpm workspaces · Turborepo · Cloudflare Pages.
+Monorepo for **codebakkers.com** — personal site, blog and company page. **henkbakker.net**
+redirects to it. Astro · pnpm workspaces · Turborepo · Cloudflare Pages.
 
 ## Structure
 
 ```
 apps/
-  codebakkers/   → codebakkers.com — umbrella hub: /, /company, /privacy, 404
-                    (routes visitors: person → henkbakker.net, firm → codecask.cc)
-  henkbakker/    → henkbakker.net — personal site + THE BLOG:
-                    /, /blog, /blog/<slug>, /about, /faith, /search, /rss.xml, /privacy, 404
+  codebakkers/   → codebakkers.com — personal site + THE BLOG + company:
+                    /, /blog, /blog/<slug>, /about, /faith, /company, /search, /rss.xml, /privacy, 404
 packages/
   ui/            → @codebakkers/ui — brand tokens, global CSS, fonts, components
                     (Header, Footer, ThemeToggle, BaseHead, Analytics, JsonLd, Prose, …)
@@ -28,8 +26,8 @@ packages/
 - **Build-time image optimization** — `astro:assets` `<Picture>` (AVIF + WebP + JPEG fallback,
   responsive `widths`/`sizes`). Source images live in `apps/*/src/assets/`, **not** `public/`:
   files in `public/` are copied verbatim and never optimized.
-- **Cloudflare Web Analytics** (cookieless, per-site beacon token via `PUBLIC_CF_BEACON_TOKEN`)
-- SEO: JSON-LD (BlogPosting / Person / Organization / Breadcrumb), sitemap, per-site OG images
+- **Cloudflare Web Analytics** (cookieless, beacon token via `PUBLIC_CF_BEACON_TOKEN`)
+- SEO: JSON-LD (BlogPosting / Person / Organization / Breadcrumb), sitemap, OG image
 - WCAG AA: skip links, landmarks, `aria-current`, reduced-motion, focus styles
 - Content types: weekly `field-report`, monthly `deep-dive`
 
@@ -42,15 +40,14 @@ packages/
 ```bash
 pnpm install
 pnpm dev:codebakkers   # http://localhost:4321
-pnpm dev:henkbakker
 ```
 
-> Search only works after a full build (Pagefind indexes `dist/`), and lives on **henkbakker**.
+> Search only works after a full build (Pagefind indexes `dist/`), .
 
 ## Build / quality
 
 ```bash
-pnpm build          # both (henkbakker build also runs `pagefind --site dist`)
+pnpm build          # also runs `pagefind --site dist`
 pnpm check          # astro check (types)
 pnpm lint           # eslint
 pnpm format         # prettier --write
@@ -58,8 +55,8 @@ pnpm format         # prettier --write
 
 ## Deploy — Wrangler + GitHub Actions
 
-`.github/workflows/deploy.yml` builds each app and runs `wrangler pages deploy` on push to `main`
-(and PR previews). Create two Cloudflare Pages projects named **codebakkers** and **henkbakker**,
+`.github/workflows/deploy.yml` builds the app and runs `wrangler pages deploy` on push to `main`
+(and PR previews). Create a Cloudflare Pages project named **codebakkers**,
 then add these GitHub repo secrets:
 
 - `CLOUDFLARE_API_TOKEN` (Pages: Edit)
@@ -73,16 +70,17 @@ a11y (pa11y-ci) and link-check job.
 ## DNS & redirects (Hostinger → Cloudflare)
 
 1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
-2. Attach each domain to its Pages project.
+2. Attach codebakkers.com to the Pages project.
 3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
-   - `henkbakker.dev/*` → `https://henkbakker.net/$1` (301)
-   - `spike1292.github.io/*` → `https://henkbakker.net/` (301)
-     Old `/blog/*` and `/tags/*` paths on henkbakker.net are handled by `apps/henkbakker/public/_redirects`.
+   - `henkbakker.net/*` → `https://codebakkers.com/$1` (301)
+   - `henkbakker.dev/*` → `https://codebakkers.com/$1` (301)
+   - `spike1292.github.io/*` → `https://codebakkers.com/` (301)
+     Old `/posts/*` and `/tags/*` paths are handled by `apps/codebakkers/public/_redirects`.
 
 ## The weekly post (Phase 2 — not built yet)
 
 Each Monday a job drafts from that week's Essent commits + memory vault + Jira (local CLI),
-runs a governance filter, and produces: a **PR** adding `apps/henkbakker/src/content/posts/<slug>.md`
+runs a governance filter, and produces: a **PR** adding `apps/codebakkers/src/content/posts/<slug>.md`
 (personal voice; you review + merge), plus `weekly/<date>/codecask.md` and `weekly/<date>/linkedin.md`
 (company voice; you paste). Monthly, a longer deep-dive. `PLAN.md` and `weekly/` are gitignored.
 
@@ -109,7 +107,7 @@ import Callout from "../../components/Callout.astro";
 <Callout type="tip">Interactive bits go here.</Callout>
 ```
 
-See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
+See `apps/codebakkers/src/content/posts/mdx-template.mdx` for a working example.
 
 ## Licensing
 
@@ -118,11 +116,7 @@ See `apps/henkbakker/src/content/posts/mdx-template.mdx` for a working example.
 
 ## Before first deploy
 
-- Replace the **placeholder Codecask logo** at `apps/codebakkers/public/codecask-logo.svg`
-  with the real one from <https://www.codecask.cc/s/codecask-logo-transparant-rectangular.svg>
-  (same filename — no code changes needed).
-
-- Portrait lives at `apps/*/src/assets/henk.jpeg` (optimized at build). Replace the file to change it — no code changes.
-- Replace the LinkedIn URL in `apps/henkbakker/src/consts.ts`.
+- Portrait lives at `apps/codebakkers/src/assets/henk.jpeg` (optimized at build). Replace the file to change it — no code changes.
+- Replace the LinkedIn URL in `apps/codebakkers/src/consts.ts`.
 - Add the two Cloudflare secrets in GitHub.
-- Add the two analytics secrets `CF_BEACON_TOKEN_CODEBAKKERS` / `CF_BEACON_TOKEN_HENKBAKKER` (see `docs/cloudflare-setup.md` §7).
+- Add the analytics secret `CF_BEACON_TOKEN_CODEBAKKERS` (see `docs/cloudflare-setup.md` §7).

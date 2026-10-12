@@ -1,6 +1,6 @@
 # Cloudflare setup
 
-One-time setup to get **codebakkers.com** and **henkbakker.net** live on Cloudflare Pages,
+One-time setup to get **codebakkers.com** live on Cloudflare Pages (with **henkbakker.net** redirecting to it),
 deployed from GitHub Actions via Wrangler (direct upload).
 
 Order matters: create the Pages projects **before** the first CI deploy — in CI Wrangler can't
@@ -39,11 +39,10 @@ Install/authenticate Wrangler locally (it's already a devDependency):
 pnpm wrangler login
 ```
 
-Create both projects — names must match the `--project-name` values in `.github/workflows/deploy.yml`:
+Create the project — the name must match the `--project-name` values in `.github/workflows/deploy.yml`:
 
 ```bash
 pnpm wrangler pages project create codebakkers --production-branch main
-pnpm wrangler pages project create henkbakker  --production-branch main
 ```
 
 Each gets a `*.pages.dev` URL you can test against before DNS is live.
@@ -81,7 +80,7 @@ gh secret set CLOUDFLARE_API_TOKEN
 gh secret set CLOUDFLARE_ACCOUNT_ID
 ```
 
-Push to `main` — both sites should deploy. Check **Actions → Deploy**.
+Push to `main` — the site should deploy. Check **Actions → Deploy**.
 
 ## 5. Attach the custom domains
 
@@ -90,60 +89,65 @@ Per project: Cloudflare dashboard → **Workers & Pages** → select project →
 | Project       | Domains                                  |
 | ------------- | ---------------------------------------- |
 | `codebakkers` | `codebakkers.com`, `www.codebakkers.com` |
-| `henkbakker`  | `henkbakker.net`, `www.henkbakker.net`   |
 
 Because the zones live in the same account, Cloudflare creates the DNS records itself. HTTPS certs
 issue automatically (a few minutes).
 
 ## 6. Redirects
 
-`henkbakker.dev` and the old GitHub Pages site should point at `henkbakker.net`.
+`henkbakker.net`, `henkbakker.dev` and the old GitHub Pages site should point at `codebakkers.com`.
+
+**henkbakker.net** — in that zone: **Rules → Redirect Rules → Create rule**
+
+- Name: `net → codebakkers`
+- If: _Hostname_ equals `henkbakker.net` (add an `or` for `www.henkbakker.net`)
+- Then: **Dynamic** redirect, **301**, expression:
+  `concat("https://codebakkers.com", http.request.uri.path)`
+- Preserve query string: on
+
+The old `henkbakker` Pages project can stay attached while the rule is live (the rule runs first).
+Once `curl -I https://henkbakker.net/blog/` shows the 301, remove its custom domains and delete it.
+Keep a proxied DNS record on the apex and `www` so the rule has something to intercept.
 
 **henkbakker.dev** — in that zone: **Rules → Redirect Rules → Create rule**
 
 - Name: `dev → net`
 - If: _Hostname_ equals `henkbakker.dev` (add a second rule, or an `or`, for `www.henkbakker.dev`)
 - Then: **Dynamic** redirect, **301**, expression:
-  `concat("https://henkbakker.net", http.request.uri.path)`
+  `concat("https://codebakkers.com", http.request.uri.path)`
 - Preserve query string: on
 
 You'll also need a proxied placeholder DNS record (e.g. `A @ 192.0.2.1`, orange cloud on) for the
 rule to have something to intercept.
 
 **spike1292.github.io** — that's GitHub's domain, so redirect from the old repo instead: keep a
-`CNAME`/meta-refresh there, or simply archive it. Not Cloudflare's concern.
+meta-refresh to codebakkers.com there, or simply archive it. Not Cloudflare's concern.
 
-> In-app redirects (old `/posts/*`, `/rss.xml`, `/about`, `/search` on codebakkers.com →
-> henkbakker.net) already ship via `apps/codebakkers/public/_redirects` — nothing to configure.
+> In-app redirects (old `/posts/*`, `/tags/*`) ship via `apps/codebakkers/public/_redirects` — nothing to configure.
 
 ## 7. Web analytics
 
-Cloudflare Web Analytics — cookieless, no consent banner needed. **Each site has its own beacon
-token**, injected at build time by CI.
+Cloudflare Web Analytics — cookieless, no consent banner needed. The beacon token is injected at build time by CI.
 
-### Get the two tokens
+### Get the token
 
 1. Dashboard → **Analytics & Logs → Web Analytics → Add a site**.
 2. Add `codebakkers.com`. When it shows the JS snippet, copy just the **token** — the value of
    `data-cf-beacon={"token": "…"}`. You don't need the snippet itself; the site already renders it.
-3. Repeat for `henkbakker.net` (a **separate** token).
 
 > Adding the site under Web Analytics is enough — no DNS or page changes required.
 
-### Add them as GitHub secrets
+### Add it as a GitHub secret
 
 | Secret name                   | Token for       |
 | ----------------------------- | --------------- |
 | `CF_BEACON_TOKEN_CODEBAKKERS` | codebakkers.com |
-| `CF_BEACON_TOKEN_HENKBAKKER`  | henkbakker.net  |
 
 ```bash
 gh secret set CF_BEACON_TOKEN_CODEBAKKERS
-gh secret set CF_BEACON_TOKEN_HENKBAKKER
 ```
 
-`.github/workflows/deploy.yml` maps each one to `PUBLIC_CF_BEACON_TOKEN` for that app's build via
-the matrix, so the right token ends up on the right site.
+`.github/workflows/deploy.yml` maps it to `PUBLIC_CF_BEACON_TOKEN` for the build.
 
 ### How it behaves
 
@@ -160,12 +164,12 @@ Data shows up under **Web Analytics** within a few minutes of the first real pag
 ## Verify
 
 - [ ] Both zones **Active** in Cloudflare
-- [ ] `pnpm wrangler pages project list` shows `codebakkers` + `henkbakker`
+- [ ] `pnpm wrangler pages project list` shows `codebakkers`
 - [ ] Actions → **Deploy** green, no "skipping deploy" notice
-- [ ] https://codebakkers.com and https://henkbakker.net serve over HTTPS
-- [ ] `curl -I https://codebakkers.com/rss.xml` → `301` to henkbakker.net
-- [ ] `https://henkbakker.net/search` returns results (Pagefind index ships with the build)
-- [ ] `curl -s https://henkbakker.net | grep cloudflareinsights` → beacon present (analytics wired)
+- [ ] https://codebakkers.com serves over HTTPS
+- [ ] `curl -I https://henkbakker.net/blog/` → `301` to https://codebakkers.com/blog/
+- [ ] `https://codebakkers.com/search` returns results (Pagefind index ships with the build)
+- [ ] `curl -s https://codebakkers.com | grep cloudflareinsights` → beacon present (analytics wired)
 
 ## Action versions
 

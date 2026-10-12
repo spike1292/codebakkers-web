@@ -9,11 +9,11 @@ import { SITE } from "../consts";
 interface Props {
   title: string;
   description?: string;
-  canonical?: string;
   type?: "website" | "article";
+  canonical?: string;
   image?: string;
 }
-const { title, description = SITE.description, canonical, type = "website", image } = Astro.props;
+const { title, description = SITE.description, type = "website", canonical, image } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,18 +23,19 @@ const { title, description = SITE.description, canonical, type = "website", imag
       title={title}
       description={description}
       site={SITE.title}
-      canonical={canonical}
       type={type}
+      canonical={canonical}
       image={image}
+      rss={true}
     />
     <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header brand={SITE.title} brandHref="/" nav={[...SITE.nav]} />
+    <Header brand={SITE.brand} brandHref="/" nav={[...SITE.nav]} />
     <main id="main">
       <slot />
     </main>
-    <Footer brand={SITE.title} tagline={SITE.tagline} social={[...SITE.social]} />
+    <Footer brand={SITE.brand} tagline="baked in, not bolted on" social={[...SITE.social]} />
   </body>
 </html>

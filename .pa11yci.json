@@ -14,9 +14,8 @@
   "urls": [
     "http://localhost:8081/",
     "http://localhost:8081/company/",
-    "http://localhost:8082/",
-    "http://localhost:8082/blog/",
-    "http://localhost:8082/about/",
-    "http://localhost:8082/faith/"
+    "http://localhost:8081/blog/",
+    "http://localhost:8081/about/",
+    "http://localhost:8081/faith/"
   ]
 }
