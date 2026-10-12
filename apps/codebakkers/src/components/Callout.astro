@@ -13,29 +13,36 @@ const label = title ?? { note: "Note", tip: "Tip", warning: "Watch out" }[type];
 </aside>
 <style>
   .callout {
-    border: 1px solid var(--color-border);
-    border-left-width: 4px;
-    border-radius: var(--radius-sm);
+    --callout: var(--cb-sky);
+    border-left: 6px solid var(--callout);
+    border-radius: 0 var(--radius) var(--radius) 0;
     padding: var(--space-4) var(--space-6);
     margin: var(--space-6) 0;
-    background: var(--color-surface);
-  }
-  .callout-title {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: var(--space-2);
-    color: var(--color-accent-strong);
-  }
-  .callout.warning {
-    border-left-color: #c0562b;
-  }
-  .callout.warning .callout-title {
-    color: #c0562b;
+    background: var(--color-bg);
   }
   .callout.tip {
-    border-left-color: var(--color-accent);
+    --callout: var(--cb-mint);
+  }
+  .callout.warning {
+    --callout: var(--cb-coral);
+  }
+  .callout-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+  .callout-title::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--callout);
   }
   .callout-body :global(p:last-child) {
     margin-bottom: 0;

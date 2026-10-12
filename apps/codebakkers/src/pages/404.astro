@@ -4,31 +4,37 @@ import Container from "@codebakkers/ui/components/Container.astro";
 ---
 
 <BaseLayout title="Not found — CodeBakkers" description="Page not found.">
-  <Container narrow>
-    <section>
-      <p class="kicker">404</p>
-      <h1>Nothing here</h1>
-      <p class="lead">
-        The link is broken or the page has moved. Head back to the <a href="/">homepage</a>.
-      </p>
+  <Container>
+    <section class="bento" aria-labelledby="nf-h">
+      <div class="tile tile-coral page-head nf">
+        <p class="label">404</p>
+        <h1 id="nf-h" class="display">Nothing here.</h1>
+        <p class="lead">The link is broken or the page has moved.</p>
+        <div class="ctas">
+          <a class="btn btn-yellow" href="/"
+            >Homepage <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a class="btn" href="/blog">Read the blog</a>
+        </div>
+      </div>
     </section>
   </Container>
 </BaseLayout>
 
 <style>
-  section {
-    margin: var(--space-16) 0;
+  .nf {
+    grid-column: 1 / -1;
+    min-height: 420px;
+    justify-content: center;
+    padding: clamp(1.6rem, 1rem + 3vw, 3.5rem);
   }
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    color: var(--color-accent-strong);
-    margin-bottom: var(--space-3);
+  .nf h1 {
+    color: inherit;
   }
-  .lead {
-    color: var(--color-text-soft);
-    font-size: var(--step-1);
-    margin-top: var(--space-4);
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
   }
 </style>

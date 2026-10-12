@@ -80,6 +80,7 @@ pre code {
   background: none;
   border: 0;
   padding: 0;
+  font-size: 1em;
 }
 hr {
   border: none;
@@ -113,7 +114,7 @@ hr {
   color: var(--tile-fg);
   overflow: hidden;
 }
-.tile a:not(.btn) {
+:where(.tile) a:not(.btn) {
   color: inherit;
 }
 .tile-ink {
@@ -319,9 +320,6 @@ hr {
 }
 
 /* Page head: a tile intro used by the inner pages */
-.page-head {
-  margin-top: var(--space-4);
-}
 .page-head h1 {
   font-size: var(--step-5);
   letter-spacing: -0.045em;
@@ -332,6 +330,16 @@ hr {
   font-weight: 500;
   max-width: 40ch;
   margin-top: var(--space-4);
+}
+
+.page-body {
+  grid-column: 1 / -1;
+  align-items: center;
+  padding: clamp(1.5rem, 0.8rem + 3vw, 3.5rem) clamp(1.25rem, 0.5rem + 3vw, 3.5rem);
+}
+.page-body > * {
+  width: 100%;
+  max-width: var(--measure);
 }
 
 /* Accessibility utilities */

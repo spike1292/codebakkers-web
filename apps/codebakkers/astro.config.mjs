@@ -13,7 +13,7 @@ export default defineConfig({
   compressHTML: true,
   markdown: {
     shikiConfig: {
-      themes: { light: "github-light", dark: "github-dark" },
+      themes: { light: "github-light-default", dark: "github-dark-default" },
       wrap: true,
     },
   },
