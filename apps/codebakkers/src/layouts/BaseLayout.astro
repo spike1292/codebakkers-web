@@ -32,10 +32,20 @@ const { title, description = SITE.description, type = "website", canonical, imag
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header brand={SITE.brand} brandHref="/" nav={[...SITE.nav]} />
+    <Header
+      brand={SITE.author}
+      brandHref="/"
+      nav={[...SITE.nav]}
+      cta={{ href: "/#contact", label: "Hire me" }}
+    />
     <main id="main">
       <slot />
     </main>
-    <Footer brand={SITE.brand} tagline="baked in, not bolted on" social={[...SITE.social]} />
+    <Footer
+      name={SITE.author}
+      brand={SITE.brand}
+      tagline="baked in, not bolted on"
+      social={[...SITE.social]}
+    />
   </body>
 </html>

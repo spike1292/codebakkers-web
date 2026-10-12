@@ -2,17 +2,15 @@
 /**
  * Self-hosted fonts, hand-declared for performance.
  *
- * Importing the Fontsource packages wholesale (`import "@fontsource-variable/inter"`) ships
+ * Importing the Fontsource packages wholesale (`import "@fontsource-variable/..."`) ships
  * @font-face rules for every subset — Cyrillic, Greek, Vietnamese, latin-ext — and pulls the
  * heavier axis files. These sites are English-only, so we declare the **latin** subset of the
- * **wght** axis and nothing else: three files, ~121 KB total, one request per family.
+ * **wght** axis and nothing else: two files, ~80 KB total, one request per family.
  *
- * Inter (body) and Fraunces (headings) are preloaded so the browser starts fetching them from
- * the initial HTML instead of waiting for the CSS to parse. JetBrains Mono is deliberately not
- * preloaded — it only styles small accents (dates, kickers, the {CB} mark).
+ * Bricolage Grotesque sets both the display type and the body, so it is preloaded. JetBrains
+ * Mono is preloaded too: the kicker labels and the drawings use it above the fold.
  */
-import inter from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
-import fraunces from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import bricolage from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import mono from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url";
 
 // Latin subset, verbatim from Fontsource's own CSS.
@@ -30,12 +28,11 @@ const face = (family: string, src: string, weight: string) => `
 }`;
 
 const css = [
-  face("Inter Variable", inter, "100 900"),
-  face("Fraunces Variable", fraunces, "100 900"),
+  face("Bricolage Grotesque Variable", bricolage, "200 800"),
   face("JetBrains Mono Variable", mono, "100 800"),
 ].join("\n");
 ---
 
-<link rel="preload" href={inter} as="font" type="font/woff2" crossorigin="anonymous" />
-<link rel="preload" href={fraunces} as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href={bricolage} as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href={mono} as="font" type="font/woff2" crossorigin="anonymous" />
 <style is:inline set:html={css}></style>

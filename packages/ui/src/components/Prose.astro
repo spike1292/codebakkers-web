@@ -6,21 +6,35 @@
 <style>
   .prose {
     max-width: var(--measure);
+    font-size: clamp(1.06rem, 1rem + 0.25vw, 1.18rem);
+    line-height: 1.72;
   }
   .prose :global(h2) {
+    font-size: var(--step-3);
     margin-top: var(--space-12);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
   .prose :global(h3) {
+    font-size: var(--step-2);
     margin-top: var(--space-8);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+  .prose :global(h2::after) {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 6px;
+    margin-top: 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-mark);
   }
   .prose :global(p),
   .prose :global(ul),
   .prose :global(ol),
   .prose :global(pre),
-  .prose :global(blockquote) {
-    margin-bottom: var(--space-4);
+  .prose :global(blockquote),
+  .prose :global(table) {
+    margin-bottom: var(--space-6);
   }
   .prose :global(ul),
   .prose :global(ol) {
@@ -29,14 +43,39 @@
   .prose :global(li) {
     margin-bottom: var(--space-2);
   }
+  .prose :global(li::marker) {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+  .prose :global(strong) {
+    font-weight: 750;
+  }
+  .prose :global(pre) {
+    font-size: 0.9rem;
+  }
   .prose :global(blockquote) {
-    border-left: 3px solid var(--color-accent);
-    padding-left: var(--space-4);
-    color: var(--color-text-soft);
-    font-style: italic;
+    border-left: 6px solid var(--cb-yellow);
+    background: var(--color-surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: var(--space-4) var(--space-6);
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  .prose :global(blockquote p:last-child) {
+    margin-bottom: 0;
   }
   .prose :global(img) {
     border-radius: var(--radius);
-    border: 1px solid var(--color-border);
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 2px solid var(--color-border);
   }
 </style>
