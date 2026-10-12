@@ -4,16 +4,24 @@ import Container from "@codebakkers/ui/components/Container.astro";
 ---
 
 <BaseLayout title="Search — CodeBakkers" description="Search the CodeBakkers archive.">
-  <Container narrow>
-    <section>
-      <p class="kicker">SEARCH</p>
-      <h1>Search the archive</h1>
-      <div id="search" class="pf"></div>
-      <p id="search-fallback" class="fallback" hidden>
-        The search index hasn't been built yet. Run <code>pnpm --filter codebakkers build</code>, or
-        browse <a href="/blog">all posts</a>.
-      </p>
-      <noscript><p>Search needs JavaScript. Browse <a href="/">all posts</a> instead.</p></noscript>
+  <Container>
+    <section class="bento" aria-labelledby="search-h">
+      <div class="tile tile-yellow page-head intro">
+        <p class="label">Search</p>
+        <h1 id="search-h" class="display">Search the archive</h1>
+      </div>
+      <div class="tile page-body">
+        <div>
+          <div id="search" class="pf"></div>
+          <p id="search-fallback" class="fallback" hidden>
+            The search index hasn't been built yet. Run <code>pnpm --filter codebakkers build</code
+            >, or browse <a href="/blog">all posts</a>.
+          </p>
+          <noscript
+            ><p>Search needs JavaScript. Browse <a href="/blog">all posts</a> instead.</p></noscript
+          >
+        </div>
+      </div>
     </section>
   </Container>
 </BaseLayout>
@@ -49,26 +57,28 @@ import Container from "@codebakkers/ui/components/Container.astro";
 </script>
 
 <style>
-  section {
-    margin: var(--space-16) 0 var(--space-12);
+  .intro {
+    grid-column: 1 / -1;
+    padding: clamp(1.6rem, 1rem + 3vw, 3rem);
   }
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    color: var(--color-accent-strong);
-    margin-bottom: var(--space-3);
+  .intro h1 {
+    color: inherit;
+  }
+  .page-body a {
+    color: var(--color-accent);
+    text-decoration: underline;
   }
   .fallback {
-    margin-top: var(--space-6);
-    color: var(--color-muted);
+    color: var(--color-text-soft);
   }
   .pf {
-    margin-top: var(--space-6);
     --pagefind-ui-primary: var(--color-accent);
     --pagefind-ui-font: var(--font-sans);
-    --pagefind-ui-background: var(--color-bg);
+    --pagefind-ui-background: var(--tile-bg);
     --pagefind-ui-text: var(--color-text);
     --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-border-width: 2px;
+    --pagefind-ui-border-radius: 14px;
+    --pagefind-ui-tag: var(--color-bg);
   }
 </style>

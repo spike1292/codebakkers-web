@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
-import Prose from "@codebakkers/ui/components/Prose.astro";
 import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
 
 const org = {
@@ -21,45 +20,121 @@ const org = {
 ---
 
 <BaseLayout title="Company — CodeBakkers" description="CodeBakkers B.V. — company profile.">
-  <Container narrow>
-    <section>
-      <p class="kicker">COMPANY</p>
-      <h1>CodeBakkers B.V.</h1>
-      <Prose>
-        <p>
-          <strong>CodeBakkers B.V.</strong> is Henk Bakker's holding company and personal brand — the
-          company behind his engineering work: frontend platform engineering at scale, front end through
-          to the edge.
+  <Container>
+    <section class="bento" aria-labelledby="co-h">
+      <div class="tile tile-pine page-head intro">
+        <p class="label">Company</p>
+        <h1 id="co-h" class="display">CodeBakkers B.V.</h1>
+        <p class="lead">
+          Henk Bakker's holding company and personal brand: the company behind his engineering work.
+          Baked in, not bolted on.
         </p>
-        <p>
-          Read about Henk on the <a href="/cv">CV</a> and his writing on the <a href="/blog">blog</a
-          >. For consultancy and secondment he works through <a href="https://www.codecask.cc"
-            >Codecask</a
-          >. To get in touch, email
-          <a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a>.
-        </p>
-        <h2>Registration</h2>
-        <ul>
-          <li>KVK: <strong>90011139</strong></li>
-          <li>BTW / VAT: <strong>NL865181470B01</strong></li>
-          <li>Based in Uithuizen, the Netherlands</li>
-          <li>Email: <a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a></li>
-        </ul>
-      </Prose>
+      </div>
+      <div class="tile reg">
+        <p class="label">Registration</p>
+        <dl>
+          <div>
+            <dt>KVK</dt>
+            <dd>90011139</dd>
+          </div>
+          <div>
+            <dt>BTW / VAT</dt>
+            <dd>NL865181470B01</dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd>Uithuizen, the Netherlands</dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:hello@codebakkers.com">hello@codebakkers.com</a></dd>
+          </div>
+        </dl>
+      </div>
+      <a class="tile tile-yellow link" href="/cv">
+        <span class="label">The person</span>
+        <span class="t">Read Henk's CV</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="tile tile-sky link" href="/blog">
+        <span class="label">The writing</span>
+        <span class="t">Notes from the platform</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="tile tile-coral link" href="https://www.codecask.cc">
+        <span class="label">Consultancy &amp; secondment</span>
+        <span class="t">Hire Henk via Codecask</span>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
     </section>
   </Container>
   <JsonLd schema={org} />
 </BaseLayout>
 
 <style>
-  section {
-    margin: var(--space-16) 0 var(--space-12);
+  .intro {
+    grid-column: span 7;
+    padding: clamp(1.6rem, 1rem + 3vw, 3rem);
   }
-  .kicker {
+  .intro h1 {
+    color: inherit;
+  }
+  .reg {
+    grid-column: span 5;
+  }
+  dl {
+    margin: 0;
+  }
+  dl div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 0.8rem 0;
+    border-top: 2px solid color-mix(in srgb, currentColor 15%, transparent);
+  }
+  dt {
     font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    color: var(--color-accent-strong);
-    margin-bottom: var(--space-3);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  dd {
+    margin: 0;
+    font-weight: 700;
+  }
+  dd a {
+    text-decoration: underline;
+  }
+  .link {
+    grid-column: span 4;
+    min-height: 200px;
+    justify-content: space-between;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .t {
+    font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.1rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .link .arrow {
+    font-size: 1.5rem;
+  }
+  .link:hover .t {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+  @media (max-width: 56rem) {
+    .intro,
+    .reg,
+    .link {
+      grid-column: 1 / -1;
+    }
+    .link {
+      min-height: 0;
+    }
   }
 </style>

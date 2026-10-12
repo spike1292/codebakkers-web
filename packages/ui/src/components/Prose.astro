@@ -47,6 +47,13 @@
     color: var(--color-accent);
     font-weight: 700;
   }
+  .prose :global(a:not(.btn)) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .prose :global(a:not(.btn):hover) {
+    color: var(--color-accent-strong);
+  }
   .prose :global(strong) {
     font-weight: 750;
   }
@@ -55,7 +62,7 @@
   }
   .prose :global(blockquote) {
     border-left: 6px solid var(--cb-yellow);
-    background: var(--color-surface);
+    background: var(--color-bg);
     border-radius: 0 var(--radius) var(--radius) 0;
     padding: var(--space-4) var(--space-6);
     font-size: 1.1em;
