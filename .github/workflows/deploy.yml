@@ -23,9 +23,6 @@ jobs:
           - app: codebakkers
             project: codebakkers
             beaconSecret: CF_BEACON_TOKEN_CODEBAKKERS
-          - app: henkbakker
-            project: henkbakker
-            beaconSecret: CF_BEACON_TOKEN_HENKBAKKER
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v6

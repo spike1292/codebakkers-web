@@ -15,7 +15,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "dev:codebakkers": "pnpm --filter codebakkers dev",
-    "dev:henkbakker": "pnpm --filter henkbakker dev",
     "prepare": "husky"
   },
   "lint-staged": {
