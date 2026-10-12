@@ -9,7 +9,7 @@ redirects to it via `apps/henkbakker/_redirects`. Astro · pnpm workspaces · Tu
 apps/
   henkbakker/    → henkbakker.net — only a `_redirects` file, 301 to codebakkers.com
   codebakkers/   → codebakkers.com — personal site + THE BLOG + company:
-                    /, /blog, /blog/<slug>, /about, /faith, /company, /search, /rss.xml, /privacy, 404
+                    /, /blog, /blog/<slug>, /cv, /faith, /company, /search, /rss.xml, /privacy, 404
 packages/
   ui/            → @codebakkers/ui — brand tokens, global CSS, fonts, components
                     (Header, Footer, ThemeToggle, BaseHead, Analytics, JsonLd, Prose, …)
