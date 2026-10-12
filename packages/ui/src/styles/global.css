@@ -163,6 +163,15 @@ hr {
   letter-spacing: -0.04em;
   line-height: 0.95;
 }
+.hl {
+  display: inline-block;
+  padding: 0 0.12em;
+  border-radius: 0.16em;
+  background: var(--cb-coral);
+  color: var(--cb-ink);
+  font-style: normal;
+  transform: rotate(-1.5deg);
+}
 .label {
   display: flex;
   align-items: center;
