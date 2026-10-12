@@ -70,12 +70,11 @@ a11y (pa11y-ci) and link-check job.
 
 ## DNS & redirects (Hostinger → Cloudflare)
 
-1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
-2. Attach codebakkers.com to the `codebakkers` project and henkbakker.net to the `henkbakker` project.
-3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
-   - `henkbakker.dev/*` → `https://codebakkers.com/$1` (301)
-   - `spike1292.github.io/*` → `https://codebakkers.com/` (301)
-     Old `/posts/*` and `/about` paths are handled by `apps/codebakkers/public/_redirects`.
+1. Add codebakkers.com, henkbakker.net and henkbakker.dev to Cloudflare; switch nameservers at
+   Hostinger (.com, .net) and TransIP (.dev).
+2. Attach codebakkers.com to the `codebakkers` project and henkbakker.net + henkbakker.dev to the `henkbakker` project
+   (redirect-only: `apps/henkbakker/_redirects`).
+3. No dashboard redirect rules needed. Old `/posts/*` and `/about` paths are handled by `apps/codebakkers/public/_redirects`.
 
 ## The weekly post (Phase 2 — not built yet)
 
