@@ -4,3 +4,6 @@
 # Old henkbakker.net (Jekyll) sections retired — send to homepage.
 /tags/*   /   301
 /tag/*    /   301
+# About page became the CV.
+/about    /cv     301
+/about/   /cv/    301

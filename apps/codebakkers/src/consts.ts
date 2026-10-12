@@ -8,7 +8,7 @@ export const SITE = {
   url: "https://codebakkers.com",
   nav: [
     { href: "/blog", label: "Blog" },
-    { href: "/about", label: "About" },
+    { href: "/cv", label: "CV" },
     { href: "/faith", label: "Faith" },
     { href: "/company", label: "Company" },
     { href: "/search", label: "Search" },
