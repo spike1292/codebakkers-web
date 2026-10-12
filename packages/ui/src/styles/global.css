@@ -295,6 +295,29 @@ hr {
   }
 }
 
+/* Section head between bento rows */
+.head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 2.25rem 0.5rem 0.4rem;
+}
+.head h2 {
+  font-size: clamp(2.75rem, 1.6rem + 3.6vw, 4rem);
+}
+.head p {
+  max-width: 38ch;
+  font-size: 1.1rem;
+}
+@media (max-width: 56rem) {
+  .head {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
 /* Page head: a tile intro used by the inner pages */
 .page-head {
   margin-top: var(--space-4);
