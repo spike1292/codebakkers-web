@@ -39,7 +39,7 @@ jobs:
         if: matrix.build
         run: pnpm --filter ${{ matrix.app }} build
         env:
-          # Each site has its own Cloudflare Web Analytics beacon token.
+          # Cloudflare Web Analytics beacon token.
           # Unset → the Analytics component renders nothing (safe default).
           PUBLIC_CF_BEACON_TOKEN: ${{ secrets[matrix.beaconSecret] }}
       - name: Skip deploy (Cloudflare secrets not configured)

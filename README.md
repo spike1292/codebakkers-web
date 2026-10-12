@@ -43,7 +43,7 @@ pnpm install
 pnpm dev:codebakkers   # http://localhost:4321
 ```
 
-> Search only works after a full build (Pagefind indexes `dist/`), .
+> Search only works after a full build (Pagefind indexes `dist/`).
 
 ## Build / quality
 
@@ -71,7 +71,7 @@ a11y (pa11y-ci) and link-check job.
 ## DNS & redirects (Hostinger → Cloudflare)
 
 1. Add codebakkers.com and henkbakker.net to Cloudflare; switch nameservers at Hostinger.
-2. Attach codebakkers.com to the Pages project.
+2. Attach codebakkers.com to the `codebakkers` project and henkbakker.net to the `henkbakker` project.
 3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
    - `henkbakker.dev/*` → `https://codebakkers.com/$1` (301)
    - `spike1292.github.io/*` → `https://codebakkers.com/` (301)
