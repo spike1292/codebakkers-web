@@ -75,7 +75,7 @@ a11y (pa11y-ci) and link-check job.
 3. Redirects to set up in Cloudflare (Bulk Redirects / Redirect Rules):
    - `henkbakker.dev/*` → `https://codebakkers.com/$1` (301)
    - `spike1292.github.io/*` → `https://codebakkers.com/` (301)
-     Old `/posts/*` and `/tags/*` paths are handled by `apps/codebakkers/public/_redirects`.
+     Old `/posts/*` and `/about` paths are handled by `apps/codebakkers/public/_redirects`.
 
 ## The weekly post (Phase 2 — not built yet)
 

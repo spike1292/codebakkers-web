@@ -117,7 +117,7 @@ rule to have something to intercept.
 **spike1292.github.io** — that's GitHub's domain, so redirect from the old repo instead: keep a
 meta-refresh to codebakkers.com there, or simply archive it. Not Cloudflare's concern.
 
-> In-app redirects (old `/posts/*`, `/tags/*`) ship via `apps/codebakkers/public/_redirects` — nothing to configure.
+> In-app redirects (old `/posts/*`, `/about`) ship via `apps/codebakkers/public/_redirects` — nothing to configure.
 
 ## 7. Web analytics
 
