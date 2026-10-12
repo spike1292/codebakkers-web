@@ -2,7 +2,7 @@ export const SITE = {
   title: "CodeBakkers",
   brand: "CodeBakkers",
   description:
-    "Henk Bakker — frontend platform engineering at scale, frontend to edge. Notes from the platform.",
+    "Henk Bakker — Frontend Platform Lead. Large-scale migrations without a stop in delivery, from the monorepo to the CDN edge.",
   tagline: "notes from the platform",
   author: "Henk Bakker",
   url: "https://codebakkers.com",
