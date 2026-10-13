@@ -263,6 +263,11 @@ hr {
   border-color: var(--cb-coral);
   color: var(--cb-ink);
 }
+.chips.one > * {
+  background: var(--chip);
+  border-color: var(--chip);
+  color: var(--cb-ink);
+}
 
 /* Blueprint drawings */
 .drawing {

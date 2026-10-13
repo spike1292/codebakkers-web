@@ -523,8 +523,10 @@ const person = {
     <section class="bento" aria-label="Stack and way of working">
       <div class="tile stack">
         <p class="label">Stack</p>
-        <h2>Tools I run in production.</h2>
-        <ul class="chips">{stack.map((s) => <li class="chip">{s}</li>)}</ul>
+        <h2>Tools we use in production.</h2>
+        <ul class="chips one" style="--chip: var(--cb-sky)">
+          {stack.map((s) => <li class="chip">{s}</li>)}
+        </ul>
       </div>
       <div class="tile tile-ink how">
         <p class="label">How I work</p>

@@ -63,6 +63,7 @@ const quintor = [
 const skills = [
   {
     group: "Frontend platform",
+    chip: "--cb-yellow",
     items: [
       "Angular (SSR, standalone, signals)",
       "React",
@@ -77,6 +78,7 @@ const skills = [
   },
   {
     group: "Cloud and edge",
+    chip: "--cb-sky",
     items: [
       "AWS CloudFront (Functions, KeyValueStore)",
       "ECS / Fargate",
@@ -90,6 +92,7 @@ const skills = [
   },
   {
     group: "Delivery",
+    chip: "--cb-mint",
     items: [
       "GitLab CI (child pipelines, sharding)",
       "Cypress",
@@ -101,6 +104,7 @@ const skills = [
   },
   {
     group: "AI-assisted engineering",
+    chip: "--cb-blush",
     items: [
       "Claude Code agents, skills and hooks",
       "MCP",
@@ -110,6 +114,7 @@ const skills = [
   },
   {
     group: "Leadership",
+    chip: "--cb-coral",
     items: [
       "Migration roadmaps",
       "PI planning",
@@ -279,21 +284,18 @@ const skills = [
       <div class="head">
         <h2 id="skills-h" class="display">Skills &amp; background</h2>
       </div>
-      <div class="tile skills">
-        <p class="label">Skills</p>
-        {
-          skills.map((s) => (
-            <div class="skill">
-              <h3>{s.group}</h3>
-              <ul class="chips">
-                {s.items.map((i) => (
-                  <li class="chip">{i}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
+      {
+        skills.map((s, i) => (
+          <div class:list={["tile skill", { wide: i > 2 }]}>
+            <h3>{s.group}</h3>
+            <ul class="chips one" style={`--chip: var(${s.chip})`}>
+              {s.items.map((i) => (
+                <li class="chip">{i}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
       <div class="tile tile-mint edu">
         <p class="label">Education</p>
         <h3>BSc Computer Science (HBO Informatica)</h3>
@@ -326,9 +328,9 @@ const skills = [
           <p class="label">Next step</p>
           <h2 id="cta-h" class="display">Is your frontend falling <em>behind?</em></h2>
           <p>
+            Let's plan the first step together. Send me an email about where your platform is today.
             I write about real migrations from my work on <a href="/blog">the blog</a>. Code and
             side projects are on <a href={SITE.github}>GitHub</a>. Company details for CodeBakkers
-            Let's plan the first step together. Send me an email about where your platform is today.
             B.V. are on the <a href="/company">company page</a>.
           </p>
         </div>
@@ -484,22 +486,27 @@ const skills = [
     margin-bottom: 0.25rem;
   }
 
-  .skills {
-    grid-column: span 7;
-    grid-row: span 3;
-    gap: 1.25rem;
+  .skill {
+    grid-column: span 4;
+  }
+  .skill.wide {
+    grid-column: span 6;
   }
   .skill h3 {
     font-size: 1.15rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.9rem;
   }
   .skill .chip {
     font-size: 0.9rem;
   }
-  .edu,
-  .lang,
-  .faith {
+  .edu {
     grid-column: span 5;
+  }
+  .lang {
+    grid-column: span 3;
+  }
+  .faith {
+    grid-column: span 4;
   }
   .edu h3 {
     font-size: 1.5rem;
@@ -561,7 +568,8 @@ const skills = [
   @media (max-width: 68rem) {
     .intro,
     .contact,
-    .skills,
+    .skill,
+    .skill.wide,
     .edu,
     .lang,
     .faith {
