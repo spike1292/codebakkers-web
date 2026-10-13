@@ -4,16 +4,12 @@ interface Props {
   href?: string;
 }
 const { label = "Henk Bakker", href = "/" } = Astro.props;
-const initials = label
-  .split(/\s+/)
-  .map((w) => w[0])
-  .join("")
-  .toLowerCase();
+const initials = (label.match(/[A-Z]/g) ?? [label[0]]).join("").toLowerCase();
 ---
 
 <a class="logo" href={href} aria-label={label}>
   <span class="mark" aria-hidden="true">{initials}</span>
-  <span class="wordmark" aria-hidden="true">{label.toLowerCase()}</span>
+  <span class="wordmark" aria-hidden="true">{label}</span>
 </a>
 <style>
   .logo {
