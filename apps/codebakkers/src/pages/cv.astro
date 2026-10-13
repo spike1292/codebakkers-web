@@ -15,15 +15,15 @@ const numbers = [
 const essentWins = [
   {
     title: "Migrating a 500-project monorepo while feature teams keep shipping",
-    text: "Large changes used to stall, and feature teams fell behind. I turned them into a planned process: a migration roadmap with deadlines, a test round for every team in PI planning, side-by-side checks of old and new builds, and blockers visible to the organisation. That moved the codebase to standalone components, signals and buildable libraries, and through two major Angular versions with only a one-day production freeze. Large refactors now run in waves with parallel AI coding agents.",
+    text: "Large changes used to stall, and feature teams fell behind. With my team, we turned them into a planned process: a migration roadmap with deadlines, a test round for every team in PI planning, side-by-side checks of old and new builds, and blockers visible to the organisation. That moved the codebase to standalone components, signals and buildable libraries, and through two major Angular versions with only a one-day production freeze. Large refactors now run in waves with parallel AI coding agents.",
   },
   {
     title: "Migrating two brands to a new cloud platform",
-    text: "essent.nl and energiedirect.nl ran on an older AWS setup. I made the move safe to run: DNS and the edge rebuilt in AWS CDK, a rehearsed rollback drill and written runbooks. Both brands switched with seconds of downtime and no rollback, and customers and feature teams did not notice. Result: lower AWS cost and 29% lower origin latency. Since then, redirects and the apps domains moved to the edge (CloudFront Functions), and the last nginx tier is next.",
+    text: "essent.nl and energiedirect.nl ran on an older AWS setup. We made the move safe to run: DNS and the edge rebuilt in AWS CDK, a rehearsed rollback drill and written runbooks. Both brands switched with seconds of downtime and no rollback, and customers and feature teams did not notice. Result: lower AWS cost and 29% lower origin latency. Since then, redirects and the apps domains moved to the edge (CloudFront Functions), and the last nginx tier is next.",
   },
   {
     title: "A platform every team can build on",
-    text: "Since September 2023 I handled 200+ support requests from feature teams and did 1,212 reviews for architectural fit. Every team got faster CI (smaller build artifacts, fewer e2e runs) and shared AI tooling: AGENTS.md and skills for Jira, Confluence and Sitecore.",
+    text: "Since September 2023 I have answered 200+ support requests from feature teams and done 1,212 reviews for architectural fit. Together we gave every team faster CI (smaller build artifacts, fewer e2e runs) and shared AI tooling: AGENTS.md and skills for Jira, Confluence and Sitecore.",
   },
 ];
 
@@ -31,7 +31,7 @@ const quintor = [
   {
     where: "NS (Dutch Railways)",
     when: "2021–2023",
-    text: "Planning system for the Dutch rail network, moving from Java EE to Angular and Spring Boot microservices on OpenShift. Set up CI/CD so the team could release at any moment, designed and shipped a new architecture for the Angular app, and wrote the proposal and proof of concept for moving the whole Java application to the web.",
+    text: "Planning system for the Dutch rail network, moving from Java EE to Angular and Spring Boot microservices on OpenShift. With the team, we set up CI/CD so we could release at any moment and took a new architecture for the Angular app to production. Together with architects and other teams, I wrote the proposal and proof of concept for moving the whole Java application to the web.",
   },
   {
     where: "Essent, cloud team",
@@ -136,11 +136,10 @@ const skills = [
           >
         </p>
         <p class="summary">
-          I help development teams keep moving. Large platforms tend to fall behind: upgrades get
-          postponed and every change feels risky. I move platforms forward by planning migrations as
-          a process, making releases safe and keeping the tooling simple. I work best in a team, I
-          keep going when a change gets hard, and I prefer evidence over assumptions and a simple
-          solution over a clever one.
+          Large platforms tend to fall behind: upgrades get postponed and every change feels risky.
+          I help development teams keep moving: we plan migrations as a process, make releases safe
+          and keep the tooling simple. I work best in a team, I keep going when a change gets hard,
+          and I prefer evidence over assumptions and a simple solution over a clever one.
         </p>
       </div>
       <div class="tile tile-yellow contact">
@@ -155,7 +154,7 @@ const skills = [
           <li><a href={SITE.github}>github.com/spike1292</a></li>
         </ul>
         <a class="btn btn-coral" href={`mailto:${SITE.email}`}
-          >Get in touch <span class="arrow" aria-hidden="true">→</span></a
+          >Email me <span class="arrow" aria-hidden="true">→</span></a
         >
       </div>
     </section>
@@ -324,17 +323,18 @@ const skills = [
     <section class="bento" aria-labelledby="cta-h">
       <div class="tile tile-ink cta">
         <div>
-          <p class="label">Proof</p>
-          <h2 id="cta-h" class="display">Want this on <em>your</em> platform?</h2>
+          <p class="label">Next step</p>
+          <h2 id="cta-h" class="display">Is your frontend falling <em>behind?</em></h2>
           <p>
             I write about real migrations from my work on <a href="/blog">the blog</a>. Code and
             side projects are on <a href={SITE.github}>GitHub</a>. Company details for CodeBakkers
+            Let's plan the first step together. Send me an email about where your platform is today.
             B.V. are on the <a href="/company">company page</a>.
           </p>
         </div>
         <div class="ctas">
           <a class="btn btn-yellow" href={`mailto:${SITE.email}`}
-            >Email me <span class="arrow" aria-hidden="true">→</span></a
+            >Email me about your platform <span class="arrow" aria-hidden="true">→</span></a
           >
           <a class="btn" href={SITE.linkedin}>LinkedIn</a>
         </div>
