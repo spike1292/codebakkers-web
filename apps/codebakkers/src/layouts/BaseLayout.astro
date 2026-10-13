@@ -33,7 +33,7 @@ const { title, description = SITE.description, type = "website", canonical, imag
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header
-      brand={SITE.author}
+      brand={SITE.brand}
       brandHref="/"
       nav={[...SITE.nav]}
       cta={{ href: "/#contact", label: "Hire me" }}
@@ -42,7 +42,7 @@ const { title, description = SITE.description, type = "website", canonical, imag
       <slot />
     </main>
     <Footer
-      name={SITE.author}
+      name={SITE.brand}
       brand={SITE.brand}
       tagline="baked in, not bolted on"
       social={[...SITE.social]}
