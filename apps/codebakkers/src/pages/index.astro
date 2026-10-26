@@ -5,16 +5,51 @@ import JsonLd from "@codebakkers/ui/components/JsonLd.astro";
 import { Picture } from "astro:assets";
 import { getCollection } from "astro:content";
 import portrait from "../assets/henk.jpeg";
+import essent from "../assets/logos/essent.svg";
+import ing from "../assets/logos/ing.svg";
+import ns from "../assets/logos/ns.svg";
+import abnAmro from "../assets/logos/abn-amro.svg";
+import sogeti from "../assets/logos/sogeti.svg";
+import codecask from "../assets/logos/codecask.svg";
 import { SITE } from "../consts";
 
-const work = [
-  "Platform foundations — the shared libraries, conventions and boundaries a few hundred projects and a few dozen teams depend on.",
-  "Large-scale migrations — moving whole monorepos onto new framework versions, build tooling and patterns without stopping delivery.",
-  "Build & workspace health — buildable/flatten restructuring, dependency untangling, lint and module-boundary rules, faster CI.",
-  "Frontend to edge — SSR, CloudFront behaviours, edge redirects and AWS CDK; owning the request path end to end.",
-  "Security & sustainability — vulnerability remediation, dependency governance, and killing what is provably dead.",
+const now = new Date();
+const years = now.getFullYear() - 2013 - (now.getMonth() < 9 ? 1 : 0);
+
+const logos = [
+  { name: "Essent", logo: essent },
+  { name: "ING", logo: ing },
+  { name: "NS", logo: ns },
+  { name: "Kadaster" },
+  { name: "ABN AMRO", logo: abnAmro },
+  { name: "Quintor" },
+  { name: "Sogeti", logo: sogeti },
+  { name: "Codecask", logo: codecask },
 ];
 
+const stack = [
+  "Angular",
+  "Nx",
+  "TypeScript",
+  "NgRx",
+  "SSR",
+  "Node.js",
+  "React",
+  "Astro",
+  "AWS CloudFront",
+  "CloudFront Functions",
+  "AWS CDK",
+  "ECS / Fargate",
+  "GitLab CI",
+  "Cypress",
+  "Playwright",
+  "Claude Code",
+];
+
+const teamFills = ["#FFFBF2", "#FFC93C", "#8FCBF0", "#FF6B4A", "#FFC2B0", "#A8DDB5"];
+const teams = Array.from({ length: 22 }, (_, i) => teamFills[i % teamFills.length]);
+
+const noteColors = ["tile-blush", "tile-paper", "tile-sky"];
 const posts = (await getCollection("posts", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
@@ -27,280 +62,1672 @@ const person = {
   "@type": "Person",
   name: "Henk Bakker",
   url: SITE.url,
-  jobTitle: "Frontend platform engineer — platform engineering at scale, frontend to edge",
+  jobTitle: "Frontend Platform Lead",
+  description: "Large-scale migrations without a stop in delivery.",
   sameAs: [SITE.github, SITE.linkedin],
   worksFor: { "@type": "Organization", name: "Codecask", url: "https://www.codecask.cc" },
   knowsAbout: [
     "Frontend platform engineering",
+    "Large-scale migrations",
     "Monorepos",
     "Nx",
     "Angular",
     "TypeScript",
-    "Build systems",
     "CI/CD",
     "AWS CloudFront",
     "AWS CDK",
-    "Web performance",
   ],
 };
 ---
 
-<BaseLayout title="Henk Bakker · CodeBakkers — frontend platform engineering at scale">
+<BaseLayout
+  title="Henk Bakker · Frontend Platform Lead — large-scale migrations without a stop in delivery"
+>
   <Container>
-    <section class="hero" aria-labelledby="hero-h">
-      <div class="hero-text">
-        <p class="kicker">HENK BAKKER · CODEBAKKERS</p>
-        <h1 id="hero-h">
-          Frontend platform engineering at scale — <span class="accent"
-            >frontend&#8209;to&#8209;edge</span
-          >.
-        </h1>
-        <p class="lead">
-          I build and modernize the frontend platforms large teams ship on — the shared foundation,
-          the build and release pipeline, and the CDN edge it all runs behind. Currently doing
-          exactly that for Essent, across a ~400-project monorepo serving six brand apps.
-        </p>
-        <div class="cta">
-          <a class="btn" href="/#contact">Work with me</a>
-          <a class="btn ghost" href="/blog">Read the blog →</a>
+    <section class="bento" aria-labelledby="hero-h">
+      <div class="tile tile-ink hero">
+        <div>
+          <p class="label">Frontend Platform Lead</p>
+          <h1 id="hero-h" class="display">
+            Your teams keep <em>shipping.</em> Your platform moves <span class="hl">forward.</span>
+          </h1>
+          <p class="lead">
+            <strong>Large-scale migrations without a stop in delivery.</strong> I help organisations move
+            big frontend platforms forward with planned migrations, safe releases and simple tooling.
+          </p>
+        </div>
+        <div class="ctas">
+          <a class="btn btn-yellow" href="#contact"
+            >Let's plan the first step <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a class="btn" href="#work">See three migrations</a>
         </div>
       </div>
-      <Picture
-        class="portrait"
-        src={portrait}
-        formats={["avif", "webp"]}
-        fallbackFormat="jpeg"
-        widths={[120, 240, 480]}
-        sizes="(max-width: 46rem) 120px, 240px"
-        width={240}
-        height={240}
-        alt="Henk Bakker"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </section>
 
-    <section id="work" class="block" aria-labelledby="work-h">
-      <h2 id="work-h">What I do</h2>
-      <ul class="work">{work.map((item) => <li>{item}</li>)}</ul>
-      <p class="more"><a href="/cv">Full background and selected work →</a></p>
-    </section>
-
-    <section id="writing" class="block" aria-labelledby="writing-h">
-      <div class="block-head">
-        <h2 id="writing-h">Writing</h2>
-        <a class="all" href="/blog">All posts →</a>
+      <div class="tile tile-coral photo">
+        <Picture
+          class="portrait"
+          src={portrait}
+          formats={["avif", "webp"]}
+          fallbackFormat="jpeg"
+          widths={[320, 480, 720]}
+          sizes="(max-width: 40rem) 100vw, (max-width: 68rem) 50vw, 25vw"
+          alt="Portrait of Henk Bakker"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <p class="tag"><b>Henk Bakker</b><span>Frontend Platform Lead</span></p>
       </div>
-      <p class="sub">
-        Field reports from frontend platform engineering at scale — a short one most weeks, a longer
-        deep-dive each month. <a href="/rss.xml">RSS</a>.
-      </p>
-      <ul class="posts">
+
+      <div class="tile tile-yellow now">
+        <p class="label">Currently</p>
+        <h2>Frontend Platform Lead @&nbsp;Essent</h2>
+        <p>My team runs the web platform that ~22 feature teams build on.</p>
+      </div>
+
+      <div class="tile tile-pine avail">
+        <div>
+          <p class="label">Availability</p>
+          <h2>Need a platform lead?</h2>
+          <p>Freelance or secondment via Codecask. Remote or hybrid.</p>
+        </div>
+        <a class="btn btn-yellow" href="#contact">Tell me about your platform</a>
+      </div>
+    </section>
+
+    <section class="bento" aria-labelledby="schem-h">
+      <div class="tile tile-sky dots schem">
+        <div class="top">
+          <div>
+            <p class="label">What we run — repo to user</p>
+            <h2 id="schem-h" class="display">From one repo to six brand apps.</h2>
+          </div>
+          <p>
+            The monorepo, the pipeline, server-side rendering (SSR) and the CDN edge. My team looks
+            after every step.
+          </p>
+        </div>
+
+        <svg
+          class="drawing h"
+          viewBox="0 0 1200 360"
+          role="img"
+          aria-label="Schematic: an Nx monorepo of 500 projects goes through build and CI to an SSR origin, behind the AWS CloudFront edge defined in CDK, serving six brand apps. Owned end to end."
+        >
+          <defs>
+            <marker
+              id="sa"
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+            >
+            <marker
+              id="stk"
+              viewBox="0 0 10 10"
+              refX="5"
+              refY="5"
+              markerWidth="10"
+              markerHeight="10"
+              orient="auto"><path d="M5 0V10" stroke="currentColor" stroke-width="2"></path></marker
+            >
+          </defs>
+          <g stroke="#15211C" stroke-width="2.5">
+            <rect
+              x="46"
+              y="114"
+              width="180"
+              height="100"
+              rx="18"
+              fill="#FFFBF2"
+              fill-opacity=".45"
+              stroke-opacity=".5"></rect>
+            <rect
+              x="38"
+              y="122"
+              width="180"
+              height="100"
+              rx="18"
+              fill="#FFFBF2"
+              fill-opacity=".7"
+              stroke-opacity=".75"></rect>
+            <rect x="30" y="130" width="180" height="100" rx="18" fill="#FFFBF2"></rect>
+            <rect x="270" y="130" width="180" height="100" rx="18" fill="#FFFBF2"></rect>
+            <rect x="510" y="130" width="180" height="100" rx="18" fill="#A8DDB5"></rect>
+            <rect x="750" y="120" width="200" height="120" rx="22" fill="#FFC93C" stroke-width="3"
+            ></rect>
+            <rect x="1010" y="130" width="160" height="100" rx="18" fill="#FF6B4A"></rect>
+          </g>
+          <g stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M232 180H262" marker-end="url(#sa)"></path>
+            <path d="M452 180H502" marker-end="url(#sa)"></path>
+            <path d="M692 180H742" marker-end="url(#sa)"></path>
+            <path d="M952 180H1002" marker-end="url(#sa)"></path>
+          </g>
+          <g fill="#15211C">
+            <text class="sb" x="48" y="156" font-size="11" opacity=".7">01 / SOURCE</text>
+            <text class="sv" x="48" y="190" font-size="23">Nx monorepo</text>
+            <text class="sm" x="48" y="214" font-size="12">500 projects</text>
+            <text class="sb" x="288" y="156" font-size="11" opacity=".7">02 / PIPELINE</text>
+            <text class="sv" x="288" y="190" font-size="23">Build &amp; CI</text>
+            <text class="sm" x="288" y="214" font-size="12">GitLab CI · Cypress</text>
+            <text class="sb" x="528" y="156" font-size="11" opacity=".7">03 / ORIGIN</text>
+            <text class="sv" x="528" y="190" font-size="23">SSR origin</text>
+            <text class="sm" x="528" y="214" font-size="12">Angular SSR</text>
+            <text class="sb" x="770" y="148" font-size="11" opacity=".7">04 / EDGE</text>
+            <text class="sv" x="770" y="184" font-size="27">CDN edge</text>
+            <text class="sm" x="770" y="208" font-size="12">AWS CloudFront</text>
+            <text class="sm" x="770" y="226" font-size="12">defined in CDK</text>
+            <text class="sb" x="1028" y="156" font-size="11" opacity=".7">05 / USERS</text>
+            <text class="sv" x="1028" y="188" font-size="20">6 brand apps</text>
+          </g>
+          <g stroke="#15211C" stroke-width="2">
+            {
+              teamFills.map((fill, i) => (
+                <circle cx={1038 + i * 22} cy="210" r="7" fill={i === 5 ? "#15211C" : fill} />
+              ))
+            }
+          </g>
+          <g
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-dasharray="4 4"
+            opacity=".75"
+          >
+            <path d="M136 114V66H236"></path>
+            <path d="M360 130V100H452"></path>
+            <path d="M850 120V56H960"></path>
+            <path d="M600 230V290H700"></path>
+          </g>
+          <g fill="#FF6B4A" stroke="#15211C" stroke-width="2">
+            <circle cx="136" cy="114" r="5"></circle><circle cx="360" cy="130" r="5"
+            ></circle><circle cx="850" cy="120" r="5"></circle><circle cx="600" cy="230" r="5"
+            ></circle>
+          </g>
+          <g class="sm" font-size="13" fill="currentColor">
+            <text x="244" y="71"
+              ><tspan class="sb">A</tspan> · one foundation, ~22 teams build on it</text
+            >
+            <text x="460" y="105"
+              ><tspan class="sb">B</tspan> · every change builds, tests, ships</text
+            >
+            <text x="968" y="52"><tspan class="sb">C</tspan> · redirects, apps domains</text>
+            <text x="968" y="70">in CloudFront Functions</text>
+            <text x="708" y="295"
+              ><tspan class="sb">D</tspan> · server-rendered, cached at the edge</text
+            >
+          </g>
+          <g stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M30 330H1170" marker-start="url(#stk)" marker-end="url(#stk)"></path>
+            <path d="M30 238V338M1170 238V338" stroke-dasharray="2 4"></path>
+          </g>
+          <rect class="pill" x="496" y="318" width="208" height="24" rx="12"></rect>
+          <text
+            class="sb pill-t"
+            x="600"
+            y="334.5"
+            font-size="12"
+            text-anchor="middle"
+            letter-spacing="2">OWNED END TO END</text
+          >
+        </svg>
+
+        <svg
+          class="drawing v"
+          viewBox="0 0 340 664"
+          role="img"
+          aria-label="Schematic: an Nx monorepo of 500 projects goes through build and CI to an SSR origin, behind the AWS CloudFront edge defined in CDK, serving six brand apps. Owned end to end."
+        >
+          <defs>
+            <marker
+              id="sav"
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+            >
+          </defs>
+          <g stroke="#15211C" stroke-width="2.5">
+            <rect
+              x="72"
+              y="12"
+              width="262"
+              height="84"
+              rx="16"
+              fill="#FFFBF2"
+              fill-opacity=".6"
+              stroke-opacity=".6"></rect>
+            <rect x="64" y="20" width="262" height="84" rx="16" fill="#FFFBF2"></rect>
+            <rect x="64" y="144" width="262" height="84" rx="16" fill="#FFFBF2"></rect>
+            <rect x="64" y="268" width="262" height="84" rx="16" fill="#A8DDB5"></rect>
+            <rect x="64" y="392" width="262" height="118" rx="20" fill="#FFC93C" stroke-width="3"
+            ></rect>
+            <rect x="64" y="550" width="262" height="104" rx="16" fill="#FF6B4A"></rect>
+          </g>
+          <g stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M195 108V138" marker-end="url(#sav)"></path>
+            <path d="M195 232V262" marker-end="url(#sav)"></path>
+            <path d="M195 356V386" marker-end="url(#sav)"></path>
+            <path d="M195 514V544" marker-end="url(#sav)"></path>
+          </g>
+          <g fill="#15211C">
+            <text class="sb" x="84" y="42" font-size="11" opacity=".7">01 / SOURCE</text>
+            <text class="sv" x="84" y="70" font-size="22">Nx monorepo</text>
+            <text class="sm" x="84" y="92" font-size="12">500 projects, one foundation</text>
+            <text class="sb" x="84" y="166" font-size="11" opacity=".7">02 / PIPELINE</text>
+            <text class="sv" x="84" y="194" font-size="22">Build &amp; CI</text>
+            <text class="sm" x="84" y="216" font-size="12">GitLab CI · Cypress</text>
+            <text class="sb" x="84" y="290" font-size="11" opacity=".7">03 / ORIGIN</text>
+            <text class="sv" x="84" y="318" font-size="22">SSR origin</text>
+            <text class="sm" x="84" y="340" font-size="12">Angular SSR</text>
+            <text class="sb" x="84" y="414" font-size="11" opacity=".7">04 / EDGE</text>
+            <text class="sv" x="84" y="446" font-size="25">CDN edge</text>
+            <text class="sm" x="84" y="470" font-size="12">CloudFront · defined in CDK</text>
+            <text class="sm" x="84" y="490" font-size="12">redirects · apps domains</text>
+            <text class="sb" x="84" y="572" font-size="11" opacity=".7">05 / USERS</text>
+            <text class="sv" x="84" y="602" font-size="22">6 brand apps</text>
+          </g>
+          <g stroke="#15211C" stroke-width="2">
+            {
+              teamFills.map((fill, i) => (
+                <circle cx={94 + i * 24} cy="628" r="8" fill={i === 5 ? "#15211C" : fill} />
+              ))
+            }
+          </g>
+          <g stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M34 20V654"></path><path d="M26 20H42M26 654H42"></path>
+          </g>
+          <rect class="pill" x="22" y="250" width="24" height="180" rx="12"></rect>
+          <text
+            class="sb pill-t"
+            font-size="11"
+            letter-spacing="2"
+            transform="translate(38.5 340) rotate(-90)"
+            text-anchor="middle">OWNED END TO END</text
+          >
+        </svg>
+      </div>
+    </section>
+
+    <section class="bento" aria-label="In numbers">
+      <div class="tile tile-mint stat">
+        <p class="label">Monorepo scale</p>
+        <p class="n display">500</p>
+        <p>projects in one Nx monorepo, one foundation</p>
+      </div>
+      <div class="tile tile-coral stat">
+        <p class="label">Brands</p>
+        <p class="n display">6</p>
+        <p>brand apps on the platform my team owns</p>
+      </div>
+      <div class="tile tile-blush stat">
+        <p class="label">Cloud move</p>
+        <p class="n display">29<small>%</small></p>
+        <p>lower origin latency after our cloud move</p>
+      </div>
+      <div class="tile tile-yellow stat">
+        <p class="label">Experience</p>
+        <p class="n display">{years}<small> yrs</small></p>
+        <p>building frontends, since October 2013</p>
+      </div>
+    </section>
+
+    <section class="bento" aria-labelledby="logos-h">
+      <div class="tile logos">
+        <p class="label">Worked with</p>
+        <h2 id="logos-h">Where I have<br />worked.</h2>
+        <ul class="logo-grid">
+          {
+            logos.map(({ name, logo }) => (
+              <li>
+                {logo ? (
+                  <span
+                    class="logo-mark"
+                    role="img"
+                    aria-label={name}
+                    style={`--logo: url(${logo.src}); --ratio: ${logo.width / logo.height}`}
+                  />
+                ) : (
+                  <span class="logo-word">{name}</span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="tile tile-sky loc">
+        <div class="map" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+        <p class="label">Based in</p>
+        <h2 class="display">Uithuizen</h2>
+        <p>the Netherlands · remote or hybrid</p>
+      </div>
+    </section>
+
+    <section class="bento" id="services" aria-labelledby="services-h">
+      <div class="head">
+        <h2 id="services-h" class="display">Where I can <em class="hl">help.</em></h2>
+        <p>Four problems that slow down large frontend teams, and what I do about each one.</p>
+      </div>
+      <div class="tile tile-ink svc">
+        <div class="row">
+          <p class="num">01</p>
+          <svg
+            class="ico"
+            viewBox="0 0 72 72"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            aria-hidden="true"
+            ><path d="M8 52L36 64L64 52"></path><path d="M8 40L36 52L64 40"></path><path
+              d="M8 28L36 16L64 28L36 40Z"
+              fill="#FFC93C"
+              stroke="#FFC93C"></path></svg
+          >
+        </div>
+        <div>
+          <h3>Frontend platform foundations</h3>
+          <p>Shared libraries, conventions and tooling that let many teams build on one base.</p>
+        </div>
+      </div>
+      <div class="tile tile-coral svc">
+        <div class="row">
+          <p class="num">02</p>
+          <svg
+            class="ico"
+            viewBox="0 0 72 72"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            aria-hidden="true"
+            ><rect x="6" y="22" width="22" height="28" rx="5"></rect><rect
+              x="44"
+              y="22"
+              width="22"
+              height="28"
+              rx="5"
+              fill="#FFFBF2"
+              stroke="#15211C"></rect><path d="M30 36H40"></path><path d="M36 31L41 36L36 41"
+            ></path><path d="M6 60H66" stroke-dasharray="4 5"></path></svg
+          >
+        </div>
+        <div>
+          <h3>Large migrations without stopping delivery</h3>
+          <p>
+            Framework-wide changes across hundreds of projects, planned as a process, while features
+            keep shipping.
+          </p>
+        </div>
+      </div>
+      <div class="tile tile-sky svc">
+        <div class="row">
+          <p class="num">03</p>
+          <svg
+            class="ico"
+            viewBox="0 0 72 72"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            aria-hidden="true"
+            ><circle cx="12" cy="36" r="7"></circle><circle cx="36" cy="36" r="7"></circle><circle
+              cx="60"
+              cy="36"
+              r="7"
+              fill="#FFC93C"
+              stroke="#15211C"></circle><path d="M19 36H29M43 36H53"></path><path
+              d="M12 22V14H60V22"
+              stroke-dasharray="3 4"></path></svg
+          >
+        </div>
+        <div>
+          <h3>Build &amp; CI pipelines</h3>
+          <p>Smaller build artifacts, fewer end-to-end test runs, and checks teams trust.</p>
+        </div>
+      </div>
+      <div class="tile tile-pine svc">
+        <div class="row">
+          <p class="num">04</p>
+          <svg
+            class="ico"
+            viewBox="0 0 72 72"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            aria-hidden="true"
+            ><circle cx="36" cy="36" r="26" fill="#A8DDB5" fill-opacity=".25"></circle><ellipse
+              cx="36"
+              cy="36"
+              rx="11"
+              ry="26"></ellipse><path d="M10 36H62M14 22H58M14 50H58"></path></svg
+          >
+        </div>
+        <div>
+          <h3>Cloud &amp; CDN edge</h3>
+          <p>
+            AWS CloudFront and CDK: DNS, redirects and domains at the edge, as code, with rehearsed
+            rollbacks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bento" aria-label="Stack and way of working">
+      <div class="tile stack">
+        <p class="label">Stack</p>
+        <h2>Tools we use in production.</h2>
+        <ul class="chips one" style="--chip: var(--cb-sky)">
+          {stack.map((s) => <li class="chip">{s}</li>)}
+        </ul>
+      </div>
+      <div class="tile tile-ink how">
+        <p class="label">How I work</p>
+        <h2 class="display">Evidence over assumptions. <em>Simple over clever.</em></h2>
+        <ul>
+          <li>Migrations planned as a process, with deadlines and a test round for every team.</li>
+          <li>Releases made safe: rehearsed rollbacks and written runbooks.</li>
+          <li>Teams enabled to do it themselves, not waiting on me.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bento" id="work" aria-labelledby="work-h">
+      <div class="head">
+        <h2 id="work-h" class="display">What this looked like <em class="hl">at Essent.</em></h2>
+        <p>
+          Three changes my team and I made, before and after. Each one shipped while the feature
+          teams kept working. More detail is on my <a href="/cv">CV</a>.
+        </p>
+      </div>
+
+      <article class="tile tile-pine case case-a" aria-labelledby="case1-h">
+        <div class="txt">
+          <p class="label">Case 01 — Cloud &amp; edge</p>
+          <h3 id="case1-h">Two brands moved to a new cloud platform</h3>
+          <p>
+            essent.nl and energiedirect.nl ran on an older AWS setup. We made the move safe to run:
+            DNS and the edge rebuilt in AWS CDK, a rehearsed rollback drill and written runbooks.
+            Both brands switched with seconds of downtime and no rollback. Since then, redirects and
+            the apps domains moved to the edge. The last nginx tier is next.
+          </p>
+          <ul class="tags">
+            <li>seconds of downtime</li>
+            <li>29% lower origin latency</li>
+            <li>lower AWS cost</li>
+            <li>CloudFront Functions</li>
+            <li>AWS CDK</li>
+          </ul>
+        </div>
+        <div class="draw dots">
+          <svg
+            class="drawing h"
+            viewBox="0 0 560 170"
+            role="img"
+            aria-label="Before, on the older AWS setup: users, then the CDN, then an nginx tier that handled redirects and the apps domains, then the SSR origin."
+          >
+            <defs>
+              <marker
+                id="c1a"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="7"
+                markerHeight="7"
+                orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+              >
+            </defs>
+            <text class="sb" x="0" y="16" font-size="12" fill="#A8DDB5" letter-spacing="2"
+              >BEFORE · OLDER AWS SETUP</text
+            >
+            <rect x="0" y="50" width="96" height="70" rx="14" fill="#FFFBF2"></rect>
+            <rect x="136" y="50" width="100" height="70" rx="14" fill="#FFFBF2"></rect>
+            <rect x="276" y="50" width="130" height="70" rx="14" fill="#FFFBF2"></rect>
+            <rect x="446" y="50" width="114" height="70" rx="14" fill="#A8DDB5"></rect>
+            <g stroke="currentColor" stroke-width="2.5">
+              <path d="M98 85H128" marker-end="url(#c1a)"></path>
+              <path d="M238 85H268" marker-end="url(#c1a)"></path>
+              <path d="M408 85H438" marker-end="url(#c1a)"></path>
+            </g>
+            <g fill="#15211C" text-anchor="middle">
+              <text class="sv" x="48" y="91" font-size="18">Users</text>
+              <text class="sv" x="186" y="91" font-size="18">CDN</text>
+              <text class="sv" x="341" y="78" font-size="18">nginx</text>
+              <text class="sm" x="341" y="96" font-size="11">redirects</text>
+              <text class="sm" x="341" y="110" font-size="11">apps domains</text>
+              <text class="sv" x="503" y="84" font-size="18">SSR</text>
+              <text class="sm" x="503" y="104" font-size="11">origin</text>
+            </g>
+          </svg>
+          <p class="turn h" aria-hidden="true">↓ MOVED TO A NEW CLOUD PLATFORM ↓</p>
+          <svg
+            class="drawing h"
+            viewBox="0 0 560 186"
+            role="img"
+            aria-label="After, on the new cloud platform: users, then the CloudFront edge that now handles redirects and the apps domains in CloudFront Functions, then the last nginx tier, marked next, then the SSR origin. Seconds of downtime, 29% lower origin latency."
+          >
+            <text class="sb" x="0" y="16" font-size="12" fill="#FFC93C" letter-spacing="2"
+              >AFTER · NEW CLOUD PLATFORM</text
+            >
+            <rect x="0" y="50" width="96" height="70" rx="14" fill="#FFFBF2"></rect>
+            <rect x="128" y="30" width="196" height="110" rx="20" fill="#FFC93C"></rect>
+            <rect
+              x="356"
+              y="50"
+              width="86"
+              height="70"
+              rx="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-dasharray="6 5"></rect>
+            <rect x="474" y="50" width="86" height="70" rx="14" fill="#A8DDB5"></rect>
+            <g stroke="currentColor" stroke-width="2.5">
+              <path d="M98 85H120" marker-end="url(#c1a)"></path>
+              <path d="M326 85H348" marker-end="url(#c1a)"></path>
+              <path d="M444 85H466" marker-end="url(#c1a)"></path>
+            </g>
+            <g fill="#15211C">
+              <text class="sv" x="48" y="91" font-size="18" text-anchor="middle">Users</text>
+              <text class="sv" x="144" y="60" font-size="20">CloudFront edge</text>
+              <text class="sm" x="144" y="86" font-size="12">✓ redirects</text>
+              <text class="sm" x="144" y="104" font-size="12">✓ apps domains</text>
+              <text class="sb" x="144" y="126" font-size="9.5" opacity=".75" letter-spacing=".5"
+                >CLOUDFRONT FUNCTIONS</text
+              >
+              <text class="sv" x="517" y="84" font-size="18" text-anchor="middle">SSR</text>
+              <text class="sm" x="517" y="104" font-size="11" text-anchor="middle">origin</text>
+            </g>
+            <g fill="currentColor" text-anchor="middle">
+              <text class="sv" x="399" y="88" font-size="17">nginx</text>
+              <text class="sm" x="399" y="106" font-size="11">last tier</text>
+            </g>
+            <rect x="372" y="40" width="54" height="20" rx="10" fill="#FF6B4A"></rect>
+            <text
+              class="sb"
+              x="399"
+              y="54"
+              font-size="11"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing="1">NEXT</text
+            >
+            <rect x="0" y="158" width="190" height="24" rx="12" fill="#A8DDB5"></rect>
+            <text
+              class="sb"
+              x="95"
+              y="174"
+              font-size="11"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing="1">SECONDS OF DOWNTIME</text
+            >
+            <rect x="202" y="158" width="226" height="24" rx="12" fill="#FFC93C"></rect>
+            <text
+              class="sb"
+              x="315"
+              y="174"
+              font-size="11"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing="1">29% LOWER ORIGIN LATENCY</text
+            >
+          </svg>
+
+          <svg
+            class="drawing v"
+            viewBox="0 0 320 400"
+            role="img"
+            aria-label="Before and after. Before, on the older AWS setup: users, CDN, an nginx tier for redirects and the apps domains, SSR origin. After, on the new cloud platform: users, the CloudFront edge with redirects and the apps domains in CloudFront Functions, the last nginx tier marked next, SSR origin. Seconds of downtime, 29% lower origin latency."
+          >
+            <defs>
+              <marker
+                id="c1v"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="7"
+                markerHeight="7"
+                orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+              >
+            </defs>
+            <text class="sb" x="0" y="14" font-size="12" fill="#A8DDB5" letter-spacing="2"
+              >BEFORE</text
+            >
+            <text class="sb" x="175" y="14" font-size="12" fill="#FFC93C" letter-spacing="2"
+              >AFTER</text
+            >
+            <path
+              d="M160 28V356"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-dasharray="3 5"
+              opacity=".45"></path>
+            <rect x="0" y="28" width="145" height="50" rx="14" fill="#FFFBF2"></rect>
+            <rect x="0" y="104" width="145" height="50" rx="14" fill="#FFFBF2"></rect>
+            <rect x="0" y="180" width="145" height="100" rx="14" fill="#FFFBF2"></rect>
+            <rect x="0" y="306" width="145" height="50" rx="14" fill="#A8DDB5"></rect>
+            <rect x="175" y="28" width="145" height="50" rx="14" fill="#FFFBF2"></rect>
+            <rect x="175" y="104" width="145" height="104" rx="18" fill="#FFC93C"></rect>
+            <rect
+              x="176"
+              y="234"
+              width="143"
+              height="46"
+              rx="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-dasharray="6 5"></rect>
+            <rect x="175" y="306" width="145" height="50" rx="14" fill="#A8DDB5"></rect>
+            <g stroke="currentColor" stroke-width="2.5">
+              <path d="M72 80V98" marker-end="url(#c1v)"></path>
+              <path d="M72 156V174" marker-end="url(#c1v)"></path>
+              <path d="M72 282V300" marker-end="url(#c1v)"></path>
+              <path d="M247 80V98" marker-end="url(#c1v)"></path>
+              <path d="M247 210V228" marker-end="url(#c1v)"></path>
+              <path d="M247 282V300" marker-end="url(#c1v)"></path>
+            </g>
+            <g fill="#15211C" text-anchor="middle">
+              <text class="sv" x="72.5" y="59" font-size="17">Users</text>
+              <text class="sv" x="72.5" y="135" font-size="17">CDN</text>
+              <text class="sv" x="72.5" y="214" font-size="17">nginx</text>
+              <text class="sm" x="72.5" y="236" font-size="11">redirects</text>
+              <text class="sm" x="72.5" y="254" font-size="11">apps domains</text>
+              <text class="sv" x="72.5" y="329" font-size="17">SSR</text>
+              <text class="sm" x="72.5" y="346" font-size="11">origin</text>
+              <text class="sv" x="247.5" y="59" font-size="17">Users</text>
+              <text class="sv" x="247.5" y="329" font-size="17">SSR</text>
+              <text class="sm" x="247.5" y="346" font-size="11">origin</text>
+            </g>
+            <g fill="#15211C">
+              <text class="sv" x="189" y="130" font-size="17">CloudFront</text>
+              <text class="sv" x="189" y="149" font-size="17">edge</text>
+              <text class="sm" x="189" y="172" font-size="11">✓ redirects</text>
+              <text class="sm" x="189" y="189" font-size="11">✓ apps domains</text>
+              <text class="sb" x="189" y="202" font-size="8.5" opacity=".75" letter-spacing=".5"
+                >CF FUNCTIONS · CDK</text
+              >
+            </g>
+            <g fill="currentColor">
+              <text class="sv" x="190" y="256" font-size="16">nginx</text>
+              <text class="sm" x="190" y="272" font-size="10">last tier</text>
+            </g>
+            <rect x="262" y="247" width="48" height="20" rx="10" fill="#FF6B4A"></rect>
+            <text
+              class="sb"
+              x="286"
+              y="261"
+              font-size="10"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing="1">NEXT</text
+            >
+            <rect x="0" y="372" width="152" height="24" rx="12" fill="#A8DDB5"></rect>
+            <text
+              class="sb"
+              x="76"
+              y="388"
+              font-size="9.5"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing=".5">SECONDS OF DOWNTIME</text
+            >
+            <rect x="162" y="372" width="158" height="24" rx="12" fill="#FFC93C"></rect>
+            <text
+              class="sb"
+              x="241"
+              y="388"
+              font-size="9.5"
+              fill="#15211C"
+              text-anchor="middle"
+              letter-spacing=".5">−29% ORIGIN LATENCY</text
+            >
+          </svg>
+        </div>
+      </article>
+
+      <article class="tile tile-yellow case case-b" aria-labelledby="case2-h">
+        <div class="draw dots">
+          <svg
+            class="drawing"
+            viewBox="0 0 360 400"
+            role="img"
+            aria-label="A grid of 500 project cells: most migrated, the rest in flight. Below it, the delivery line keeps running, with one short break for a one-day production freeze."
+          >
+            <defs>
+              <pattern id="done" width="14" height="14" patternUnits="userSpaceOnUse"
+                ><rect x="1.5" y="1.5" width="11" height="11" rx="3" fill="currentColor"
+                ></rect></pattern
+              >
+              <pattern id="todo" width="14" height="14" patternUnits="userSpaceOnUse"
+                ><rect
+                  x="2.25"
+                  y="2.25"
+                  width="9.5"
+                  height="9.5"
+                  rx="3"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-opacity=".55"
+                  stroke-width="1.5"></rect></pattern
+              >
+              <marker
+                id="c2a"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+              >
+              <marker
+                id="c2t"
+                viewBox="0 0 10 10"
+                refX="5"
+                refY="5"
+                markerWidth="10"
+                markerHeight="10"
+                orient="auto"
+                ><path d="M5 0V10" stroke="currentColor" stroke-width="2"></path></marker
+              >
+            </defs>
+            <path
+              d="M0 14H350"
+              stroke="currentColor"
+              stroke-width="1.5"
+              marker-start="url(#c2t)"
+              marker-end="url(#c2t)"></path>
+            <rect class="pill" x="112" y="3" width="126" height="22" rx="11"></rect>
+            <text
+              class="sb pill-t"
+              x="175"
+              y="18.5"
+              font-size="12"
+              text-anchor="middle"
+              letter-spacing="1">500 PROJECTS</text
+            >
+            <rect x="0" y="28" width="252" height="280" fill="url(#done)"></rect>
+            <rect x="252" y="28" width="98" height="280" fill="url(#todo)"></rect>
+            <path d="M252 24V314" stroke="#FF6B4A" stroke-width="3" stroke-dasharray="6 4"></path>
+            <g class="sb" font-size="12.5" fill="currentColor">
+              <text x="244" y="330" text-anchor="end">MIGRATED →</text>
+              <text x="260" y="330" opacity=".8">IN FLIGHT</text>
+              <text x="0" y="357" letter-spacing="1">DELIVERY · TEAMS KEPT SHIPPING</text>
+            </g>
+            <g stroke="currentColor" stroke-width="3" fill="none">
+              <path d="M0 372H196"></path>
+              <path d="M214 372H350" marker-end="url(#c2a)"></path>
+            </g>
+            <g fill="#FF6B4A" stroke="#15211C" stroke-width="2">
+              <circle cx="30" cy="372" r="6"></circle><circle cx="85" cy="372" r="6"
+              ></circle><circle cx="140" cy="372" r="6"></circle><circle cx="250" cy="372" r="6"
+              ></circle><circle cx="305" cy="372" r="6"></circle>
+            </g>
+            <text
+              class="sb"
+              x="205"
+              y="394"
+              font-size="10"
+              fill="currentColor"
+              text-anchor="middle"
+              letter-spacing="1">1-DAY FREEZE</text
+            >
+          </svg>
+        </div>
+        <div class="txt">
+          <p class="label">Case 02 — Migration</p>
+          <h3 id="case2-h">A 500-project monorepo, migrated while teams keep shipping</h3>
+          <p>
+            Large changes used to stall. With my team, we turned them into a planned process: a
+            roadmap with deadlines, a test round for every team, side-by-side checks of old and new
+            builds. Two major Angular versions landed with only a one-day production freeze, while
+            ~22 feature teams kept shipping.
+          </p>
+          <ul class="tags">
+            <li>standalone components</li>
+            <li>signals</li>
+            <li>buildable libraries</li>
+            <li>parallel AI coding agents</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tile tile-mint case case-c" aria-labelledby="case3-h">
+        <div class="draw dots">
+          <svg
+            class="drawing h"
+            viewBox="0 0 520 256"
+            role="img"
+            aria-label="About 22 feature teams build on one web platform. Since September 2023: 200+ support requests handled, 1,212 reviews for architectural fit, faster CI and shared AI tooling."
+          >
+            <defs>
+              <marker
+                id="c3a"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="7"
+                markerHeight="7"
+                orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+              >
+            </defs>
+            <text class="sb" x="0" y="14" font-size="12" fill="currentColor" letter-spacing="1"
+              >~22 FEATURE TEAMS</text
+            >
+            <path
+              d={teams.map((_, i) => `M${18 + i * 22.5} 48V84`).join("")}
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-dasharray="3 4"
+              opacity=".6"></path>
+            <g stroke="#15211C" stroke-width="2">
+              {teams.map((fill, i) => <circle cx={18 + i * 22.5} cy="40" r="7" fill={fill} />)}
+            </g>
+            <rect
+              x="1"
+              y="88"
+              width="518"
+              height="66"
+              rx="18"
+              fill="#15211C"
+              stroke="currentColor"
+              stroke-opacity=".35"
+              stroke-width="2"></rect>
+            <text class="sv" x="22" y="118" font-size="22" fill="#FFFBF2">One web platform</text>
+            <text class="sm" x="22" y="140" font-size="12" fill="#FFC93C"
+              >CMS · monorepo · 6 brand apps · edge · cloud</text
+            >
+            <g stroke="currentColor" stroke-width="2.5">
+              <path d="M82 156V174" marker-end="url(#c3a)"></path>
+              <path d="M260 156V174" marker-end="url(#c3a)"></path>
+              <path d="M438 156V174" marker-end="url(#c3a)"></path>
+            </g>
+            <g stroke="#15211C" stroke-width="2">
+              <rect x="1" y="182" width="164" height="70" rx="16" fill="#FFC93C"></rect>
+              <rect x="178" y="182" width="164" height="70" rx="16" fill="#FFFBF2"></rect>
+              <rect x="355" y="182" width="164" height="70" rx="16" fill="#8FCBF0"></rect>
+            </g>
+            <g fill="#15211C">
+              <text class="sv" x="16" y="216" font-size="26">200+</text>
+              <text class="sm" x="16" y="238" font-size="12">support requests</text>
+              <text class="sv" x="193" y="216" font-size="26">1,212</text>
+              <text class="sm" x="193" y="238" font-size="12">reviews for fit</text>
+              <text class="sv" x="370" y="214" font-size="22">Faster CI</text>
+              <text class="sm" x="370" y="238" font-size="12">+ shared AI tooling</text>
+            </g>
+          </svg>
+
+          <svg
+            class="drawing v"
+            viewBox="0 0 320 412"
+            role="img"
+            aria-label="About 22 feature teams build on one web platform. Since September 2023: 200+ support requests handled, 1,212 reviews for architectural fit, faster CI and shared AI tooling."
+          >
+            <defs>
+              <marker
+                id="c3v"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="7"
+                markerHeight="7"
+                orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
+              >
+            </defs>
+            <text class="sb" x="0" y="14" font-size="12" fill="currentColor" letter-spacing="1"
+              >~22 FEATURE TEAMS</text
+            >
+            <g stroke="#15211C" stroke-width="2">
+              {
+                teams.map((fill, i) => (
+                  <circle
+                    cx={14 + (i % 11) * 29}
+                    cy={38 + Math.floor(i / 11) * 26}
+                    r="8"
+                    fill={fill}
+                  />
+                ))
+              }
+            </g>
+            <g stroke="currentColor" stroke-width="2.5">
+              <path d="M160 76V94" marker-end="url(#c3v)"></path>
+              <path d="M160 172V190" marker-end="url(#c3v)"></path>
+            </g>
+            <rect
+              x="1"
+              y="100"
+              width="318"
+              height="70"
+              rx="18"
+              fill="#15211C"
+              stroke="currentColor"
+              stroke-opacity=".35"
+              stroke-width="2"></rect>
+            <text class="sv" x="18" y="130" font-size="20" fill="#FFFBF2">One web platform</text>
+            <text class="sm" x="18" y="152" font-size="11" fill="#FFC93C"
+              >CMS · monorepo · edge · cloud</text
+            >
+            <g stroke="#15211C" stroke-width="2">
+              <rect x="1" y="196" width="318" height="64" rx="16" fill="#FFC93C"></rect>
+              <rect x="1" y="270" width="318" height="64" rx="16" fill="#FFFBF2"></rect>
+              <rect x="1" y="344" width="318" height="64" rx="16" fill="#8FCBF0"></rect>
+            </g>
+            <g fill="#15211C">
+              <text class="sv" x="18" y="237" font-size="26">200+</text>
+              <text class="sm" x="120" y="234" font-size="12">support requests</text>
+              <text class="sv" x="18" y="311" font-size="26">1,212</text>
+              <text class="sm" x="120" y="308" font-size="12">reviews for fit</text>
+              <text class="sv" x="18" y="384" font-size="21">Faster CI</text>
+              <text class="sm" x="134" y="382" font-size="12">+ shared AI tooling</text>
+            </g>
+          </svg>
+        </div>
+        <div class="txt">
+          <p class="label">Case 03 — Platform</p>
+          <h3 id="case3-h">A platform every team can build on</h3>
+          <p>
+            Since September 2023 I have answered 200+ support requests from feature teams and done
+            1,212 reviews for architectural fit. Together we gave every team faster CI and shared AI
+            tooling: AGENTS.md and skills for Jira, Confluence and Sitecore.
+          </p>
+        </div>
+      </article>
+
+      <div class="tile tile-coral motto">
+        <h2 class="display">Baked in, <span>not bolted on.</span></h2>
+        <p>
+          Quality goes into the platform from the start, not as an afterthought. You can hire me
+          freelance or on secondment through <a href="https://www.codecask.cc">Codecask</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="bento" id="notes" aria-labelledby="notes-h">
+      <div class="tile tile-pine note-head">
+        <p class="label">The blog</p>
+        <h2 id="notes-h" class="display">{SITE.tagline}</h2>
+        <a class="more" href="/blog">All posts <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <ul class="notes">
         {
-          posts.map((post) => (
+          posts.map((post, i) => (
             <li>
-              <a href={`/blog/${post.id}/`}>
-                <time class="date" datetime={iso(post.data.pubDate)}>
-                  {fmt(post.data.pubDate)}
-                </time>
-                <span class="body">
-                  <span class="ptitle">{post.data.title}</span>
-                  <span class="pdesc">{post.data.description}</span>
+              <a
+                class={`tile ${noteColors[i % noteColors.length]} note`}
+                href={`/blog/${post.id}/`}
+              >
+                <span class="label">
+                  {i === 0 ? "Latest · " : ""}
+                  <time datetime={iso(post.data.pubDate)}>{fmt(post.data.pubDate)}</time>
+                </span>
+                <span class="note-title">{post.data.title}</span>
+                <span class="meta">
+                  <span>Read</span>
+                  <span class="arrow" aria-hidden="true">
+                    →
+                  </span>
                 </span>
               </a>
             </li>
           ))
         }
       </ul>
-      {posts.length === 0 && <p class="empty">First post lands Monday.</p>}
     </section>
 
-    <section id="contact" class="block" aria-labelledby="contact-h">
-      <h2 id="contact-h">Contact</h2>
-      <p class="lead">
-        Building or modernizing a frontend platform and want a hand at the foundation, build, or
-        edge layers? Get in touch.
-      </p>
-      <p class="email"><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    <section class="bento" id="contact" aria-labelledby="contact-h">
+      <div class="tile tile-ink cta">
+        <div>
+          <p class="label">Contact</p>
+          <h2 id="contact-h" class="display">Let's plan the first step <em>together.</em></h2>
+        </div>
+        <div class="ctas">
+          <a class="btn btn-coral" href={`mailto:${SITE.email}`}
+            >Email me about your platform <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a class="btn" href={SITE.linkedin}>Connect on LinkedIn</a>
+        </div>
+      </div>
+      <div class="tile tile-yellow mail">
+        <div>
+          <p class="label">Email</p>
+          <p class="addr">{SITE.email.replace("@", "@​")}</p>
+        </div>
+        <ul>
+          <li>
+            <a href={`mailto:${SITE.email}`}
+              >Send an email <span class="arrow" aria-hidden="true">→</span></a
+            >
+          </li>
+          <li>
+            <a href={SITE.linkedin}>LinkedIn <span class="arrow" aria-hidden="true">↗</span></a>
+          </li>
+          <li>
+            <a href={SITE.github}>GitHub <span class="arrow" aria-hidden="true">↗</span></a>
+          </li>
+          <li>
+            <a href="https://www.codecask.cc"
+              >Hire via Codecask <span class="arrow" aria-hidden="true">↗</span></a
+            >
+          </li>
+        </ul>
+      </div>
     </section>
   </Container>
   <JsonLd schema={person} />
 </BaseLayout>
 
 <style>
+  .bento h2,
+  .bento h3 {
+    color: inherit;
+  }
   .hero {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--space-8);
-    align-items: center;
-    margin: var(--space-16) 0 var(--space-12);
-  }
-  .hero-text {
-    max-width: var(--measure);
-  }
-  .hero :global(picture) {
-    display: block;
-  }
-  .portrait {
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-  }
-  @media (max-width: 46rem) {
-    .hero {
-      grid-template-columns: 1fr;
-    }
-    .portrait {
-      width: 120px;
-      height: 120px;
-      order: -1;
-    }
-  }
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    color: var(--color-accent-strong);
-    margin-bottom: var(--space-3);
+    grid-column: span 7;
+    grid-row: span 2;
+    min-height: 560px;
+    justify-content: space-between;
+    padding: clamp(1.6rem, 1rem + 2vw, 2.5rem);
   }
   .hero h1 {
-    font-size: var(--step-4);
+    font-size: clamp(3.1rem, 1.6rem + 4.4vw, 5.75rem);
   }
-  .accent {
-    color: var(--color-accent);
+  .hero h1 em {
+    font-style: normal;
+    color: var(--cb-yellow);
   }
   .lead {
-    color: var(--color-text-soft);
-    font-size: var(--step-1);
-    margin-top: var(--space-4);
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+    max-width: 36ch;
+    margin-top: 1.4rem;
   }
-  .cta {
+  .lead strong {
+    color: var(--tile-accent);
+  }
+  .ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
+    gap: 0.75rem;
+    margin-top: 1.75rem;
   }
-  .btn {
-    display: inline-block;
-    font-weight: 600;
-    font-size: var(--step--1);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius);
-    background: var(--color-accent);
-    color: #fff;
-    text-decoration: none;
+
+  .photo {
+    grid-column: span 3;
+    grid-row: span 2;
+    justify-content: flex-end;
+    min-height: 360px;
   }
-  .btn:hover {
-    background: var(--color-accent-strong);
-    color: #fff;
-  }
-  .btn.ghost {
-    background: transparent;
-    color: var(--color-accent-strong);
-    border: 1px solid var(--color-border);
-  }
-  .block {
-    margin: var(--space-16) 0;
-  }
-  .block h2 {
-    max-width: var(--measure);
-  }
-  .work {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-6) 0 0;
-    max-width: var(--measure);
-  }
-  .work li {
-    position: relative;
-    padding-left: var(--space-6);
-    margin-bottom: var(--space-4);
-    color: var(--color-text-soft);
-  }
-  .work li::before {
-    content: "→";
+  .photo :global(picture),
+  .photo :global(.portrait) {
     position: absolute;
-    left: 0;
-    color: var(--color-accent);
-    font-family: var(--font-mono);
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  .more {
-    margin-top: var(--space-4);
-  }
-  .block-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4);
-    max-width: var(--measure);
-  }
-  .all {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    text-decoration: none;
-    color: var(--color-accent-strong);
-    white-space: nowrap;
-  }
-  .all:hover {
-    color: var(--color-accent);
-  }
-  .sub {
-    color: var(--color-muted);
-    margin-top: var(--space-2);
-    max-width: var(--measure);
-  }
-  .posts {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-6) 0 0;
-  }
-  .posts li + li {
-    border-top: 1px solid var(--color-border);
-  }
-  .posts a {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    gap: var(--space-4);
-    padding: var(--space-5) 0;
-    text-decoration: none;
-    color: inherit;
-    align-items: baseline;
-  }
-  .date {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--color-muted);
-    padding-top: 0.25em;
-  }
-  .body {
+  .tag {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    background: var(--cb-paper);
+    color: var(--cb-ink);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
   }
-  .ptitle {
-    font-size: var(--step-1);
-    font-weight: 620;
+  .tag b {
+    font-size: 1.25rem;
     letter-spacing: -0.02em;
   }
-  .pdesc {
-    color: var(--color-muted);
+  .tag span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
-  .posts a:hover .ptitle {
-    color: var(--color-accent);
+
+  .now,
+  .avail {
+    grid-column: span 2;
   }
-  .empty {
-    color: var(--color-muted);
-    padding: var(--space-6) 0;
+  .now h2,
+  .avail h2 {
+    font-size: clamp(1.3rem, 1rem + 0.7vw, 1.6rem);
+    line-height: 1.02;
   }
-  @media (max-width: 34rem) {
-    .posts a {
-      grid-template-columns: 1fr;
-      gap: var(--space-1);
+  .now p:last-child {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.95rem;
+  }
+  .avail {
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .avail h2 + p {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+  }
+  .avail .btn {
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .schem {
+    grid-column: span 12;
+    padding: clamp(1.35rem, 1rem + 1.4vw, 2.25rem);
+  }
+  .schem .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .schem h2 {
+    font-size: clamp(2.1rem, 1.4rem + 2vw, 3rem);
+  }
+  .schem .top > p {
+    max-width: 40ch;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .stat {
+    grid-column: span 3;
+    min-height: 230px;
+    justify-content: space-between;
+  }
+  .n {
+    font-size: clamp(4rem, 2rem + 6vw, 7.5rem);
+    color: var(--tile-accent);
+  }
+  .n small {
+    font-size: 0.45em;
+    letter-spacing: -0.02em;
+  }
+  .stat p:last-child {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.2;
+    max-width: 18ch;
+  }
+
+  .logos {
+    grid-column: span 8;
+  }
+  .logos h2 {
+    font-size: clamp(1.75rem, 1.3rem + 1.2vw, 2.25rem);
+    margin-bottom: 1.4rem;
+  }
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: auto 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .logo-grid li {
+    display: grid;
+    place-items: center;
+    height: 92px;
+    padding: 0 1rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--tile-accent) 9%, transparent);
+    color: var(--tile-accent);
+  }
+  .logo-mark {
+    display: block;
+    width: min(100%, calc(var(--ratio) * var(--logo-h, 40px)), 150px);
+    aspect-ratio: var(--ratio);
+    background: currentColor;
+    mask: var(--logo) center / contain no-repeat;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+  }
+  .logo-word {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .loc {
+    grid-column: span 4;
+    min-height: 300px;
+  }
+  .map {
+    position: absolute;
+    right: -60px;
+    bottom: -60px;
+    width: 300px;
+    height: 300px;
+  }
+  .map i {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+  }
+  .map i:nth-child(1) {
+    inset: 0;
+  }
+  .map i:nth-child(2) {
+    inset: 50px;
+  }
+  .map i:nth-child(3) {
+    inset: 100px;
+  }
+  .map b {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 26px;
+    height: 26px;
+    margin: -13px;
+    background: var(--cb-coral);
+    border: 4px solid var(--cb-ink);
+    border-radius: 50%;
+  }
+  .loc h2 {
+    position: relative;
+    font-size: clamp(2.6rem, 1.8rem + 2vw, 3.5rem);
+  }
+  .loc h2 + p {
+    position: relative;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .svc {
+    grid-column: span 3;
+    min-height: 320px;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .svc .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .num {
+    font-size: clamp(2.75rem, 2rem + 2vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: var(--tile-accent);
+  }
+  .ico {
+    width: 64px;
+    height: 64px;
+  }
+  .svc h3 {
+    font-size: clamp(1.45rem, 1.2rem + 0.6vw, 1.75rem);
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+  }
+  .svc h3 + p {
+    margin-top: 0.6rem;
+  }
+
+  .stack {
+    grid-column: span 5;
+  }
+  .stack h2,
+  .how h2 {
+    font-size: clamp(1.6rem, 1.3rem + 0.9vw, 1.9rem);
+    margin-bottom: 1.25rem;
+  }
+  .how {
+    grid-column: span 7;
+    justify-content: space-between;
+  }
+  .how h2 {
+    font-size: clamp(2rem, 1.4rem + 1.8vw, 2.75rem);
+    max-width: 18ch;
+  }
+  .how h2 em {
+    font-style: normal;
+    color: var(--tile-accent);
+  }
+  .how ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .how li {
+    padding-top: 0.75rem;
+    border-top: 2px dashed color-mix(in srgb, currentColor 30%, transparent);
+    font-weight: 500;
+  }
+
+  .case {
+    gap: 1.6rem;
+  }
+  .case h3 {
+    font-size: clamp(1.9rem, 1.4rem + 1.4vw, 2.5rem);
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+  .case h3 + p {
+    font-size: 1.08rem;
+    margin-top: 0.9rem;
+    max-width: 50ch;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    font-size: 0.875rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    background: color-mix(in srgb, currentColor 13%, transparent);
+  }
+  .draw {
+    border-radius: 20px;
+    padding: 1.5rem;
+    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+  }
+  .case-a {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 2.25rem;
+    padding: clamp(1.35rem, 1rem + 1.4vw, 2.25rem);
+  }
+  .case-a h3 {
+    font-size: clamp(2.1rem, 1.4rem + 2vw, 3.4rem);
+  }
+  .case-a .draw {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6rem;
+    background-color: color-mix(in srgb, var(--cb-ink) 26%, transparent);
+  }
+  .case-b {
+    grid-column: span 5;
+  }
+  .case-b .draw svg {
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .case-c {
+    grid-column: span 7;
+  }
+  .case-c .draw {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .turn {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-align: center;
+    color: var(--cb-yellow);
+  }
+  .pill {
+    fill: currentColor;
+  }
+  .pill-t {
+    fill: var(--tile-bg);
+  }
+
+  .motto {
+    grid-column: span 12;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    padding: clamp(1.6rem, 1rem + 1.4vw, 2.25rem);
+  }
+  .motto h2 {
+    font-size: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  }
+  .motto h2 span {
+    display: inline-block;
+    padding: 0 0.15em 0.05em;
+    border-radius: 0.16em;
+    background: var(--cb-ink);
+    color: var(--cb-coral);
+    transform: rotate(1deg);
+  }
+  .motto p {
+    max-width: 38ch;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .motto a {
+    text-decoration: underline;
+  }
+
+  .note-head {
+    grid-column: span 3;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 260px;
+  }
+  .note-head h2 {
+    font-size: clamp(2.2rem, 1.6rem + 1.6vw, 2.9rem);
+  }
+  .more {
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .more:hover {
+    text-decoration: underline;
+  }
+  .notes {
+    grid-column: span 9;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .note {
+    height: 100%;
+    min-height: 260px;
+    justify-content: space-between;
+    gap: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.12s;
+  }
+  .note:hover {
+    transform: translateY(-3px);
+  }
+  .note-title {
+    font-size: clamp(1.5rem, 1.25rem + 0.7vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .note:hover .note-title {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cta {
+    grid-column: span 8;
+    min-height: 420px;
+    justify-content: space-between;
+    padding: clamp(1.6rem, 1rem + 2vw, 3rem);
+  }
+  .cta h2 {
+    font-size: clamp(3rem, 1.6rem + 4.4vw, 6rem);
+  }
+  .cta h2 em {
+    font-style: normal;
+    color: var(--cb-coral);
+  }
+  .mail {
+    grid-column: span 4;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .addr {
+    font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .mail ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mail li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-top: 2px solid color-mix(in srgb, currentColor 20%, transparent);
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-decoration: none;
+  }
+  .mail li a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 68rem) {
+    .hero {
+      grid-column: span 12;
+      min-height: 0;
+    }
+    .photo {
+      grid-column: span 6;
+      grid-row: span 1;
+      min-height: 380px;
+    }
+    .now,
+    .avail {
+      grid-column: span 3;
+    }
+    .stat,
+    .svc {
+      grid-column: span 6;
+    }
+    .logos,
+    .loc,
+    .stack,
+    .how,
+    .case-b,
+    .case-c,
+    .cta,
+    .mail,
+    .note-head,
+    .notes {
+      grid-column: span 12;
+    }
+    .note-head {
+      min-height: 0;
     }
   }
-  .email {
-    font-size: var(--step-1);
-    margin-top: var(--space-4);
+  @media (max-width: 56rem) {
+    .case-a {
+      grid-template-columns: 1fr;
+    }
+    .schem .top,
+    .motto {
+      flex-direction: column;
+      align-items: start;
+    }
+    .how ul {
+      grid-template-columns: 1fr;
+    }
+    .turn {
+      display: none;
+    }
+  }
+  @media (max-width: 40rem) {
+    .bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .bento > * {
+      grid-column: span 2;
+      grid-row: auto;
+    }
+    .bento > .now,
+    .bento > .avail,
+    .bento > .stat {
+      grid-column: span 1;
+    }
+    .photo {
+      min-height: 340px;
+    }
+    .now h2,
+    .avail h2 {
+      font-size: 1.2rem;
+    }
+    .now,
+    .avail,
+    .stat {
+      padding: 1.1rem;
+    }
+    .stat {
+      min-height: 170px;
+    }
+    .stat p:last-child {
+      font-size: 0.95rem;
+    }
+    .logo-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .logo-grid li {
+      height: 74px;
+      --logo-h: 30px;
+    }
+    .logo-word {
+      font-size: 1.3rem;
+    }
+    .map {
+      bottom: -120px;
+      right: -90px;
+    }
+    .loc {
+      min-height: 220px;
+    }
+    .svc {
+      min-height: 0;
+    }
+    .draw {
+      padding: 0.75rem;
+      border-radius: 16px;
+    }
+    .note {
+      min-height: 0;
+    }
+    .cta {
+      min-height: 0;
+    }
   }
 </style>

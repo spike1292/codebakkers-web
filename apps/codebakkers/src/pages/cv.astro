@@ -1,231 +1,601 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
-import Prose from "@codebakkers/ui/components/Prose.astro";
 import { SITE } from "../consts";
 
-const selectedWork = [
+const numbers = [
+  { n: "500", label: "projects in one monorepo", color: "tile-mint" },
+  { n: "~22", label: "feature teams on the platform", color: "tile-sky" },
+  { n: "6", label: "brand apps", color: "tile-coral" },
+  { n: "29%", label: "lower origin latency", color: "tile-blush" },
+  { n: "1,212", label: "reviews for architectural fit", color: "tile-yellow" },
+  { n: "200+", label: "support requests handled", color: "tile-paper" },
+];
+
+const essentWins = [
   {
-    title: "nginx tier → CloudFront + SSR origin",
-    note: "Decommissioned a whole ECS/nginx layer; moved routing, redirects and header rewriting to the edge.",
+    title: "Migrating a 500-project monorepo while feature teams keep shipping",
+    text: "Large changes used to stall, and feature teams fell behind. With my team, we turned them into a planned process: a migration roadmap with deadlines, a test round for every team in PI planning, side-by-side checks of old and new builds, and blockers visible to the organisation. That moved the codebase to standalone components, signals and buildable libraries, and through two major Angular versions with only a one-day production freeze. Large refactors now run in waves with parallel AI coding agents.",
   },
   {
-    title: "Framework migration across ~400 projects",
-    note: "Drove the standalone-components migration at monorepo scale, without pausing delivery.",
+    title: "Migrating two brands to a new cloud platform",
+    text: "essent.nl and energiedirect.nl ran on an older AWS setup. We made the move safe to run: DNS and the edge rebuilt in AWS CDK, a rehearsed rollback drill and written runbooks. Both brands switched with seconds of downtime and no rollback, and customers and feature teams did not notice. Result: lower AWS cost and 29% lower origin latency. Since then, redirects and the apps domains moved to the edge (CloudFront Functions), and the last nginx tier is next.",
   },
   {
-    title: "Signals & inject() migration",
-    note: "Modernized reactivity and DI across the platform's shared libraries.",
-  },
-  {
-    title: "Edge redirects via key-value store",
-    note: "CloudFront + KVS redirects evaluated at the edge.",
-  },
-  {
-    title: "Security & CVE remediation",
-    note: "Vulnerability fixes across the front-end platform and its containers.",
+    title: "A platform every team can build on",
+    text: "Since September 2023 I have answered 200+ support requests from feature teams and done 1,212 reviews for architectural fit. Together we gave every team faster CI (smaller build artifacts, fewer e2e runs) and shared AI tooling: AGENTS.md and skills for Jira, Confluence and Sitecore.",
   },
 ];
 
-const companies = [
+const quintor = [
   {
-    name: "CodeBakkers",
-    role: "Owner",
-    blurb: "My company — baked in, not bolted on. The umbrella over everything I do.",
-    href: "/company",
-    cta: "Company details",
+    where: "NS (Dutch Railways)",
+    when: "2021–2023",
+    text: "Planning system for the Dutch rail network, moving from Java EE to Angular and Spring Boot microservices on OpenShift. With the team, we set up CI/CD so we could release at any moment and took a new architecture for the Angular app to production. Together with architects and other teams, I wrote the proposal and proof of concept for moving the whole Java application to the web.",
   },
   {
-    name: "Codecask",
-    role: "Co-owner",
-    blurb: "The consultancy I work through — professional geeks delivering working software.",
-    href: "https://www.codecask.cc",
-    cta: "Visit Codecask",
+    where: "Essent, cloud team",
+    when: "2021",
+    text: "Helped move apps from Kubernetes to AWS Fargate, with CDK and TypeScript.",
+  },
+  {
+    where: "Essent, web platform",
+    when: "2020",
+    text: "Coached a legacy team onto the new platform. Built APIs for OpenID Connect, Angular SSR and backend-for-frontend, and sped up the build pipeline for all platform teams.",
+  },
+  {
+    where: "Kadaster, Omgevingswet",
+    when: "2019–2020",
+    text: "Proved a rebuild of an untested Angular map app was realistic, then designed the new NgRx architecture and guidelines.",
+  },
+  {
+    where: "Essent, multi-label platform",
+    when: "2017–2019",
+    text: "Designed the frontend architecture of the platform that replaced the Essent, Essent Zakelijk and EnergieDirect sites (headless Sitecore, Angular, Nx). Set up CI/CD, blue/green deploys and monitoring.",
+  },
+  {
+    where: "Essent, Regelneef app",
+    when: "2016–2017",
+    text: "Built the mobile CI/CD pipeline for a NativeScript Angular app and introduced BDD.",
   },
 ];
 
-const stack = [
-  "Nx monorepos",
-  "TypeScript",
-  "Build & CI pipelines",
-  "SSR",
-  "AWS CloudFront",
-  "AWS CDK",
-  "Angular",
-  "NgRx",
-  "Jest",
-  "Cypress",
+const skills = [
+  {
+    group: "Frontend platform",
+    chip: "--cb-yellow",
+    items: [
+      "Angular (SSR, standalone, signals)",
+      "React",
+      "Astro",
+      "Node.js",
+      "Nx monorepos",
+      "TypeScript",
+      "NgRx",
+      "Sitecore & Contentstack (headless)",
+      "Storybook",
+    ],
+  },
+  {
+    group: "Cloud and edge",
+    chip: "--cb-sky",
+    items: [
+      "AWS CloudFront (Functions, KeyValueStore)",
+      "ECS / Fargate",
+      "Lambda",
+      "AWS CDK",
+      "CloudWatch",
+      "Azure",
+      "nginx",
+      "Docker",
+    ],
+  },
+  {
+    group: "Delivery",
+    chip: "--cb-mint",
+    items: [
+      "GitLab CI (child pipelines, sharding)",
+      "Cypress",
+      "Playwright",
+      "Jest",
+      "Sentry",
+      "ADRs",
+    ],
+  },
+  {
+    group: "AI-assisted engineering",
+    chip: "--cb-blush",
+    items: [
+      "Claude Code agents, skills and hooks",
+      "MCP",
+      "GitHub Copilot",
+      "Team-wide AGENTS.md and shared skills",
+    ],
+  },
+  {
+    group: "Leadership",
+    chip: "--cb-coral",
+    items: [
+      "Migration roadmaps",
+      "PI planning",
+      "Stakeholder communication",
+      "Runbooks",
+      "Coaching and training",
+    ],
+  },
 ];
 ---
 
 <BaseLayout
-  title="CV — CodeBakkers"
-  description="About Henk Bakker — frontend platform engineer: background, selected work, and how I work."
+  title="CV — Henk Bakker, Frontend Platform Lead"
+  description="Henk Bakker — Frontend Platform Lead. Large-scale migrations without a stop in delivery: experience, skills and education."
 >
-  <Container narrow>
-    <section>
-      <p class="kicker">CV</p>
-      <h1>Henk Bakker</h1>
-      <Prose>
-        <p>
-          I'm a <strong>frontend platform engineer</strong>, working at the scale where the platform
-          itself is the product: shared foundations, build and release tooling, and the request path
-          all the way out to the CDN edge. Today I'm the <strong>functional platform lead</strong> on
-          <strong>Essent</strong>'s Team Atlas, which owns that foundation across a ~400-project Nx
-          monorepo serving six brand apps. I work through
-          <a href="https://www.codecask.cc">Codecask</a>, the consultancy I co-own, under my own
-          company <a href="/company">CodeBakkers</a>.
+  <Container>
+    <section class="bento" aria-labelledby="cv-h">
+      <div class="tile tile-ink page-head intro">
+        <p class="label">CV</p>
+        <h1 id="cv-h" class="display">Henk Bakker</h1>
+        <p class="lead">
+          Frontend Platform Lead · <span class="accent"
+            >Large-scale migrations without a stop in delivery</span
+          >
         </p>
-        <p>
-          Angular and Nx are where I've gone deepest, but the work isn't framework-shaped: it's
-          dependency graphs, build pipelines, module boundaries, rendering strategy and caching. I
-          do
-          <strong>both</strong> the framework-level refactors and the AWS/edge plumbing, and I build my
-          own tooling to do it. My work is migration- and modernization-weighted: I move large platforms
-          forward without stopping the teams that depend on them.
+        <p class="summary">
+          Large platforms tend to fall behind: upgrades get postponed and every change feels risky.
+          I help development teams keep moving: we plan migrations as a process, make releases safe
+          and keep the tooling simple. I work best in a team, I keep going when a change gets hard,
+          and I prefer evidence over assumptions and a simple solution over a clever one.
         </p>
-
-        <h2>Faith</h2>
-        <p>
-          Before any of the engineering: I follow Jesus. It shapes how I try to live, work, and
-          treat the people around me — and it's the part of my life I'd most want you to know about. <a
-            href="/faith">More about that here</a
-          >.
-        </p>
-
-        <h2>How I work</h2>
+      </div>
+      <div class="tile tile-yellow contact">
+        <div>
+          <p class="label">Contact</p>
+          <p class="where">Uithuizen (Groningen), Netherlands</p>
+          <p>Freelance or secondment via Codecask. Remote or hybrid.</p>
+        </div>
         <ul>
-          <li><strong>Evidence over assumption</strong> — pull the real data before deciding.</li>
-          <li><strong>Kill what's provably dead</strong> — YAGNI, applied honestly.</li>
-          <li>
-            <strong>Document the why, keep the code terse</strong> — rationale belongs in docs.
-          </li>
-          <li><strong>Engineer my own leverage</strong> — better tooling beats working longer.</li>
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><a href={SITE.linkedin}>linkedin.com/in/henkhbakker</a></li>
+          <li><a href={SITE.github}>github.com/spike1292</a></li>
         </ul>
+        <a class="btn btn-coral" href={`mailto:${SITE.email}`}
+          >Email me <span class="arrow" aria-hidden="true">→</span></a
+        >
+      </div>
+    </section>
 
-        <h2>Selected work</h2>
-      </Prose>
-      <ul class="work">
-        {
-          selectedWork.map((w) => (
-            <li>
-              <span class="wt">{w.title}</span>
-              <span class="wn">{w.note}</span>
-            </li>
-          ))
-        }
-      </ul>
+    <section class="bento numbers" aria-label="In numbers">
+      {
+        numbers.map((s) => (
+          <div class={`tile ${s.color} num`}>
+            <p class="n display">{s.n}</p>
+            <p>{s.label}</p>
+          </div>
+        ))
+      }
+    </section>
 
-      <Prose>
-        <h2>Stack</h2>
-      </Prose>
-      <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
-
-      <Prose>
-        <h2>Companies</h2>
-      </Prose>
-      <div class="cards">
-        {
-          companies.map((c) => (
-            <article class="card">
-              <p class="role">{c.role}</p>
-              <h3>{c.name}</h3>
-              <p class="blurb">{c.blurb}</p>
-              <a href={c.href}>{c.cta} →</a>
-            </article>
-          ))
-        }
+    <section class="bento" aria-labelledby="exp-h">
+      <div class="head">
+        <h2 id="exp-h" class="display">Experience</h2>
+        <p>Building frontends since 2013, most of it at platform scale.</p>
       </div>
 
-      <Prose>
-        <h2>Elsewhere</h2>
-        <p>I write <a href="/blog">field reports from the platform</a> most weeks.</p>
-        <h2>Contact</h2>
+      <article class="tile tile-pine job" aria-labelledby="job-essent">
+        <div class="when">
+          <p class="label">Jul 2023 – present</p>
+          <h3 id="job-essent">Frontend Platform Lead — Essent</h3>
+          <p class="meta">Via Codecask · 's-Hertogenbosch, hybrid</p>
+        </div>
+        <div class="what">
+          <p>
+            My team owns the web platform behind Essent's websites, which about 22 feature teams
+            build on: the Sitecore headless CMS, the frontend monorepo with all six brand apps, the
+            edge tier, and the cloud infrastructure on AWS and Azure. I helped design this platform
+            in 2017–2019 and came back in 2023 to help get it out of its technical debt and moving
+            again.
+          </p>
+          <ul class="wins">
+            {
+              essentWins.map((w) => (
+                <li>
+                  <h4>{w.title}</h4>
+                  <p>{w.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+          <p>
+            <strong>Also:</strong> security hardening (WAF, CSP, headers, Sonar, CVEs). Now helping the
+            journey-analytics team serve tracking first-party through the edge (RudderStack via CloudFront)
+            and set up A/B testing with Amplitude. Started this assignment on e-mobility (EV charging)
+            integrations: SAP, document handling and process tracing on Node.js and AWS.
+          </p>
+        </div>
+      </article>
+
+      <article class="tile tile-yellow job" aria-labelledby="job-codecask">
+        <div class="when">
+          <p class="label">Jun 2023 – present</p>
+          <h3 id="job-codecask">Codecask</h3>
+        </div>
+        <div class="what">
+          <p>
+            The web platform consultancy I co-founded. Through <a href="https://www.codecask.cc"
+              >Codecask</a
+            >, clients hire me freelance or on secondment anywhere in the EU, to modernise their
+            frontend platform without stopping their teams. Clients include Essent and ING.
+          </p>
+        </div>
+      </article>
+
+      <article class="tile tile-blush job" aria-labelledby="job-quintor">
+        <div class="when">
+          <p class="label">May 2016 – Jun 2023</p>
+          <h3 id="job-quintor">Quintor</h3>
+          <p class="meta">Amersfoort</p>
+        </div>
+        <div class="what">
+          <p>
+            Consultant on the assignments below. Co-built Quintor's frontend practice: wrote and
+            taught the 11-week frontend masterclass (Angular, React, TypeScript), and trained client
+            teams.
+          </p>
+          <ul class="assignments">
+            {
+              quintor.map((a) => (
+                <li>
+                  <p class="a-when">{a.when}</p>
+                  <h4>{a.where}</h4>
+                  <p>{a.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </article>
+
+      <article class="tile tile-sky job" aria-labelledby="job-sogeti">
+        <div class="when">
+          <p class="label">Oct 2013 – Apr 2016</p>
+          <h3 id="job-sogeti">Sogeti</h3>
+          <p class="meta">Amsterdam area</p>
+        </div>
+        <div class="what">
+          <ul class="assignments two">
+            <li>
+              <p class="a-when">2015–2016</p>
+              <h4>ING</h4>
+              <p>
+                AngularJS frontend for modular banking, and the CI/CD pipeline for AngularJS apps.
+              </p>
+            </li>
+            <li>
+              <p class="a-when">2014–2015</p>
+              <h4>ABN AMRO</h4>
+              <p>JavaScript frontend for internet banking. Co-wrote Sogeti's AngularJS training.</p>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="bento" aria-labelledby="skills-h">
+      <div class="head">
+        <h2 id="skills-h" class="display">Skills &amp; background</h2>
+      </div>
+      {
+        skills.map((s, i) => (
+          <div class:list={["tile skill", { wide: i > 2 }]}>
+            <h3>{s.group}</h3>
+            <ul class="chips one" style={`--chip: var(${s.chip})`}>
+              {s.items.map((i) => (
+                <li class="chip">{i}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+      <div class="tile tile-mint edu">
+        <p class="label">Education</p>
+        <h3>BSc Computer Science (HBO Informatica)</h3>
+        <p>Hanze University of Applied Sciences Groningen, 2009–2013</p>
+        <p class="label sub">Training</p>
+        <ul>
+          <li>Cloud Native Development in AWS (2021)</li>
+          <li>SAFe (2018)</li>
+          <li>Scrum Master (2014)</li>
+          <li>Oracle Certified Professional, Java SE 6 (2013)</li>
+        </ul>
+      </div>
+      <div class="tile tile-coral lang">
+        <p class="label">Languages</p>
+        <p class="big">Dutch <span>native</span></p>
+        <p class="big">English <span>professional</span></p>
+      </div>
+      <div class="tile tile-paper faith">
+        <p class="label">Faith</p>
         <p>
-          Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
-          <a href={SITE.github}>GitHub</a> ·
-          <a href={SITE.linkedin}>LinkedIn</a>
+          Before any of the engineering: I follow Jesus. It shapes how I try to live, work, and
+          treat the people around me. <a href="/faith">More about that</a>.
         </p>
-      </Prose>
+      </div>
+    </section>
+
+    <section class="bento" aria-labelledby="cta-h">
+      <div class="tile tile-ink cta">
+        <div>
+          <p class="label">Next step</p>
+          <h2 id="cta-h" class="display">Is your frontend falling <em>behind?</em></h2>
+          <p>
+            Let's plan the first step together. Send me an email about where your platform is today.
+            I write about real migrations from my work on <a href="/blog">the blog</a>. Code and
+            side projects are on <a href={SITE.github}>GitHub</a>. Company details for CodeBakkers
+            B.V. are on the <a href="/company">company page</a>.
+          </p>
+        </div>
+        <div class="ctas">
+          <a class="btn btn-yellow" href={`mailto:${SITE.email}`}
+            >Email me about your platform <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a class="btn" href={SITE.linkedin}>LinkedIn</a>
+        </div>
+      </div>
     </section>
   </Container>
 </BaseLayout>
 
 <style>
-  section {
-    margin: var(--space-16) 0 var(--space-12);
+  .bento h2,
+  .bento h3,
+  .bento h4 {
+    color: inherit;
   }
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: 0.12em;
-    color: var(--color-accent-strong);
-    margin-bottom: var(--space-3);
+  .intro {
+    grid-column: span 8;
+    padding: clamp(1.6rem, 1rem + 2vw, 2.5rem);
   }
-  .work {
-    list-style: none;
+  .accent {
+    color: var(--tile-accent);
+  }
+  .summary {
+    max-width: 62ch;
+    margin-top: 1.5rem;
+    font-size: 1.08rem;
+  }
+  .contact {
+    grid-column: span 4;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  .where {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .contact ul {
+    margin: 0;
     padding: 0;
-    margin: var(--space-4) 0 var(--space-8);
-    max-width: var(--measure);
-  }
-  .work li {
-    padding: var(--space-4) 0;
-    border-top: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-  .wt {
-    font-weight: 620;
-  }
-  .wn {
-    color: var(--color-muted);
-    font-size: var(--step--1);
-  }
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
-    margin: var(--space-4) 0 var(--space-8);
-  }
-  @media (max-width: 40rem) {
-    .cards {
-      grid-template-columns: 1fr;
-    }
-  }
-  .card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: var(--space-6);
-    background: var(--color-surface);
-  }
-  .card .role {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--color-muted);
-  }
-  .card h3 {
-    margin: var(--space-1) 0 var(--space-2);
-  }
-  .card .blurb {
-    color: var(--color-text-soft);
-    margin-bottom: var(--space-4);
-  }
-  .stack {
     list-style: none;
+  }
+  .contact li a {
+    display: block;
+    padding: 0.55rem 0;
+    border-top: 2px solid color-mix(in srgb, currentColor 20%, transparent);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .contact .btn {
+    align-self: start;
+  }
+
+  .numbers {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .num {
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 150px;
+  }
+  .n {
+    font-size: clamp(2.5rem, 1.8rem + 2vw, 3.5rem);
+    color: var(--tile-accent);
+  }
+  .num p:last-child {
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .job {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 1.5rem 2.5rem;
+    padding: clamp(1.35rem, 1rem + 1.4vw, 2.25rem);
+  }
+  .when {
+    position: sticky;
+    top: 6.5rem;
+    align-self: start;
+  }
+  .job h3 {
+    font-size: clamp(1.8rem, 1.3rem + 1.4vw, 2.6rem);
+    line-height: 1;
+  }
+  .meta {
+    margin-top: 0.6rem;
+    font-weight: 600;
+  }
+  .what > p + *,
+  .what > * + p {
+    margin-top: 1rem;
+  }
+  .what p {
+    max-width: 70ch;
+  }
+  .what a {
+    text-decoration: underline;
+  }
+  .wins {
+    display: grid;
+    gap: var(--gap);
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wins li {
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--cb-ink) 24%, transparent);
+  }
+  .wins h4,
+  .assignments h4 {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .wins h4 {
+    color: var(--tile-accent);
+  }
+  .assignments {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap);
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .assignments li {
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--color-surface) 55%, transparent);
+  }
+  .assignments li:first-child:not(:only-child) {
+    grid-column: 1 / -1;
+  }
+  .assignments.two li:first-child {
+    grid-column: auto;
+  }
+  .a-when {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+
+  .skill {
+    grid-column: span 4;
+  }
+  .skill.wide {
+    grid-column: span 6;
+  }
+  .skill h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.9rem;
+  }
+  .skill .chip {
+    font-size: 0.9rem;
+  }
+  .edu {
+    grid-column: span 5;
+  }
+  .lang {
+    grid-column: span 3;
+  }
+  .faith {
+    grid-column: span 4;
+  }
+  .edu h3 {
+    font-size: 1.5rem;
+    line-height: 1.1;
+  }
+  .edu h3 + p {
+    margin-top: 0.4rem;
+  }
+  .edu .sub {
+    margin-top: 1.25rem;
+  }
+  .edu ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .big {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .big span {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .faith a {
+    text-decoration: underline;
+  }
+
+  .cta {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.6rem, 1rem + 2vw, 3rem);
+  }
+  .cta h2 {
+    font-size: clamp(2.6rem, 1.6rem + 3.2vw, 4.75rem);
+  }
+  .cta h2 em {
+    font-style: normal;
+    color: var(--cb-coral);
+  }
+  .cta h2 + p {
+    max-width: 60ch;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+  }
+  .cta a:not(.btn) {
+    text-decoration: underline;
+  }
+  .ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
-    padding: 0;
-    margin: var(--space-4) 0 var(--space-8);
+    gap: 0.75rem;
   }
-  .stack li {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--color-text-soft);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: 0.2em 0.6em;
-    border-radius: var(--radius-sm);
+
+  @media (max-width: 68rem) {
+    .intro,
+    .contact,
+    .skill,
+    .skill.wide,
+    .edu,
+    .lang,
+    .faith {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+    .numbers {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .job {
+      grid-template-columns: 1fr;
+    }
+    .when {
+      position: static;
+    }
+  }
+  @media (max-width: 40rem) {
+    .numbers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .num {
+      min-height: 0;
+      padding: 1.1rem;
+    }
+    .assignments {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
