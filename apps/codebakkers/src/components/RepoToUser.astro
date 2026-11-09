@@ -193,8 +193,17 @@ const teamFills = ["#FFFBF2", "#FFC93C", "#8FCBF0", "#FF6B4A", "#FFC2B0", "#A8DD
 
 <style>
   .repo {
+    container-type: inline-size;
     margin-inline: 0;
     padding: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+  }
+  @container (max-width: 60rem) {
+    .drawing.h {
+      display: none;
+    }
+    .drawing.v {
+      display: block;
+    }
   }
   .pill {
     fill: currentColor;
