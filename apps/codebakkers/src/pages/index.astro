@@ -52,7 +52,6 @@ const teams = Array.from({ length: 22 }, (_, i) => teamFills[i % teamFills.lengt
 const workAria =
   "How we work together, in four steps. 01 Look: we look at your platform and measure where it hurts. 02 Plan: a migration roadmap with deadlines. 03 First step: one small, safe change in production. 04 Hand over: your teams carry on without me. Your teams keep shipping the whole time.";
 
-const noteColors = ["tile-blush", "tile-paper", "tile-sky"];
 const posts = (await getCollection("posts", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
@@ -474,21 +473,12 @@ const person = {
       </div>
     </section>
 
-    <section class="bento" aria-label="Stack and way of working">
+    <section class="bento" aria-label="Stack">
       <div class="tile stack">
         <p class="label">Stack</p>
         <h2>Tools we use in production.</h2>
         <ul class="chips one" style="--chip: var(--cb-sky)">
           {stack.map((s) => <li class="chip">{s}</li>)}
-        </ul>
-      </div>
-      <div class="tile tile-ink how">
-        <p class="label">How I work</p>
-        <h2 class="display">Evidence over assumptions. <em>Simple over clever.</em></h2>
-        <ul>
-          <li>Migrations planned as a process, with deadlines and a test round for every team.</li>
-          <li>Releases made safe: rehearsed rollbacks and written runbooks.</li>
-          <li>Teams enabled to do it themselves, not waiting on me.</li>
         </ul>
       </div>
     </section>
@@ -994,40 +984,70 @@ const person = {
           </p>
         </div>
       </article>
+    </section>
 
-      <div class="tile tile-coral motto">
-        <h2 class="display">Baked in, <span>not bolted on.</span></h2>
+    <section class="bento" id="how" aria-labelledby="how-h">
+      <div class="head">
+        <div>
+          <p class="label">How I work</p>
+          <h2 id="how-h" class="display">Baked in, <em class="hl">not bolted on.</em></h2>
+        </div>
         <p>
           Quality goes into the platform from the start, not as an afterthought. You can hire me
           freelance or on secondment through <a href="https://www.codecask.cc">Codecask</a>.
         </p>
       </div>
+      <div class="tile tile-mint principle">
+        <span class="pnum">01</span>
+        <h3>Planned migrations</h3>
+        <p>
+          A roadmap with deadlines and a test round for every team. Large changes land in waves
+          while your teams keep shipping.
+        </p>
+      </div>
+      <div class="tile tile-yellow principle">
+        <span class="pnum">02</span>
+        <h3>Safe releases</h3>
+        <p>
+          Old and new builds checked side by side, a rehearsed rollback and written runbooks before
+          every switch.
+        </p>
+      </div>
+      <div class="tile tile-sky principle">
+        <span class="pnum">03</span>
+        <h3>Teams that do it themselves</h3>
+        <p>
+          Shared tooling, reviews and clear docs, so your teams can run the next change on their
+          own.
+        </p>
+      </div>
     </section>
 
     <section class="bento" id="notes" aria-labelledby="notes-h">
-      <div class="tile tile-pine note-head">
-        <p class="label">The blog</p>
-        <h2 id="notes-h" class="display">{SITE.tagline}</h2>
-        <a class="more" href="/blog">All posts <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="head">
+        <div>
+          <p class="label">{SITE.tagline}</p>
+          <h2 id="notes-h" class="display">From the blog</h2>
+        </div>
+        <a class="btn btn-ink" href="/blog"
+          >All posts <span class="arrow" aria-hidden="true">→</span></a
+        >
       </div>
-      <ul class="notes">
+      <ul class="rows">
         {
-          posts.map((post, i) => (
+          posts.map((post) => (
             <li>
-              <a
-                class={`tile ${noteColors[i % noteColors.length]} note`}
-                href={`/blog/${post.id}/`}
-              >
+              <a class="tile rowtile" href={`/blog/${post.id}/`}>
                 <span class="label">
-                  {i === 0 ? "Latest · " : ""}
+                  {post.data.type === "deep-dive" ? "Deep dive" : "Field report"} ·{" "}
                   <time datetime={iso(post.data.pubDate)}>{fmt(post.data.pubDate)}</time>
                 </span>
-                <span class="note-title">{post.data.title}</span>
-                <span class="meta">
-                  <span>Read</span>
-                  <span class="arrow" aria-hidden="true">
-                    →
-                  </span>
+                <span>
+                  <span class="rt">{post.data.title}</span>
+                  <span class="rd">{post.data.description}</span>
+                </span>
+                <span class="arrow" aria-hidden="true">
+                  →
                 </span>
               </a>
             </li>
@@ -1204,7 +1224,7 @@ const person = {
     color: var(--tile-accent);
   }
   .n.year {
-    font-size: clamp(3rem, 1.5rem + 4vw, 5.5rem);
+    font-size: clamp(3rem, 1rem + 5.5vw, 6.5rem);
   }
   .n small {
     font-size: 0.45em;
@@ -1334,37 +1354,11 @@ const person = {
   }
 
   .stack {
-    grid-column: span 5;
+    grid-column: span 12;
   }
-  .stack h2,
-  .how h2 {
+  .stack h2 {
     font-size: clamp(1.6rem, 1.3rem + 0.9vw, 1.9rem);
     margin-bottom: 1.25rem;
-  }
-  .how {
-    grid-column: span 7;
-    justify-content: space-between;
-  }
-  .how h2 {
-    font-size: clamp(2rem, 1.4rem + 1.8vw, 2.75rem);
-    max-width: 18ch;
-  }
-  .how h2 em {
-    font-style: normal;
-    color: var(--tile-accent);
-  }
-  .how ul {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  .how li {
-    padding-top: 0.75rem;
-    border-top: 2px dashed color-mix(in srgb, currentColor 30%, transparent);
-    font-weight: 500;
   }
 
   .case {
@@ -1444,88 +1438,87 @@ const person = {
     fill: var(--tile-bg);
   }
 
-  .motto {
-    grid-column: span 12;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: end;
-    gap: 1.5rem;
-    padding: clamp(1.6rem, 1rem + 1.4vw, 2.25rem);
+  .head .label {
+    max-width: none;
+    margin-bottom: 0.6rem;
+    font-size: 0.75rem;
   }
-  .motto h2 {
-    font-size: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  .principle {
+    grid-column: span 4;
+    gap: 0.75rem;
+    min-height: 250px;
   }
-  .motto h2 span {
-    display: inline-block;
-    padding: 0 0.15em 0.05em;
-    border-radius: 0.16em;
-    background: var(--cb-ink);
-    color: var(--cb-coral);
-    transform: rotate(1deg);
-  }
-  .motto p {
-    max-width: 38ch;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-  .motto a {
-    text-decoration: underline;
-  }
-
-  .note-head {
-    grid-column: span 3;
-    justify-content: space-between;
-    gap: 1.5rem;
-    min-height: 260px;
-  }
-  .note-head h2 {
-    font-size: clamp(2.2rem, 1.6rem + 1.6vw, 2.9rem);
-  }
-  .more {
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .more:hover {
-    text-decoration: underline;
-  }
-  .notes {
-    grid-column: span 9;
+  .pnum {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--gap);
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-bottom: auto;
+    border-radius: 50%;
+    background: var(--tile-fg);
+    color: var(--tile-bg);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .principle h3 {
+    margin-top: 2rem;
+    font-size: clamp(1.6rem, 1.3rem + 0.8vw, 2rem);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+  .principle p {
+    font-size: 1.05rem;
+    max-width: 38ch;
+  }
+  .btn-ink,
+  .btn-ink:hover {
+    flex: none;
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+  .rows {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 10px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .note {
-    height: 100%;
-    min-height: 260px;
-    justify-content: space-between;
-    gap: 1.5rem;
+  .rowtile {
+    display: grid;
+    grid-template-columns: 16rem 1fr auto;
+    align-items: center;
+    gap: 0.4rem 1.5rem;
+    padding: 1.15rem 1.75rem;
+    border-radius: 22px;
     text-decoration: none;
-    transition: transform 0.12s;
   }
-  .note:hover {
-    transform: translateY(-3px);
+  .rowtile .label {
+    margin: 0;
+    white-space: nowrap;
   }
-  .note-title {
-    font-size: clamp(1.5rem, 1.25rem + 0.7vw, 1.8rem);
+  .rt {
+    display: block;
+    font-size: 1.4rem;
     font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
   }
-  .note:hover .note-title {
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
+  .rd {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: var(--color-muted);
   }
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+  .rowtile .arrow {
+    font-size: 1.1rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  }
+  .rowtile:hover .rt {
+    text-decoration: underline 3px;
   }
 
   .cta {
@@ -1591,17 +1584,14 @@ const person = {
     }
     .logos,
     .loc,
-    .stack,
-    .how,
     .case-b,
     .case-c,
+    .principle,
     .cta,
-    .mail,
-    .note-head,
-    .notes {
+    .mail {
       grid-column: span 12;
     }
-    .note-head {
+    .principle {
       min-height: 0;
     }
   }
@@ -1609,13 +1599,16 @@ const person = {
     .case-a {
       grid-template-columns: 1fr;
     }
-    .schem .top,
-    .motto {
+    .schem .top {
       flex-direction: column;
       align-items: start;
     }
-    .how ul {
-      grid-template-columns: 1fr;
+    .rowtile {
+      grid-template-columns: 1fr auto;
+    }
+    .rowtile .label {
+      grid-column: 1 / -1;
+      white-space: normal;
     }
     .turn {
       display: none;
@@ -1676,8 +1669,8 @@ const person = {
       padding: 0.75rem;
       border-radius: 16px;
     }
-    .note {
-      min-height: 0;
+    .rowtile {
+      padding: 1rem 1.1rem;
     }
     .cta {
       min-height: 0;
