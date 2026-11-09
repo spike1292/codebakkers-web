@@ -3,13 +3,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "@codebakkers/ui/components/Container.astro";
 import { SITE } from "../consts";
 
-const numbers = [
-  { n: "500", label: "projects in one monorepo", color: "tile-mint" },
-  { n: "~22", label: "feature teams on the platform", color: "tile-sky" },
-  { n: "6", label: "brand apps", color: "tile-coral" },
-  { n: "29%", label: "lower origin latency", color: "tile-blush" },
-  { n: "1,212", label: "reviews for architectural fit", color: "tile-yellow" },
-  { n: "200+", label: "support requests handled", color: "tile-paper" },
+const strengths = [
+  {
+    title: "Planned migrations",
+    proof: "Two major Angular versions, with only a one-day production freeze.",
+    color: "tile-mint",
+  },
+  {
+    title: "Safe releases",
+    proof: "Two brands moved with seconds of downtime, after a rehearsed rollback drill.",
+    color: "tile-sky",
+  },
+  {
+    title: "Simple tooling",
+    proof: "Faster CI for ~22 feature teams: smaller build artifacts, fewer e2e runs.",
+    color: "tile-yellow",
+  },
+  {
+    title: "Teaching",
+    proof: "An 11-week frontend masterclass, written and taught.",
+    color: "tile-blush",
+  },
 ];
 
 const essentWins = [
@@ -164,12 +178,14 @@ const skills = [
       </div>
     </section>
 
-    <section class="bento numbers" aria-label="In numbers">
+    <section class="bento strengths" aria-labelledby="str-h">
+      <h2 id="str-h" class="sr-only">Strengths with proof</h2>
       {
-        numbers.map((s) => (
-          <div class={`tile ${s.color} num`}>
-            <p class="n display">{s.n}</p>
-            <p>{s.label}</p>
+        strengths.map((s) => (
+          <div class={`tile ${s.color} strength`}>
+            <h3>{s.title}</h3>
+            <p class="label">Proof</p>
+            <p>{s.proof}</p>
           </div>
         ))
       }
@@ -391,21 +407,25 @@ const skills = [
     align-self: start;
   }
 
-  .numbers {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .strengths {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .num {
-    justify-content: space-between;
-    gap: 0.75rem;
-    min-height: 150px;
+  .strength {
+    min-height: 190px;
   }
-  .n {
-    font-size: clamp(2.5rem, 1.8rem + 2vw, 3.5rem);
-    color: var(--tile-accent);
+  .strength h3 {
+    margin-bottom: auto;
+    padding-bottom: 1.25rem;
+    font-size: clamp(1.45rem, 1.2rem + 0.6vw, 1.75rem);
+    letter-spacing: -0.025em;
+    line-height: 1.02;
   }
-  .num p:last-child {
+  .strength .label {
+    margin-bottom: 0.4rem;
+  }
+  .strength p:last-child {
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   .job {
@@ -576,8 +596,8 @@ const skills = [
       grid-column: 1 / -1;
       grid-row: auto;
     }
-    .numbers {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .strengths {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .job {
       grid-template-columns: 1fr;
@@ -587,12 +607,11 @@ const skills = [
     }
   }
   @media (max-width: 40rem) {
-    .numbers {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .strengths {
+      grid-template-columns: 1fr;
     }
-    .num {
+    .strength {
       min-height: 0;
-      padding: 1.1rem;
     }
     .assignments {
       grid-template-columns: 1fr;
