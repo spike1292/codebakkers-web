@@ -30,3 +30,4 @@ Talk about the reader's teams and their result. Be modest about yourself and giv
 - The word "independent".
 - Any job title other than "Frontend Platform Lead".
 - Essent internals: cost figures, incidents, error counts, team rosters, ticket IDs.
+- Em dashes (—). Use a period, comma or colon.
