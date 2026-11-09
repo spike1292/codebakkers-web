@@ -1,0 +1,38 @@
+---
+title: "From one repo to six brand apps"
+description: "What sits between a commit and a customer on a platform that about 22 feature teams build on: the monorepo, the pipeline, the SSR origin and the CDN edge."
+pubDate: 2026-11-09
+type: deep-dive
+tags: ["monorepo", "nx", "ci", "cloudfront", "edge", "aws"]
+draft: true
+---
+
+import RepoToUser from "../../components/RepoToUser.astro";
+
+Your feature teams write code, and your customers open a website. In between sits a chain of steps that most people never see. This post walks through that chain on the platform my team looks after at Essent: from one repository to six brand apps.
+
+<RepoToUser />
+
+## 01 Source: one Nx monorepo
+
+Everything starts in one Nx monorepo of about 500 projects. About 22 feature teams build on it, and they share one foundation: the same libraries, the same conventions and the same tooling. That shared base is what makes a large change possible. When we move the codebase forward, we do it in one place, in waves, with a test round for every team.
+
+## 02 Pipeline: build and CI
+
+Every change builds, tests and ships through GitLab CI, with Cypress for the end-to-end tests. With 500 projects, the pipeline is where a lot of time goes. Together we made CI faster for every team, with smaller build artifacts and fewer end-to-end runs.
+
+## 03 Origin: Angular SSR
+
+The apps render on the server with Angular SSR. The SSR origin builds each page, and the edge in front of it caches what it can.
+
+## 04 Edge: AWS CloudFront, defined in CDK
+
+In front of the origin sits the AWS CloudFront edge. We define it in AWS CDK, so the edge is code, just like the apps behind it. Redirects and the apps domains used to live in an nginx tier. They now run at the edge, in CloudFront Functions. The last nginx tier is next.
+
+## 05 Users: six brand apps
+
+At the end of the chain are six brand apps, all built from the same monorepo and served through the same edge.
+
+## Why the whole chain matters
+
+My team looks after every step in this chain. That is what made the bigger moves possible: two major Angular versions with only a one-day production freeze, and a cloud move with seconds of downtime.
