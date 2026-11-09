@@ -49,6 +49,9 @@ const stack = [
 const teamFills = ["#FFFBF2", "#FFC93C", "#8FCBF0", "#FF6B4A", "#FFC2B0", "#A8DDB5"];
 const teams = Array.from({ length: 22 }, (_, i) => teamFills[i % teamFills.length]);
 
+const workAria =
+  "How we work together, in four steps. 01 Look: we look at your platform and measure where it hurts. 02 Plan: a migration roadmap with deadlines. 03 First step: one small, safe change in production. 04 Hand over: your teams carry on without me. Your teams keep shipping the whole time.";
+
 const noteColors = ["tile-blush", "tile-paper", "tile-sky"];
 const posts = (await getCollection("posts", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -139,24 +142,18 @@ const person = {
       <div class="tile tile-sky dots schem">
         <div class="top">
           <div>
-            <p class="label">What we run: repo to user</p>
-            <h2 id="schem-h" class="display">From one repo to six brand apps.</h2>
+            <p class="label">Working together</p>
+            <h2 id="schem-h" class="display">How we work together.</h2>
           </div>
           <p>
-            The monorepo, the pipeline, server-side rendering (SSR) and the CDN edge. My team looks
-            after every step.
+            Four steps, from a first look at your platform to your teams carrying on without me.
           </p>
         </div>
 
-        <svg
-          class="drawing h"
-          viewBox="0 0 1200 360"
-          role="img"
-          aria-label="Schematic: an Nx monorepo of 500 projects goes through build and CI to an SSR origin, behind the AWS CloudFront edge defined in CDK, serving six brand apps. Owned end to end."
-        >
+        <svg class="drawing h" viewBox="0 0 1200 360" role="img" aria-label={workAria}>
           <defs>
             <marker
-              id="sa"
+              id="wa"
               viewBox="0 0 10 10"
               refX="8"
               refY="5"
@@ -165,7 +162,7 @@ const person = {
               orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker
             >
             <marker
-              id="stk"
+              id="wtk"
               viewBox="0 0 10 10"
               refX="5"
               refY="5"
@@ -175,58 +172,35 @@ const person = {
             >
           </defs>
           <g stroke="#15211C" stroke-width="2.5">
-            <rect
-              x="46"
-              y="114"
-              width="180"
-              height="100"
-              rx="18"
-              fill="#FFFBF2"
-              fill-opacity=".45"
-              stroke-opacity=".5"></rect>
-            <rect
-              x="38"
-              y="122"
-              width="180"
-              height="100"
-              rx="18"
-              fill="#FFFBF2"
-              fill-opacity=".7"
-              stroke-opacity=".75"></rect>
-            <rect x="30" y="130" width="180" height="100" rx="18" fill="#FFFBF2"></rect>
-            <rect x="270" y="130" width="180" height="100" rx="18" fill="#FFFBF2"></rect>
-            <rect x="510" y="130" width="180" height="100" rx="18" fill="#A8DDB5"></rect>
-            <rect x="750" y="120" width="200" height="120" rx="22" fill="#FFC93C" stroke-width="3"
+            <rect x="30" y="130" width="220" height="100" rx="18" fill="#FFFBF2"></rect>
+            <rect x="310" y="130" width="220" height="100" rx="18" fill="#FFFBF2"></rect>
+            <rect x="590" y="120" width="250" height="120" rx="22" fill="#FFC93C" stroke-width="3"
             ></rect>
-            <rect x="1010" y="130" width="160" height="100" rx="18" fill="#FF6B4A"></rect>
+            <rect x="900" y="130" width="270" height="100" rx="18" fill="#A8DDB5"></rect>
           </g>
           <g stroke="currentColor" stroke-width="2.5" fill="none">
-            <path d="M232 180H262" marker-end="url(#sa)"></path>
-            <path d="M452 180H502" marker-end="url(#sa)"></path>
-            <path d="M692 180H742" marker-end="url(#sa)"></path>
-            <path d="M952 180H1002" marker-end="url(#sa)"></path>
+            <path d="M254 180H302" marker-end="url(#wa)"></path>
+            <path d="M534 180H582" marker-end="url(#wa)"></path>
+            <path d="M844 180H892" marker-end="url(#wa)"></path>
           </g>
           <g fill="#15211C">
-            <text class="sb" x="48" y="156" font-size="11" opacity=".7">01 / SOURCE</text>
-            <text class="sv" x="48" y="190" font-size="23">Nx monorepo</text>
-            <text class="sm" x="48" y="214" font-size="12">500 projects</text>
-            <text class="sb" x="288" y="156" font-size="11" opacity=".7">02 / PIPELINE</text>
-            <text class="sv" x="288" y="190" font-size="23">Build &amp; CI</text>
-            <text class="sm" x="288" y="214" font-size="12">GitLab CI · Cypress</text>
-            <text class="sb" x="528" y="156" font-size="11" opacity=".7">03 / ORIGIN</text>
-            <text class="sv" x="528" y="190" font-size="23">SSR origin</text>
-            <text class="sm" x="528" y="214" font-size="12">Angular SSR</text>
-            <text class="sb" x="770" y="148" font-size="11" opacity=".7">04 / EDGE</text>
-            <text class="sv" x="770" y="184" font-size="27">CDN edge</text>
-            <text class="sm" x="770" y="208" font-size="12">AWS CloudFront</text>
-            <text class="sm" x="770" y="226" font-size="12">defined in CDK</text>
-            <text class="sb" x="1028" y="156" font-size="11" opacity=".7">05 / USERS</text>
-            <text class="sv" x="1028" y="188" font-size="20">6 brand apps</text>
+            <text class="sb" x="48" y="156" font-size="11" opacity=".7">01 / LOOK</text>
+            <text class="sv" x="48" y="190" font-size="23">Look</text>
+            <text class="sm" x="48" y="214" font-size="12">measure first</text>
+            <text class="sb" x="328" y="156" font-size="11" opacity=".7">02 / PLAN</text>
+            <text class="sv" x="328" y="190" font-size="23">Plan</text>
+            <text class="sm" x="328" y="214" font-size="12">a roadmap, with deadlines</text>
+            <text class="sb" x="610" y="148" font-size="11" opacity=".7">03 / FIRST STEP</text>
+            <text class="sv" x="610" y="184" font-size="27">First step</text>
+            <text class="sm" x="610" y="208" font-size="12">one small, safe change</text>
+            <text class="sm" x="610" y="226" font-size="12">in production</text>
+            <text class="sb" x="918" y="156" font-size="11" opacity=".7">04 / HAND OVER</text>
+            <text class="sv" x="918" y="188" font-size="23">Hand over</text>
           </g>
           <g stroke="#15211C" stroke-width="2">
             {
               teamFills.map((fill, i) => (
-                <circle cx={1038 + i * 22} cy="210" r="7" fill={i === 5 ? "#15211C" : fill} />
+                <circle cx={928 + i * 22} cy="210" r="7" fill={i === 5 ? "#15211C" : fill} />
               ))
             }
           </g>
@@ -237,53 +211,46 @@ const person = {
             stroke-dasharray="4 4"
             opacity=".75"
           >
-            <path d="M136 114V66H236"></path>
-            <path d="M360 130V100H452"></path>
-            <path d="M850 120V56H960"></path>
-            <path d="M600 230V290H700"></path>
+            <path d="M140 130V66H236"></path>
+            <path d="M370 230V284H390"></path>
+            <path d="M715 120V56H830"></path>
+            <path d="M940 230V284H960"></path>
           </g>
           <g fill="#FF6B4A" stroke="#15211C" stroke-width="2">
-            <circle cx="136" cy="114" r="5"></circle><circle cx="360" cy="130" r="5"
-            ></circle><circle cx="850" cy="120" r="5"></circle><circle cx="600" cy="230" r="5"
+            <circle cx="140" cy="130" r="5"></circle><circle cx="370" cy="230" r="5"
+            ></circle><circle cx="715" cy="120" r="5"></circle><circle cx="940" cy="230" r="5"
             ></circle>
           </g>
           <g class="sm" font-size="13" fill="currentColor">
-            <text x="244" y="71"
-              ><tspan class="sb">A</tspan> · one foundation, ~22 teams build on it</text
+            <text x="244" y="71"><tspan class="sb">A</tspan> · we look at your platform</text>
+            <text x="244" y="89">and measure where it hurts</text>
+            <text x="398" y="289"
+              ><tspan class="sb">B</tspan> · a migration roadmap with deadlines</text
             >
-            <text x="460" y="105"
-              ><tspan class="sb">B</tspan> · every change builds, tests, ships</text
-            >
-            <text x="968" y="52"><tspan class="sb">C</tspan> · redirects, apps domains</text>
-            <text x="968" y="70">in CloudFront Functions</text>
-            <text x="708" y="295"
-              ><tspan class="sb">D</tspan> · server-rendered, cached at the edge</text
-            >
+            <text x="838" y="61"><tspan class="sb">C</tspan> · one small, safe change</text>
+            <text x="838" y="79">in production</text>
+            <text x="968" y="289"><tspan class="sb">D</tspan> · your teams carry on</text>
+            <text x="968" y="307">without me</text>
           </g>
           <g stroke="currentColor" stroke-width="1.5" fill="none">
-            <path d="M30 330H1170" marker-start="url(#stk)" marker-end="url(#stk)"></path>
+            <path d="M30 330H1170" marker-start="url(#wtk)" marker-end="url(#wtk)"></path>
             <path d="M30 238V338M1170 238V338" stroke-dasharray="2 4"></path>
           </g>
-          <rect class="pill" x="496" y="318" width="208" height="24" rx="12"></rect>
+          <rect class="pill" x="400" y="318" width="400" height="24" rx="12"></rect>
           <text
             class="sb pill-t"
             x="600"
             y="334.5"
             font-size="12"
             text-anchor="middle"
-            letter-spacing="2">OWNED END TO END</text
+            letter-spacing="2">YOUR TEAMS KEEP SHIPPING THE WHOLE TIME</text
           >
         </svg>
 
-        <svg
-          class="drawing v"
-          viewBox="0 0 340 664"
-          role="img"
-          aria-label="Schematic: an Nx monorepo of 500 projects goes through build and CI to an SSR origin, behind the AWS CloudFront edge defined in CDK, serving six brand apps. Owned end to end."
-        >
+        <svg class="drawing v" viewBox="0 0 340 568" role="img" aria-label={workAria}>
           <defs>
             <marker
-              id="sav"
+              id="wav"
               viewBox="0 0 10 10"
               refX="8"
               refY="5"
@@ -293,62 +260,49 @@ const person = {
             >
           </defs>
           <g stroke="#15211C" stroke-width="2.5">
-            <rect
-              x="72"
-              y="12"
-              width="262"
-              height="84"
-              rx="16"
-              fill="#FFFBF2"
-              fill-opacity=".6"
-              stroke-opacity=".6"></rect>
             <rect x="64" y="20" width="262" height="84" rx="16" fill="#FFFBF2"></rect>
             <rect x="64" y="144" width="262" height="84" rx="16" fill="#FFFBF2"></rect>
-            <rect x="64" y="268" width="262" height="84" rx="16" fill="#A8DDB5"></rect>
-            <rect x="64" y="392" width="262" height="118" rx="20" fill="#FFC93C" stroke-width="3"
+            <rect x="64" y="268" width="262" height="118" rx="20" fill="#FFC93C" stroke-width="3"
             ></rect>
-            <rect x="64" y="550" width="262" height="104" rx="16" fill="#FF6B4A"></rect>
+            <rect x="64" y="426" width="262" height="122" rx="16" fill="#A8DDB5"></rect>
           </g>
           <g stroke="currentColor" stroke-width="2.5" fill="none">
-            <path d="M195 108V138" marker-end="url(#sav)"></path>
-            <path d="M195 232V262" marker-end="url(#sav)"></path>
-            <path d="M195 356V386" marker-end="url(#sav)"></path>
-            <path d="M195 514V544" marker-end="url(#sav)"></path>
+            <path d="M195 108V138" marker-end="url(#wav)"></path>
+            <path d="M195 232V262" marker-end="url(#wav)"></path>
+            <path d="M195 390V420" marker-end="url(#wav)"></path>
           </g>
           <g fill="#15211C">
-            <text class="sb" x="84" y="42" font-size="11" opacity=".7">01 / SOURCE</text>
-            <text class="sv" x="84" y="70" font-size="22">Nx monorepo</text>
-            <text class="sm" x="84" y="92" font-size="12">500 projects, one foundation</text>
-            <text class="sb" x="84" y="166" font-size="11" opacity=".7">02 / PIPELINE</text>
-            <text class="sv" x="84" y="194" font-size="22">Build &amp; CI</text>
-            <text class="sm" x="84" y="216" font-size="12">GitLab CI · Cypress</text>
-            <text class="sb" x="84" y="290" font-size="11" opacity=".7">03 / ORIGIN</text>
-            <text class="sv" x="84" y="318" font-size="22">SSR origin</text>
-            <text class="sm" x="84" y="340" font-size="12">Angular SSR</text>
-            <text class="sb" x="84" y="414" font-size="11" opacity=".7">04 / EDGE</text>
-            <text class="sv" x="84" y="446" font-size="25">CDN edge</text>
-            <text class="sm" x="84" y="470" font-size="12">CloudFront · defined in CDK</text>
-            <text class="sm" x="84" y="490" font-size="12">redirects · apps domains</text>
-            <text class="sb" x="84" y="572" font-size="11" opacity=".7">05 / USERS</text>
-            <text class="sv" x="84" y="602" font-size="22">6 brand apps</text>
+            <text class="sb" x="84" y="42" font-size="11" opacity=".7">01 / LOOK</text>
+            <text class="sv" x="84" y="70" font-size="22">Look</text>
+            <text class="sm" x="84" y="92" font-size="12">we measure where it hurts</text>
+            <text class="sb" x="84" y="166" font-size="11" opacity=".7">02 / PLAN</text>
+            <text class="sv" x="84" y="194" font-size="22">Plan</text>
+            <text class="sm" x="84" y="216" font-size="12">a roadmap with deadlines</text>
+            <text class="sb" x="84" y="290" font-size="11" opacity=".7">03 / FIRST STEP</text>
+            <text class="sv" x="84" y="322" font-size="25">First step</text>
+            <text class="sm" x="84" y="346" font-size="12">one small, safe change</text>
+            <text class="sm" x="84" y="366" font-size="12">in production</text>
+            <text class="sb" x="84" y="448" font-size="11" opacity=".7">04 / HAND OVER</text>
+            <text class="sv" x="84" y="478" font-size="22">Hand over</text>
+            <text class="sm" x="84" y="500" font-size="12">your teams carry on</text>
           </g>
           <g stroke="#15211C" stroke-width="2">
             {
               teamFills.map((fill, i) => (
-                <circle cx={94 + i * 24} cy="628" r="8" fill={i === 5 ? "#15211C" : fill} />
+                <circle cx={94 + i * 24} cy="526" r="8" fill={i === 5 ? "#15211C" : fill} />
               ))
             }
           </g>
           <g stroke="currentColor" stroke-width="1.5" fill="none">
-            <path d="M34 20V654"></path><path d="M26 20H42M26 654H42"></path>
+            <path d="M34 20V548"></path><path d="M26 20H42M26 548H42"></path>
           </g>
-          <rect class="pill" x="22" y="250" width="24" height="180" rx="12"></rect>
+          <rect class="pill" x="22" y="104" width="24" height="360" rx="12"></rect>
           <text
             class="sb pill-t"
             font-size="11"
-            letter-spacing="2"
-            transform="translate(38.5 340) rotate(-90)"
-            text-anchor="middle">OWNED END TO END</text
+            letter-spacing="1.5"
+            transform="translate(38.5 284) rotate(-90)"
+            text-anchor="middle">YOUR TEAMS KEEP SHIPPING THE WHOLE TIME</text
           >
         </svg>
       </div>
