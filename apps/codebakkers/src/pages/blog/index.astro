@@ -10,130 +10,312 @@ const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
 const fmt = (d: Date) =>
   d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" }).toUpperCase();
 const iso = (d: Date) => d.toISOString().slice(0, 10);
-const colors = ["tile-blush", "tile-sky", "tile-mint", "tile-yellow", "tile-paper", "tile-coral"];
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+const counts = new Map<string, number>();
+for (const p of posts) for (const t of p.data.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
+const tags = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([t]) => t);
+
+const filterCss = tags
+  .map(
+    (t) =>
+      `#posts:has(#topic-${slug(t)}:checked) [data-tags]:not([data-tags~="${slug(t)}"]){display:none}`,
+  )
+  .join("");
 ---
 
 <BaseLayout title={`Blog · ${SITE.title}`} description={SITE.description}>
   <Container>
     <section class="bento" aria-labelledby="intro-h">
-      <div class="tile tile-pine page-head intro">
-        <p class="label">Blog</p>
-        <h1 id="intro-h" class="display">{SITE.tagline}</h1>
-        <p class="lead">
-          What worked, what broke and what we learned while moving large frontend platforms forward:
-          migrations, build tooling and the edge. A field report each week, a longer deep dive each
-          month.
-        </p>
+      <div class="tile tile-pine head-tile">
+        <div>
+          <h1 id="intro-h" class="display">Blog</h1>
+          <p class="sub">{SITE.tagline}</p>
+        </div>
+        <div class="side">
+          <p>
+            What worked, what broke and what we learned while moving large frontend platforms
+            forward.
+          </p>
+          <a class="rss-link" href="/rss.xml"
+            ><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+              ><circle cx="5" cy="19" r="2.5"></circle><path
+                d="M3 10.5v3a7.5 7.5 0 0 1 7.5 7.5h3A10.5 10.5 0 0 0 3 10.5zm0-6v3A13.5 13.5 0 0 1 16.5 21h3A16.5 16.5 0 0 0 3 4.5z"
+              ></path></svg
+            >RSS feed</a
+          >
+        </div>
       </div>
-      <a class="tile tile-yellow rss" href="/rss.xml">
-        <span class="label">Subscribe</span>
-        <span class="rss-t">RSS feed</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </a>
     </section>
 
-    <section aria-label="Posts">
-      <ul class="bento posts">
-        {
-          posts.map((post, i) => (
-            <li class={i === 0 ? "first" : ""}>
-              <a class={`tile ${colors[i % colors.length]} post`} href={`/blog/${post.id}/`}>
-                <span class="label">
-                  {post.data.type === "deep-dive" ? "Deep dive" : "Field report"} ·{" "}
-                  <time datetime={iso(post.data.pubDate)}>{fmt(post.data.pubDate)}</time>
-                </span>
-                <span class="ptitle">{post.data.title}</span>
-                <span class="pdesc">{post.data.description}</span>
-                <span class="read">
-                  Read{" "}
-                  <span class="arrow" aria-hidden="true">
-                    →
+    <section class="bento" id="posts" aria-label="Posts">
+      <div class="filter">
+        <div class="topics" role="radiogroup" aria-labelledby="topics-l">
+          <span class="mono" id="topics-l">Topics</span>
+          <input class="sr-only" type="radio" name="topic" id="topic-all" checked />
+          <label class="fchip" for="topic-all">All posts</label>
+          {
+            tags.map((t) => (
+              <>
+                <input class="sr-only" type="radio" name="topic" id={`topic-${slug(t)}`} />
+                <label class="fchip" for={`topic-${slug(t)}`}>
+                  {t}
+                </label>
+              </>
+            ))
+          }
+        </div>
+        <p class="legend">
+          <span><i class="m-fr"></i>Field report</span>
+          <span><i class="m-dd"></i>Deep dive</span>
+        </p>
+      </div>
+
+      <div class="tile list-tile">
+        <ul class="list">
+          {
+            posts.map((post) => (
+              <li data-tags={post.data.tags.map(slug).join(" ")}>
+                <a href={`/blog/${post.id}/`}>
+                  <span class={`marker ${post.data.type === "deep-dive" ? "m-dd" : "m-fr"}`}>
+                    {post.data.type === "deep-dive" ? "Deep dive" : "Field report"}
                   </span>
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      {posts.length === 0 && <p class="tile empty">First post lands Monday.</p>}
+                  <span>
+                    <span class="t">{post.data.title}</span>
+                    <span class="d">{post.data.description}</span>
+                  </span>
+                  <span class="tags">
+                    {post.data.tags.map((t) => (
+                      <span>{t}</span>
+                    ))}
+                  </span>
+                  <time datetime={iso(post.data.pubDate)}>{fmt(post.data.pubDate)}</time>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        {posts.length === 0 && <p class="empty">First post lands Monday.</p>}
+      </div>
     </section>
   </Container>
+  <style is:inline set:html={filterCss}></style>
 </BaseLayout>
 
 <style>
-  .intro {
-    grid-column: span 9;
-    padding: clamp(1.6rem, 1rem + 3vw, 3rem);
+  .head-tile {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 1.25rem 2rem;
+    padding: clamp(1.4rem, 1rem + 1.4vw, 2.25rem);
   }
-  .intro h1 {
+  .head-tile h1 {
+    font-size: var(--step-4);
     color: inherit;
   }
-  .rss {
-    grid-column: span 3;
-    justify-content: space-between;
-    gap: 1rem;
-    text-decoration: none;
-  }
-  .rss-t {
-    font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.5rem);
+  .sub {
+    margin-top: 0.35rem;
+    font-size: var(--step-2);
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1;
+    line-height: 1.1;
+    color: var(--tile-accent);
   }
-  .rss .arrow {
-    font-size: 1.5rem;
+  .side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    max-width: 30rem;
   }
-  .rss:hover .rss-t,
-  .post:hover .ptitle {
+  .side p {
+    font-size: 1.05rem;
+  }
+  .rss-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-pill);
+    background: var(--cb-yellow);
+    color: var(--cb-ink);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .rss-link:hover {
+    color: var(--cb-ink);
     text-decoration: underline;
-    text-decoration-thickness: 3px;
   }
-  .posts {
-    padding: 0;
-    list-style: none;
+  .rss-link svg {
+    flex: none;
+    width: 16px;
+    height: 16px;
   }
-  .posts li {
-    grid-column: span 4;
-  }
-  .posts li.first {
-    grid-column: span 8;
-  }
-  .post {
-    height: 100%;
-    min-height: 280px;
-    gap: 1rem;
-    text-decoration: none;
-  }
-  .ptitle {
-    font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.1rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-  }
-  .first .ptitle {
-    font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem);
-    max-width: 20ch;
-  }
-  .pdesc {
-    max-width: 52ch;
-  }
-  .read {
-    margin-top: auto;
+
+  .mono {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .filter {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 28px;
+    background: var(--tile-paper-bg);
+    color: var(--tile-paper-fg);
+  }
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .topics .mono {
+    margin-right: 0.5rem;
+    color: var(--color-muted);
+  }
+  .fchip {
+    padding: 0.3rem 0.85rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+  }
+  .fchip:hover {
+    border-color: currentColor;
+  }
+  input:checked + .fchip {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+  input:focus-visible + .fchip {
+    outline: 3px solid var(--cb-ink);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 7px var(--cb-yellow);
+  }
+  .legend {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .legend i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 0.4rem;
+    border-radius: 4px;
+    vertical-align: -1px;
+  }
+  .m-fr {
+    background: var(--cb-coral);
+  }
+  .m-dd {
+    background: var(--cb-sky);
+  }
+
+  .list-tile {
+    grid-column: 1 / -1;
+    padding: 0.6rem 1.75rem;
+  }
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .list a {
+    display: grid;
+    grid-template-columns: 9rem 1fr 15rem 7.5rem;
+    align-items: center;
+    gap: 0.6rem 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 2px dashed var(--color-border);
+    color: inherit;
+    text-decoration: none;
+  }
+  .list li:last-child a {
+    border-bottom: 0;
+  }
+  .list a:hover .t {
+    text-decoration: underline 3px var(--cb-coral);
+  }
+  .marker {
+    justify-self: start;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cb-ink);
+  }
+  .t {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  .d {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tags span {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  time {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+  .empty {
+    padding: 1.1rem 0;
+  }
+
   @media (max-width: 56rem) {
-    .intro,
-    .rss,
-    .posts li,
-    .posts li.first {
+    .head-tile {
+      grid-template-columns: 1fr;
+    }
+    .list-tile {
+      padding: 0.4rem 1.1rem;
+    }
+    .list a {
+      grid-template-columns: 1fr auto;
+    }
+    .list a > span:nth-child(2),
+    .tags {
       grid-column: 1 / -1;
     }
-    .post {
-      min-height: 0;
+    .list a > time {
+      grid-row: 1;
+      grid-column: 2;
     }
   }
 </style>
