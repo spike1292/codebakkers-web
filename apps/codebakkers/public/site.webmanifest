@@ -3,8 +3,8 @@
   "short_name": "CodeBakkers",
   "start_url": "/",
   "display": "browser",
-  "theme_color": "#16181d",
-  "background_color": "#16181d",
+  "theme_color": "#15211c",
+  "background_color": "#f5eedc",
   "icons": [
     { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
     { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }

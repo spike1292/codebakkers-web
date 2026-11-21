@@ -1,29 +1,32 @@
 ---
-title: "Killing the nginx tier: CloudFront + an SSR origin"
-description: "Retiring a whole ECS/nginx layer in favour of CloudFront in front of a Node SSR origin — what moved, and what got simpler."
+title: "Moving nginx work to the edge, one step at a time"
+description: "How we moved redirects and the apps domains from nginx to CloudFront, what got simpler, and why the last nginx tier is next."
 pubDate: 2026-07-13
 tags: ["aws", "cloudfront", "edge", "angular"]
 type: deep-dive
 ---
 
-For years the request path ran through an nginx tier on ECS before it ever
-reached the app. This week that tier came out.
+For years, requests passed through nginx on ECS before they reached the app.
+We are moving that work to the edge in steps. The first steps are done. The
+last nginx tier, in front of the main sites, is next.
 
-## Why it existed, and why it didn't need to
+## What moved already
 
-nginx was doing three jobs: routing, a handful of redirects, and some header
-rewriting. None of those need a always-on container fleet in 2026 — CloudFront
-plus a small amount of edge logic covers all three, and the Node SSR origin
-handles the rest.
-
-## What moved where
-
-- **Routing + caching** → CloudFront behaviours.
-- **Redirects** → an edge key-value store, evaluated at the edge.
-- **Header rewriting** → an edge function.
+- **Redirects** now live in an edge key-value store (CloudFront
+  KeyValueStore). A CloudFront Function reads it at the edge.
+- **The apps domains** are now served through CloudFront. Their nginx setup is
+  gone.
+- **The old cloud setup** is gone too. The sites run on a new cloud
+  platform.
 
 ## What got simpler
 
-One fewer tier to deploy, patch, and reason about — and one fewer place for a
-container CVE to hide. The edge config is now declarative and lives with the
-rest of the infrastructure-as-code.
+Fewer containers to deploy, patch and keep in mind. A redirect is now a
+key-value entry, not an nginx config change and a deploy. The edge config is
+declarative and lives with the rest of the infrastructure-as-code.
+
+## What is next
+
+One nginx tier still sits in front of the main sites. It is the next step. The
+approach stays the same: move one job at a time to the edge, check it, then
+remove what is left.
